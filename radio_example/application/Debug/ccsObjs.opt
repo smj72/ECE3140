@@ -1,0 +1,1 @@
+"./bsp/bsp.obj" "./mrfi/mrfi.obj" "./uart.obj" "./process.obj" "./3140_concur.obj" "./3140.obj" -l"rts430.lib" "../lnk_msp430f2274.cmd" 
