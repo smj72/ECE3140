@@ -125,15 +125,7 @@ __interrupt void USCI0RX_ISR(void)
        uart_puts(" message returned");
 }*/
 
- /*Function to execute upon receiving a packet
- *   Called by the driver when new packet arrives */
- ///*
-void MRFI_RxCompleteISR(void) {
-/*   Since this is a transmit-only application we do nothing.
- *   This function still needs to be defined for the project
- *   to compile properly. 
- * */
-}
+
 ///*
 /*int main (void) {
 	msp430_obj *dummy = (msp430_obj*)malloc(sizeof(msp430_obj));

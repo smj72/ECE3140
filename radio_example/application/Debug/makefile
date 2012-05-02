@@ -9,6 +9,9 @@ ORDERED_OBJS += \
 "./bsp/bsp.obj" \
 "./mrfi/mrfi.obj" \
 "./uart.obj" \
+"./simple_send_app.obj" \
+"./simple_receive_app.obj" \
+"./radio.obj" \
 "./process.obj" \
 "./interface.obj" \
 "./3140_concur.obj" \

@@ -66,9 +66,13 @@ The following functions are for use in Radio Transmission.
 
 ------------------------------------------------------------------------*/
 
-void init_radio(void);
+int init_radio(void);
 
-char* send_message(char *msg);
+//char* send_message(char *msg);
+
+void send_message (void);
+
+//void receive_message(void);
 
 void receive_message(void);
 

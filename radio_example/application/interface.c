@@ -9,6 +9,19 @@ typedef struct msp430_impl{
  }msp430_obj; 
 extern msp430_obj *root;
 
+
+
+/* Parameterized "sleep" helper function */
+void sleep(unsigned int count) {
+	int i;
+	for (i = 0; i < 10; i++) {
+		while(count > 0) {
+			count--;
+			__no_operation();
+		}
+	}
+}
+
 int main(void){
 	int found_id;
 	int array_size;

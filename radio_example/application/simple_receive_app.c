@@ -16,7 +16,18 @@
 /* Function prototypes */
 void sleep(unsigned int count);
 
-msp430_obj my_msp430 = NULL;
+typedef struct msp430_impl{
+ 	int ID;
+ 	char *message;
+ 	int chat_IDs[20];
+ 	msp430_obj *signal_next;
+ 	int state;
+ }msp430_obj; 
+
+
+
+
+extern msp430_obj *root;
 
 /* Main function for receive application */
 /*void main(void) {
@@ -32,17 +43,32 @@ msp430_obj my_msp430 = NULL;
 	void receive_message();
 }*/
 
-void receive_message(msp430_obj msp430){
-	
-	my_msp430 = msp430;
+/* Parameterized "sleep" helper function */
+/*void sleep(unsigned int count) {
+	int i;
+	for (i = 0; i < 10; i++) {
+		while(count > 0) {
+			count--;
+			__no_operation();
+		}
+	}
+}*/
+
+void receive_message(void){
+	/* Filter setup return value: success or failure */
+	unsigned char status;
 	
 	/* Set a filter address for packets received by the radio
 	 *   This should match the "destination" address of
 	 *   the packets sent by the transmitter. */
 	uint8_t address[] = {0x12,0x34,0xab,0xcd};
 	
-	/* Filter setup return value: success or failure */
-	unsigned char status;
+	
+	
+	
+	
+	
+	
 	
 	/* Attempt to turn on address filtering
 	 *   If unsuccessful, turn on both LEDs and wait forever */
@@ -83,13 +109,4 @@ void MRFI_RxCompleteISR(void) {
 	P1OUT ^= RED_RECEIVE_LED;
 }
 
-/* Parameterized "sleep" helper function */
-void sleep(unsigned int count) {
-	int i;
-	for (i = 0; i < 10; i++) {
-		while(count > 0) {
-			count--;
-			__no_operation();
-		}
-	}
-}
+

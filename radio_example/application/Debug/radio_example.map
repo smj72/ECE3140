@@ -1,7 +1,7 @@
 ******************************************************************************
        MSP430 Evaluation Linker PC v3.2.1                      
 ******************************************************************************
->> Linked Wed May 02 10:03:59 2012
+>> Linked Wed May 02 11:00:57 2012
 
 OUTPUT FILE NAME:   <radio_example.out>
 ENTRY POINT SYMBOL: "_c_int00"  address: 0000a304
@@ -14,12 +14,12 @@ MEMORY CONFIGURATION
   SFR                   00000000   00000010  00000000  00000010  RWIX
   PERIPHERALS_8BIT      00000010   000000f0  00000000  000000f0  RWIX
   PERIPHERALS_16BIT     00000100   00000100  00000000  00000100  RWIX
-  RAM                   00000200   00000400  000002fa  00000106  RWIX
+  RAM                   00000200   00000400  000002fe  00000102  RWIX
   INFOD                 00001000   00000040  00000000  00000040  RWIX
   INFOC                 00001040   00000040  00000000  00000040  RWIX
   INFOB                 00001080   00000040  00000000  00000040  RWIX
   INFOA                 000010c0   00000040  00000000  00000040  RWIX
-  FLASH                 00008000   00007fde  000026ec  000058f2  RWIX
+  FLASH                 00008000   00007fde  0000271c  000058c2  RWIX
   INT00                 0000ffe0   00000002  00000000  00000002  RWIX
   INT01                 0000ffe2   00000002  00000000  00000002  RWIX
   INT02                 0000ffe4   00000002  00000000  00000002  RWIX
@@ -45,24 +45,25 @@ section   page    origin      length       input sections
 --------  ----  ----------  ----------   ----------------
 .pinit     0    00008000    00000000     UNINITIALIZED
 
-.bss       0    00000200    0000025a     UNINITIALIZED
+.bss       0    00000200    0000025e     UNINITIALIZED
                   00000200    00000204     uart.obj (.bss)
                   00000404    0000002e     mrfi.obj (.bss)
                   00000432    00000016     process.obj (.bss)
                   00000448    00000008     rts430.lib : memory.obj (.bss)
-                  00000450    00000004                : _lock.obj (.bss)
-                  00000454    00000004                : boot.obj (.bss)
-                  00000458    00000002     3140.obj (.bss)
+                  00000450    00000004     radio.obj (.bss)
+                  00000454    00000004     rts430.lib : _lock.obj (.bss)
+                  00000458    00000004                : boot.obj (.bss)
+                  0000045c    00000002     3140.obj (.bss)
 
-.sysmem    0    0000045c    00000050     UNINITIALIZED
-                  0000045c    00000004     rts430.lib : memory.obj (.sysmem)
-                  00000460    0000004c     --HOLE--
+.sysmem    0    00000460    00000050     UNINITIALIZED
+                  00000460    00000004     rts430.lib : memory.obj (.sysmem)
+                  00000464    0000004c     --HOLE--
 
 .stack     0    000005b0    00000050     UNINITIALIZED
                   000005b0    00000002     rts430.lib : boot.obj (.stack)
                   000005b2    0000004e     --HOLE--
 
-.text      0    00008000    000024a0     
+.text      0    00008000    000024c8     
                   00008000    000003ce     process.obj (.text:process_select)
                   000083ce    00000216     rts430.lib : _printfi.obj (.text:_setfield)
                   000085e4    000001b6                : _printfi.obj (.text:_printfi)
@@ -121,36 +122,39 @@ section   page    origin      length       input sections
                   0000a392    0000001c     mrfi.obj (.text:mrfiSpiReadRxFifo)
                   0000a3ae    0000001a     mrfi.obj (.text:BSP_GpioPort1Isr)
                   0000a3c8    0000001a     rts430.lib : sprintf.obj (.text:_outs)
-                  0000a3e2    00000016                : div16u.obj (.text)
-                  0000a3f8    00000014                : memset.obj (.text:memset)
-                  0000a40c    00000014                : mult16.obj (.text)
-                  0000a420    00000014     uart.obj (.text:uart_putc)
-                  0000a434    00000012     rts430.lib : sprintf.obj (.text:_outc)
-                  0000a446    00000012                : memcpy.obj (.text:memcpy)
-                  0000a458    00000012                : strlen.obj (.text:strlen)
-                  0000a46a    00000010                : epilog.obj (.text)
-                  0000a47a    0000000a     bsp.obj (.text:_system_pre_init)
-                  0000a484    0000000a     rts430.lib : abs.obj (.text:abs)
-                  0000a48e    0000000a                : fs_neg.obj (.text)
-                  0000a498    00000004                : exit.obj (.text:abort)
-                  0000a49c    00000002     uart.obj (.text:MRFI_RxCompleteISR)
-                  0000a49e    00000002     rts430.lib : _lock.obj (.text:_nop)
+                  0000a3e2    00000016     mrfi.obj (.text:MRFI_Receive)
+                  0000a3f8    00000016     rts430.lib : div16u.obj (.text)
+                  0000a40e    00000014     simple_receive_app.obj (.text:MRFI_RxCompleteISR)
+                  0000a422    00000014     rts430.lib : memset.obj (.text:memset)
+                  0000a436    00000014                : mult16.obj (.text)
+                  0000a44a    00000014     uart.obj (.text:uart_putc)
+                  0000a45e    00000012     rts430.lib : sprintf.obj (.text:_outc)
+                  0000a470    00000012                : memcpy.obj (.text:memcpy)
+                  0000a482    00000012                : strlen.obj (.text:strlen)
+                  0000a494    00000010                : epilog.obj (.text)
+                  0000a4a4    0000000a     bsp.obj (.text:_system_pre_init)
+                  0000a4ae    0000000a     rts430.lib : abs.obj (.text:abs)
+                  0000a4b8    0000000a                : fs_neg.obj (.text)
+                  0000a4c2    00000004                : exit.obj (.text:abort)
+                  0000a4c6    00000002                : _lock.obj (.text:_nop)
 
-.const     0    0000a4a0    000001d6     
-                  0000a4a0    00000101     rts430.lib : ctype.obj (.const:_ctypes_)
-                  0000a5a1    00000001     --HOLE-- [fill = 0]
-                  0000a5a2    00000056     interface.obj (.const:.string)
-                  0000a5f8    00000056     uart.obj (.const:.string)
-                  0000a64e    00000024     rts430.lib : _printfi.obj (.const:.string)
-                  0000a672    00000004     mrfi.obj (.const:mrfiBroadcastAddr)
+.const     0    0000a4c8    000001d6     
+                  0000a4c8    00000101     rts430.lib : ctype.obj (.const:_ctypes_)
+                  0000a5c9    00000001     --HOLE-- [fill = 0]
+                  0000a5ca    00000056     interface.obj (.const:.string)
+                  0000a620    00000056     uart.obj (.const:.string)
+                  0000a676    00000024     rts430.lib : _printfi.obj (.const:.string)
+                  0000a69a    00000004     mrfi.obj (.const:mrfiBroadcastAddr)
 
-.cinit     0    0000a676    00000076     
-                  0000a676    00000036     process.obj (.cinit)
-                  0000a6ac    0000002f     mrfi.obj (.cinit)
-                  0000a6db    00000001     --HOLE-- [fill = 0]
-                  0000a6dc    00000006     rts430.lib : memory.obj (.cinit)
-                  0000a6e2    00000006     uart.obj (.cinit)
-                  0000a6e8    00000004     --HOLE-- [fill = 0]
+.cinit     0    0000a69e    0000007e     
+                  0000a69e    00000036     process.obj (.cinit)
+                  0000a6d4    0000002f     mrfi.obj (.cinit)
+                  0000a703    00000001     --HOLE-- [fill = 0]
+                  0000a704    00000006     radio.obj (.cinit)
+                  0000a70a    00000006     rts430.lib : memory.obj (.cinit)
+                  0000a710    00000006     uart.obj (.cinit)
+                  0000a716    00000002     --HOLE-- [fill = 0]
+                  0000a718    00000004     (.pad.cinit) [fill = 0]
 
 .int03     0    0000ffe6    00000002     
                   0000ffe6    00000002     mrfi.obj (.int03)
@@ -186,7 +190,7 @@ address    name
 00000058   BCSCTL2
 00000053   BCSCTL3
 0000a3ae   BSP_GpioPort1Isr
-0000a498   C$$EXIT
+0000a4c2   C$$EXIT
 000010fb   CALBC1_12MHZ
 000010f9   CALBC1_16MHZ
 000010ff   CALBC1_1MHZ
@@ -252,8 +256,9 @@ address    name
 00009d0e   L_LSR_8
 00009d08   L_LSR_9
 0000a376   MRFI_GpioIsr
+0000a3e2   MRFI_Receive
 00009c62   MRFI_RxAddrIsFiltered
-0000a49c   MRFI_RxCompleteISR
+0000a40e   MRFI_RxCompleteISR
 000000c0   OA0CTL0
 000000c1   OA0CTL1
 000000c2   OA1CTL0
@@ -335,77 +340,79 @@ address    name
 ffffffff   __binit__
 00000200   __bss__
 ffffffff   __c_args__
-0000a676   __cinit__
+0000a69e   __cinit__
 0000a2b0   __divi
 0000a19a   __divli
-0000a3e2   __divu
+0000a3f8   __divu
 00009e56   __divul
-0000045a   __end__
-0000a4a0   __etext__
+0000045e   __end__
+0000a4c8   __etext__
 00008d38   __fs_add
 0000a036   __fs_cmp
 000097ac   __fs_div
 0000a080   __fs_ltof
 0000965a   __fs_mpy
-0000a48e   __fs_neg
+0000a4b8   __fs_neg
 00008d32   __fs_sub
 00009af6   __fs_tol
 0000a110   __fs_tou
-0000a40c   __mpyi
+0000a436   __mpyi
 0000a350   __mpyl
 ffffffff   __pinit__
 0000a2b0   __remi
 0000a19a   __remli
-0000a3e2   __remu
+0000a3f8   __remu
 00009e56   __remul
 00008000   __text__
 0000a0ca   _auto_init
 0000a304   _c_int00
 0000a304   _c_int00_noexit
-00000454   _cleanup_ptr
-0000a4a0   _ctypes_
-00000456   _dtors_ptr
-00000450   _lock
-0000a49e   _nop
+00000458   _cleanup_ptr
+0000a4c8   _ctypes_
+0000045a   _dtors_ptr
+00000454   _lock
+0000a4c6   _nop
 000085e4   _printfi
 0000fffe   _reset_vector
 000005b0   _stack
-0000045c   _sys_memory
-0000a47a   _system_pre_init
-00000452   _unlock
-0000a498   abort
-0000a484   abs
+00000460   _sys_memory
+0000a4a4   _system_pre_init
+00000456   _unlock
+0000a4c2   abort
+0000a4ae   abs
 00000444   add_realtime
 00000302   another
 00009eae   atoi
 ffffffff   binit
-0000a676   cinit
+0000a69e   cinit
 00000432   current_process
 0000043c   current_time
-0000045a   end
-0000a4a0   etext
+0000045e   end
+0000a4c8   etext
 00009a76   free
-0000a476   func_epilog_1
-0000a474   func_epilog_2
-0000a472   func_epilog_3
-0000a470   func_epilog_4
-0000a46e   func_epilog_5
-0000a46c   func_epilog_6
-0000a46a   func_epilog_7
+0000a4a0   func_epilog_1
+0000a49e   func_epilog_2
+0000a49c   func_epilog_3
+0000a49a   func_epilog_4
+0000a498   func_epilog_5
+0000a496   func_epilog_6
+0000a494   func_epilog_7
 00000434   head
 00000436   holder
 00000200   index
+00000450   l
 000099f2   ltoa
 0000879a   main
 00009704   malloc
 0000a2dc   memccpy
-0000a446   memcpy
-0000a3f8   memset
+0000a470   memcpy
+0000a422   memset
 0000a1da   minit
-0000a672   mrfiBroadcastAddr
+0000a69a   mrfiBroadcastAddr
 00009dfa   mrfiSpiCmdStrobe
 0000a32a   mrfiSpiReadReg
 0000a392   mrfiSpiReadRxFifo
+00000452   my_msp430_ptr
 00000202   out
 ffffffff   pinit
 00009da4   process_begin
@@ -417,8 +424,8 @@ ffffffff   pinit
 00000442   realtime_queue
 00000402   root
 0000a214   sprintf
-0000a458   strlen
-0000a420   uart_putc
+0000a482   strlen
+0000a44a   uart_putc
 0000a280   uart_puts
 0000043a   waiter_curr
 00000438   waiter_first
@@ -538,13 +545,15 @@ address    name
 00000442   realtime_queue
 00000444   add_realtime
 00000446   process_deadline_miss
-00000450   _lock
-00000452   _unlock
-00000454   _cleanup_ptr
-00000456   _dtors_ptr
-0000045a   __end__
-0000045a   end
-0000045c   _sys_memory
+00000450   l
+00000452   my_msp430_ptr
+00000454   _lock
+00000456   _unlock
+00000458   _cleanup_ptr
+0000045a   _dtors_ptr
+0000045e   __end__
+0000045e   end
+00000460   _sys_memory
 000005b0   _stack
 00000600   __STACK_END
 000010f8   CALDCO_16MHZ
@@ -645,33 +654,34 @@ address    name
 0000a376   MRFI_GpioIsr
 0000a392   mrfiSpiReadRxFifo
 0000a3ae   BSP_GpioPort1Isr
-0000a3e2   __divu
-0000a3e2   __remu
-0000a3f8   memset
-0000a40c   __mpyi
-0000a420   uart_putc
-0000a446   memcpy
-0000a458   strlen
-0000a46a   func_epilog_7
-0000a46c   func_epilog_6
-0000a46e   func_epilog_5
-0000a470   func_epilog_4
-0000a472   func_epilog_3
-0000a474   func_epilog_2
-0000a476   func_epilog_1
-0000a47a   _system_pre_init
-0000a484   abs
-0000a48e   __fs_neg
-0000a498   C$$EXIT
-0000a498   abort
-0000a49c   MRFI_RxCompleteISR
-0000a49e   _nop
-0000a4a0   __etext__
-0000a4a0   _ctypes_
-0000a4a0   etext
-0000a672   mrfiBroadcastAddr
-0000a676   __cinit__
-0000a676   cinit
+0000a3e2   MRFI_Receive
+0000a3f8   __divu
+0000a3f8   __remu
+0000a40e   MRFI_RxCompleteISR
+0000a422   memset
+0000a436   __mpyi
+0000a44a   uart_putc
+0000a470   memcpy
+0000a482   strlen
+0000a494   func_epilog_7
+0000a496   func_epilog_6
+0000a498   func_epilog_5
+0000a49a   func_epilog_4
+0000a49c   func_epilog_3
+0000a49e   func_epilog_2
+0000a4a0   func_epilog_1
+0000a4a4   _system_pre_init
+0000a4ae   abs
+0000a4b8   __fs_neg
+0000a4c2   C$$EXIT
+0000a4c2   abort
+0000a4c6   _nop
+0000a4c8   __etext__
+0000a4c8   _ctypes_
+0000a4c8   etext
+0000a69a   mrfiBroadcastAddr
+0000a69e   __cinit__
+0000a69e   cinit
 0000fffe   _reset_vector
 ffffffff   __binit__
 ffffffff   __c_args__
@@ -679,4 +689,4 @@ ffffffff   __pinit__
 ffffffff   binit
 ffffffff   pinit
 
-[250 symbols]
+[253 symbols]

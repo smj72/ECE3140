@@ -53,13 +53,13 @@
 </tool>
 <macros expandEnvironmentMacros="true"/>
 </toolChain>
-<resourceConfiguration exclude="true" id="com.ti.ccstudio.buildDefinitions.MSP430.Debug.1965618290./radio_example/radio.c" name="radio.c" rcbsApplicability="disable" resourcePath="/final_radio/radio.c" toolsToInvoke="com.ti.ccstudio.buildDefinitions.MSP430_3.2.exe.compilerDebug.918525008./radio_example/radio.c">
+<resourceConfiguration exclude="false" id="com.ti.ccstudio.buildDefinitions.MSP430.Debug.1965618290./radio_example/radio.c" name="radio.c" rcbsApplicability="disable" resourcePath="/final_radio/radio.c" toolsToInvoke="com.ti.ccstudio.buildDefinitions.MSP430_3.2.exe.compilerDebug.918525008./radio_example/radio.c">
 <tool id="com.ti.ccstudio.buildDefinitions.MSP430_3.2.exe.compilerDebug.918525008./radio_example/radio.c" name="MSP430 Compiler" superClass="com.ti.ccstudio.buildDefinitions.MSP430_3.2.exe.compilerDebug.918525008"/>
 </resourceConfiguration>
-<resourceConfiguration exclude="true" id="com.ti.ccstudio.buildDefinitions.MSP430.Debug.1965618290./radio_example/simple_receive_app.c" name="simple_receive_app.c" rcbsApplicability="disable" resourcePath="/final_radio/simple_receive_app.c" toolsToInvoke="com.ti.ccstudio.buildDefinitions.MSP430_3.2.exe.compilerDebug.918525008./radio_example/simple_receive_app.c">
+<resourceConfiguration exclude="false" id="com.ti.ccstudio.buildDefinitions.MSP430.Debug.1965618290./radio_example/simple_receive_app.c" name="simple_receive_app.c" rcbsApplicability="disable" resourcePath="/final_radio/simple_receive_app.c" toolsToInvoke="com.ti.ccstudio.buildDefinitions.MSP430_3.2.exe.compilerDebug.918525008./radio_example/simple_receive_app.c">
 <tool id="com.ti.ccstudio.buildDefinitions.MSP430_3.2.exe.compilerDebug.918525008./radio_example/simple_receive_app.c" name="MSP430 Compiler" superClass="com.ti.ccstudio.buildDefinitions.MSP430_3.2.exe.compilerDebug.918525008"/>
 </resourceConfiguration>
-<resourceConfiguration exclude="true" id="com.ti.ccstudio.buildDefinitions.MSP430.Debug.1965618290./radio_example/simple_send_app.c" name="simple_send_app.c" rcbsApplicability="disable" resourcePath="/final_radio/simple_send_app.c" toolsToInvoke="com.ti.ccstudio.buildDefinitions.MSP430_3.2.exe.compilerDebug.918525008./radio_example/simple_send_app.c">
+<resourceConfiguration exclude="false" id="com.ti.ccstudio.buildDefinitions.MSP430.Debug.1965618290./radio_example/simple_send_app.c" name="simple_send_app.c" rcbsApplicability="disable" resourcePath="/final_radio/simple_send_app.c" toolsToInvoke="com.ti.ccstudio.buildDefinitions.MSP430_3.2.exe.compilerDebug.918525008./radio_example/simple_send_app.c">
 <tool id="com.ti.ccstudio.buildDefinitions.MSP430_3.2.exe.compilerDebug.918525008./radio_example/simple_send_app.c" name="MSP430 Compiler" superClass="com.ti.ccstudio.buildDefinitions.MSP430_3.2.exe.compilerDebug.918525008"/>
 </resourceConfiguration>
 <resourceConfiguration exclude="false" id="com.ti.ccstudio.buildDefinitions.MSP430.Debug.1965618290./radio_example/uart.c" name="uart.c" rcbsApplicability="disable" resourcePath="/final_radio/uart.c" toolsToInvoke="com.ti.ccstudio.buildDefinitions.MSP430_3.2.exe.compilerDebug.918525008./radio_example/uart.c">

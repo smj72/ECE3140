@@ -7,12 +7,15 @@
 lock_t l;
 msp430_obj *my_msp430_ptr = NULL;
 
-/*typedef struct msp430_impl{
+typedef struct msp430_impl{
  	int ID;
- 	char message [255];
+ 	char *message;
+ 	int chat_IDs[20];
  	msp430_obj *signal_next;
- 	
- }msp430_obj;*/
+ 	int state;
+ }msp430_obj; 
+
+extern msp430_obj *root;
 
 void send_uart_input()
 {
@@ -20,17 +23,13 @@ void send_uart_input()
 
 }
 
-void init_radio(void){
-	msp430_obj *dummy = (msp430_obj*)malloc(sizeof(msp430_obj));
-	char *dummy_msg = (char*)malloc(sizeof(char));
+int init_radio(void){
+	
 	WDTCTL = WDTPW + WDTHOLD;
  	P1DIR = 0x03;
  	P1OUT = 0x00;
  	
  	
- 	dummy->ID = 1;
- 	dummy->message = dummy_msg;
- 	dummy->signal_next = NULL;
  	
  	
 	BSP_Init();
@@ -39,17 +38,14 @@ void init_radio(void){
 	MRFI_Init();
 	MRFI_WakeUp();
 	
-	l_init (&l);
 	
-	init_uart(dummy);	
- 	uart_clear_screen();
 	/* Perform board-specific initialization */
 	
-	if (process_create (receive_message(dummy),10) < 0) {
+	if (process_create (receive_message,10) < 0) {
 	 	return -1;
 	}
-	if(my_msp430.message !=NULL){
-		if (process_create (send_message(dummy),10) < 0) {
+	if(root->message !=NULL){
+		if (process_create (send_message,10) < 0) {
 	 	return -1;
 	}
 			
@@ -58,5 +54,6 @@ void init_radio(void){
 	
 	process_start();
 	P1OUT= 0x02;
+	return 1;
 	
 }
