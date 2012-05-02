@@ -2,6 +2,6 @@
 # Automatically-generated file. Do not edit!
 ################################################################################
 
-LIBS := -l"rts430.lib"
+LIBS := $(GEN_CMDS_QUOTED) -l"rts430.lib"
 
 USER_OBJS :=

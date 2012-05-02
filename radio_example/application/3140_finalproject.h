@@ -29,12 +29,9 @@ Each root represents its own msp430. Each child msp430's next is connected with 
  
  //typedef struct msp430_impl msp430_obj;
  //opaque definition of msp430 type;
-typedef struct msp430_impl{
- 	int ID;
- 	char *message;
- 	msp430_obj *signal_next;
- 	
- }msp430_obj; 
+typedef struct msp430_impl msp430_obj; 
+ 
+ extern msp430_obj root;
 
 /*------------------------------------------------------------------------
   

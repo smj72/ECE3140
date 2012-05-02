@@ -3,13 +3,19 @@
 volatile int index = 0;
 char out[255];
 char another[255];
-msp430_obj my_msp430;
+//msp430_obj my_msp430;
+
+// Define Root parameters
+root->ID = 100;
+root->message = NULL;
+root->signal_next = NULL;
+root->state = 0;
 
 /*typedef struct msp430_impl{
  	int ID;
  	char *message;
  	msp430_obj *signal_next;
- 	
+ 	int state
  }msp430_obj;*/
 
 /*------------------------------------------------------------------------
@@ -31,16 +37,14 @@ void init_uart(msp430_obj *msp430_ptr) {
 	//IE1  |=  URXIE0;        	  //  Enable  USART0  RX  interrupt
 	
 	//__enable_interrupt();
-	set_msp430(*msp430_ptr);				//Initialize msp430 to this uart.
+//	set_msp430(*msp430_ptr);				//Initialize msp430 to this uart.
 	__bis_SR_register(LPM3_bits + GIE);       /* Enter LPM3, interrupts enabled */
-	
-	
 }
 
-void set_msp430(msp430_obj msp430)
+/*void set_msp430(msp430_obj msp430)
 {
 	my_msp430 = msp430;
-}
+}*/
 
 /* Transmit a single character over UART interface */
 void uart_putc(char c) {
@@ -72,38 +76,36 @@ void uart_clear_screen(void) {
 __interrupt void USCI0RX_ISR(void)
 {
 	int i =0;
-	//uart_putc(UCA0RXBUF);
-	
-	
+	// Grow a user input array with the characters received from user
 	out[index++] = UCA0RXBUF;
-	//clears out the rest after end
+	
+	// If carriage return process the array constructed
 	if (UCA0RXBUF == '\r'){
 		uart_puts("\r\nEntered:\n");
 		i =0;
 		for(i;i<255;i++){
 			if (i<index){
 				another[i] = out[i];
-				my_msp430.message[i] = out[i];
+				root->message[i] = out[i];
 			}else{
 				another[i] = 0;
 				out[i] = 0;
-				my_msp430.message[i] = 0;
+				root->message[i] = 0;
 			}
 		}
+		// Restart index to the beginning of the array
 		index = 0;
-		
+		// Echo back the user input
 		uart_puts(&another[0]);
 		uart_putc('\n');
-		
+   // Overflow error, will only accept messages that are 255 characters long
 	}else if(index == 255){
 		uart_puts("\r\nThe limit is 255 characters, your entry has been restarted.\r\n");
 		i = 0;
+		// Clean buffer and restart at beginning of array
 		for(i;i<255;i++) {out[i]=0;}
 		index = 0;
 	}
-	/*else{
-		uart_puts("Proper radio message not received");
-	}*/
 }
 
 /*//Interrupt for receiving uart input
