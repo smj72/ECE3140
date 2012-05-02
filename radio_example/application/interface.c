@@ -11,8 +11,9 @@ typedef struct msp430_impl{
  }msp430_obj; 
 extern msp430_obj *root;
 
-
-
+#define NETWORK_MODE 0x00
+#define CHAT_ACCEPT_MODE 0x01
+#define CHAT_MODE 0x02
 /* Parameterized "sleep" helper function */
 void sleep(unsigned int count) {
 	int i;
@@ -31,7 +32,7 @@ void interface_loop(void){
 	int found_id;
 	int array_size;
 	int quit;
-	__disable_interrupt();
+	
 	while(1){
 	// Get head of messages received
 	
@@ -56,7 +57,7 @@ void interface_loop(void){
 		}
 	}
 		// If id was found and state is in chat mode
-		if (found_id && root->state == 2){	
+		if (found_id && root->state == CHAT_MODE){	
 			uart_puts("Message From ID: ");
 			//char *id;
 			sprintf(id_str,"%d",root->ID);
@@ -93,15 +94,21 @@ void interface_loop(void){
 			}
 		// NETWORK STATE
 		}
-		else if (root->state == 0){
-			
-			uart_puts("Located ID: \n");
+		else if (root->state == NETWORK_MODE){
+			if(root->message!=NULL){
+				uart_puts(root->message);
+			}
+			/*uart_puts("Located ID: \n");
 
 			sprintf(id_str,"%d",root->ID);
 			uart_puts(id_str);
-			uart_puts("\n");
+			uart_puts("\n");*/
+			
+			//uart_puts("\nLooking for other MSP430s...\n");
+			sleep(5000000);
+			
 		}
-	__enable_interrupt();
+	
 	sleep(10000);
 	}//end program loop
 	

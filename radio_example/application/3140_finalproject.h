@@ -13,7 +13,10 @@
 /* Useful #defines */
 #define RED_SEND_LED 		0x01
 #define RED_RECEIVE_LED     0x01
-#define GREEN_LED   0x02
+#define GREEN_LED   		0x02
+#define NETWORK_MODE 		0x00
+#define CHAT_ACCEPT_MODE	0x01
+#define CHAT_MODE 			0x02
 #ifndef NULL
 #define NULL 0
 #endif

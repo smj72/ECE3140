@@ -22,6 +22,7 @@ msp430_obj *root;
 /* Settings taken from TI UART demo */ 
 void init_uart(void) {
 	msp430_obj *root_init = (msp430_obj*)malloc(sizeof(msp430_obj));
+	char *msg_init = (char*)malloc(sizeof(char));
 	BCSCTL1 = CALBC1_1MHZ;        /* Set DCO for 1 MHz */
 	DCOCTL  = CALDCO_1MHZ;
 	P3SEL = 0x30;                 /* P3.4,5 = USCI_A0 TXD/RXD */
@@ -36,15 +37,19 @@ void init_uart(void) {
 	
 	// Define Root parameters
 	root_init->ID = 100;
-	root_init->message = NULL;
+	msg_init = "\0";
+	root_init->message = msg_init;
+	//msg_init = "/empty/";
+	//root_init->message = NULL;
 	root_init->signal_next = NULL;
 	root_init->state = 0;
 	
 	root = root_init;
 	
-	__enable_interrupt();
+	//__enable_interrupt();
 //	set_msp430(*msp430_ptr);				//Initialize msp430 to this uart.
 	//__bis_SR_register(LPM3_bits + GIE);       /* Enter LPM3, interrupts enabled */
+	__bis_SR_register( GIE);
 }
 
 /*void set_msp430(msp430_obj msp430)
@@ -82,12 +87,17 @@ void uart_clear_screen(void) {
 __interrupt void USCI0RX_ISR(void)
 {
 	int i =0;
+	//if(index == 0){
+		//Clear buffer
+	//	memset(&out[0], 0, sizeof(out));
+	//}
+
 	// Grow a user input array with the characters received from user
 	out[index++] = UCA0RXBUF;
 	
 	// If carriage return process the array constructed
 	if (UCA0RXBUF == '\r'){
-		uart_puts("\r\nEntered:\n");
+		//uart_puts("\r\nEntered:\n");
 		i =0;
 		for(i;i<255;i++){
 			if (i<index){
@@ -99,14 +109,24 @@ __interrupt void USCI0RX_ISR(void)
 				root->message[i] = 0;
 			}
 		}
+		
+		root->message = another; 
+		uart_puts(root->message);
 		// Restart index to the beginning of the array
 		index = 0;
 		// Echo back the user input
-		uart_puts(&another[0]);
+		//uart_puts(&another[0]);
 		uart_putc('\n');
+		/*if(root->state == NETWORK_MODE){
+			root->message = another;
+		}*/
+		//Clear buffer
+		//memset(&out[0], 0, sizeof(out));
    // Overflow error, will only accept messages that are 255 characters long
 	}else if(index == 255){
 		uart_puts("\r\nThe limit is 255 characters, your entry has been restarted.\r\n");
+		//Clear buffer
+		//memset(&out[0], 0, sizeof(out));
 		i = 0;
 		// Clean buffer and restart at beginning of array
 		for(i;i<255;i++) {out[i]=0;}
