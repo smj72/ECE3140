@@ -1,4 +1,6 @@
 #include "3140_finalproject.h"
+#include<stdio.h>
+#include<string.h>
 
 typedef struct msp430_impl{
  	int ID;
@@ -23,10 +25,13 @@ void sleep(unsigned int count) {
 }
 
 int main(void){
+	char buffer[255] = {0};
+	char *id_str = (char*)malloc(sizeof(char));
+	//char *id_str = &buffer[0];
 	int found_id;
 	int array_size;
-	char *id_str;
 	int quit;
+	
 	
 	init_uart();
 	uart_clear_screen();
@@ -58,11 +63,12 @@ int main(void){
 				}
 			}
 		}
+	}
 		// If id was found and state is in chat mode
 		if (found_id && root->state == 2){	
 			uart_puts("Message From ID: ");
 			//char *id;
-			sprintf(id_str,"%i",root->ID);
+			snprintf(id_str,sizeof(root->ID),"%d",root->ID);
 			uart_puts(id_str);
 			uart_puts("\n");
 			uart_puts(head->message);
@@ -79,6 +85,7 @@ int main(void){
 				}
 			}
 			
+			
 			// If there was no quit message
 			if (!quit){
 				uart_puts("Respond To (enter id): ");
@@ -94,9 +101,12 @@ int main(void){
 				// SEND RADIO SIGNAL
 			}
 		// NETWORK STATE
-		}else if (root->state == 0){
+		}
+		else if (root->state == 0){
+			int mspID = root->ID;
 			uart_puts("Located ID: \n");
-			sprintf(id_str,"%i",root->ID);
+
+			sprintf(id_str,"%d",mspID);
 			uart_puts(id_str);
 			uart_puts("\n");
 		}
@@ -110,5 +120,4 @@ int main(void){
 
 	
 	return 0;
-}
 }

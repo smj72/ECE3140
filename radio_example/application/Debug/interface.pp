@@ -16,3 +16,6 @@ interface.obj: C:/Users/SAN/Dropbox/ECE\ 3140\ Embedded\ Systems/Workspace/final
 interface.obj: C:/Users/SAN/Dropbox/ECE\ 3140\ Embedded\ Systems/Workspace/final_radio/radio_example/application/../drivers/mrfi/mrfi_defs.h
 interface.obj: C:/Users/SAN/Dropbox/ECE\ 3140\ Embedded\ Systems/Workspace/final_radio/radio_example/application/../drivers/mrfi/radios/family1/mrfi_spi.h
 interface.obj: C:/Program\ Files\ (x86)/Texas\ Instruments/ccsv4/tools/compiler/msp430/include/string.h
+interface.obj: C:/Program\ Files\ (x86)/Texas\ Instruments/ccsv4/tools/compiler/msp430/include/stdio.h
+interface.obj: C:/Program\ Files\ (x86)/Texas\ Instruments/ccsv4/tools/compiler/msp430/include/stdarg.h
+interface.obj: C:/Program\ Files\ (x86)/Texas\ Instruments/ccsv4/tools/compiler/msp430/include/string.h

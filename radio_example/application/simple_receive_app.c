@@ -29,31 +29,7 @@ typedef struct msp430_impl{
 
 extern msp430_obj *root;
 
-/* Main function for receive application */
-/*void main(void) {
-	
-	
-	//Perform board-specific initialization 
-	BSP_Init();
-	
-	// Initialize minimal RF interface, wake up radio 
-	MRFI_Init();
-	MRFI_WakeUp();
-			
-	void receive_message();
-}*/
-
-/* Parameterized "sleep" helper function */
-/*void sleep(unsigned int count) {
-	int i;
-	for (i = 0; i < 10; i++) {
-		while(count > 0) {
-			count--;
-			__no_operation();
-		}
-	}
-}*/
-
+//Initialization for receiving messages
 void receive_message(void){
 	/* Filter setup return value: success or failure */
 	unsigned char status;
@@ -62,13 +38,7 @@ void receive_message(void){
 	 *   This should match the "destination" address of
 	 *   the packets sent by the transmitter. */
 	uint8_t address[] = {0x12,0x34,0xab,0xcd};
-	
-	
-	
-	
-	
-	
-	
+		
 	
 	/* Attempt to turn on address filtering
 	 *   If unsuccessful, turn on both LEDs and wait forever */
@@ -79,8 +49,7 @@ void receive_message(void){
 		while(1);
 	}
 		
-	/* Red and green LEDs are output, green starts on */
-	P1DIR = RED_RECEIVE_LED | GREEN_LED;
+	
 	P1OUT = GREEN_LED;
 	
 	/* Turn on the radio receiver */

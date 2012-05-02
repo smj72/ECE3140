@@ -27,39 +27,12 @@ typedef struct msp430_impl{
 
 extern msp430_obj *root;
 
-/* Main function for transmit application */
-/*void main(void) {
-	
-	//Perform board-specific initialization 
-	BSP_Init();
-	
-	//Initialize minimal RF interface, wake up radio 
-	MRFI_Init();
-	MRFI_WakeUp();
-	
-	
-	
-	send_message("ECE3140 rocks!\r\n");
-	
-}*/
 
-/* Parameterized "sleep" helper function */
-
-//There is a sleep in simple receive
-/*void sleep(unsigned int count) {
-	int i;
-	for (i = 0; i < 10; i++) {
-		while(count > 0) {
-			count--;
-			__no_operation();
-		}
-	}
-}*/
 
 void send_message (void){
 	/* Set red LED to output */
-	P1DIR = RED_SEND_LED;
-	P1OUT = RED_SEND_LED;
+	//P1DIR = RED_SEND_LED;
+	//P1OUT ^= RED_SEND_LED;
 	
 	__bis_SR_register(GIE);
 	/* Main (infinite) transmit loop */
