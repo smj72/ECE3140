@@ -23,27 +23,18 @@ void sleep(unsigned int count) {
 		}
 	}
 }
-
-int main(void){
-	char buffer[255] = {0};
+void interface_loop(void){
+	
+	//char buffer[10] = {0};
 	char *id_str = (char*)malloc(sizeof(char));
 	//char *id_str = &buffer[0];
 	int found_id;
 	int array_size;
 	int quit;
-	
-	
-	init_uart();
-	uart_clear_screen();
-	uart_puts("\nUart initiated for MSP430 Chat interface.\n");
-	
-	init_radio();
-	uart_puts("\nRadio established. \nCommunication with other radio devices enabled.\n");
-	
-	
-	
+	__disable_interrupt();
 	while(1){
 	// Get head of messages received
+	
 	msp430_obj* head = root->signal_next;
 	
 	// Pop off top message and print out the message
@@ -68,7 +59,7 @@ int main(void){
 		if (found_id && root->state == 2){	
 			uart_puts("Message From ID: ");
 			//char *id;
-			snprintf(id_str,sizeof(root->ID),"%d",root->ID);
+			sprintf(id_str,"%d",root->ID);
 			uart_puts(id_str);
 			uart_puts("\n");
 			uart_puts(head->message);
@@ -103,16 +94,60 @@ int main(void){
 		// NETWORK STATE
 		}
 		else if (root->state == 0){
-			int mspID = root->ID;
+			
 			uart_puts("Located ID: \n");
 
-			sprintf(id_str,"%d",mspID);
+			sprintf(id_str,"%d",root->ID);
 			uart_puts(id_str);
 			uart_puts("\n");
 		}
-	
-	
+	__enable_interrupt();
+	sleep(10000);
 	}//end program loop
+	
+}
+
+int main(void){
+	
+	WDTCTL = WDTPW + WDTHOLD;
+ 	P1DIR = 0x03;
+ 	P1OUT = 0x00;
+ 	
+ 	
+ 	
+ 	
+	
+	
+	init_uart();
+	uart_clear_screen();
+	uart_puts("\nUart initiated for MSP430 Chat interface.\n");
+	
+	//init_radio();
+	
+	BSP_Init();
+	
+	/* Initialize minimal RF interface, wake up radio */
+	MRFI_Init();
+	MRFI_WakeUp();
+	
+	
+	/* Perform board-specific initialization */
+	
+	receive_message();
+	
+			
+	
+	uart_puts("\nRadio initialized.\n");
+	
+	
+	uart_puts("\nStarting interface.\n");
+	
+	interface_loop();
+	
+	
+	
+	//process_start();
+
 	
 	
 	

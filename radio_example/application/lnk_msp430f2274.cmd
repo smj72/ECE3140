@@ -17,7 +17,7 @@
 /* you should set your linker options in Project Properties                   */
 /* -c                                               LINK USING C CONVENTIONS  */
 /* -stack  0x0100                                   SOFTWARE STACK SIZE       */
-/* -heap   0x0100                                   HEAP AREA SIZE            */
+/* -heap   0x0600                                   HEAP AREA SIZE            */
 
 /*----------------------------------------------------------------------------*/
 /* 'Allocate' peripheral registers at given addresses                         */

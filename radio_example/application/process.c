@@ -324,12 +324,12 @@ void process_start (void){
   
   // Set up timer B interrupt
   //TBCL0 = 0xFFFF; // Maximum value for Timer B counter (needed?)
-  TBCCR0 = 150;
+ /* TBCCR0 = 150;
   TBCCTL0 = CCIE; //enable interrupt in timer B register
   TBCTL=MC_1|ID_3|TBSSEL_2|TBCLR; //Use up mode , divide by 8, use SMCLK to divide, reset count enable
   //__disable_interrupt();
   
-  
+  */
   // Call process_begin() to start execution of concurrent processes
   process_begin();
 }

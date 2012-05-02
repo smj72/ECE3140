@@ -31,6 +31,7 @@ extern msp430_obj *root;
 
 //Initialization for receiving messages
 void receive_message(void){
+	
 	/* Filter setup return value: success or failure */
 	unsigned char status;
 	
@@ -38,7 +39,7 @@ void receive_message(void){
 	 *   This should match the "destination" address of
 	 *   the packets sent by the transmitter. */
 	uint8_t address[] = {0x12,0x34,0xab,0xcd};
-		
+	
 	
 	/* Attempt to turn on address filtering
 	 *   If unsuccessful, turn on both LEDs and wait forever */
@@ -50,17 +51,19 @@ void receive_message(void){
 	}
 		
 	
-	P1OUT = GREEN_LED;
+	
 	
 	/* Turn on the radio receiver */
 	MRFI_RxOn();
 	
 	/* Main loop just toggles the green LED with some delay */
 	__bis_SR_register(GIE);
-	while(1){
+	/*while(1){
+		__enable_interrupt();
 		sleep(60000);
 		P1OUT ^= GREEN_LED;
-	}
+	}*/
+	P1OUT = GREEN_LED;
 }
 
 

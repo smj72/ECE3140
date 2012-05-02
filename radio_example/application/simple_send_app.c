@@ -81,6 +81,7 @@ void send_message (void){
 		/* Toggle red LED after transmitting, then wait a while */
 		P1OUT ^= RED_SEND_LED;
 		sleep(60000);
+		P1OUT ^= RED_SEND_LED;
 	}
 }
 

@@ -44,16 +44,16 @@ int init_radio(void){
 	if (process_create (receive_message,10) < 0) {
 	 	return -1;
 	}
-	if(root->message !=NULL){
+	/*if(root->message !=NULL){
 		if (process_create (send_message,10) < 0) {
 	 	return -1;
 	}
 			
-	}
+	}*/
 	
 	
-	process_start();
-	P1OUT= 0x02;
+	//process_start();
+	//P1OUT= 0x02;
 	return 1;
 	
 }
