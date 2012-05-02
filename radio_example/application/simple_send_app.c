@@ -16,12 +16,12 @@
 void sleep(unsigned int count);
 
 /* Main function for transmit application */
-void main(void) {
+/*void main(void) {
 	
-	/* Perform board-specific initialization */
+	//Perform board-specific initialization 
 	BSP_Init();
 	
-	/* Initialize minimal RF interface, wake up radio */
+	//Initialize minimal RF interface, wake up radio 
 	MRFI_Init();
 	MRFI_WakeUp();
 	
@@ -29,9 +29,9 @@ void main(void) {
 	
 	send_message("ECE3140 rocks!\r\n");
 	
-}
+}*/
 
-void send_message (char[] msg){
+void send_message (msp430_obj msp430){
 	/* Set red LED to output */
 	P1DIR = RED_SEND_LED;
 	P1OUT = RED_SEND_LED;
@@ -48,7 +48,7 @@ void send_message (char[] msg){
 		 */
 		mrfiPacket_t 	packet;
 		//char msg[] = "ECE3140 rocks!\r\n"; 
-
+		char msg[] = *msp430.message;
 		/* First byte of packet frame holds message length in bytes */
 		packet.frame[0] = strlen(msg) + 8;	/* Includes 8-byte address header */
 		

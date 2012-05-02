@@ -5,12 +5,12 @@ char out[255];
 char another[255];
 msp430_obj my_msp430;
 
-typedef struct msp430_impl{
+/*typedef struct msp430_impl{
  	int ID;
- 	char message [255];
+ 	char *message;
  	msp430_obj *signal_next;
  	
- }msp430_obj;
+ }msp430_obj;*/
 
 /*------------------------------------------------------------------------
  * UART communication functions
@@ -30,9 +30,11 @@ void init_uart(msp430_obj *msp430_ptr) {
 	IE2 |= UCA0RXIE; 			  /* Enable USCI_A0 RX interrupt */
 	//IE1  |=  URXIE0;        	  //  Enable  USART0  RX  interrupt
 	
+	//__enable_interrupt();
+	set_msp430(*msp430_ptr);				//Initialize msp430 to this uart.
 	__bis_SR_register(LPM3_bits + GIE);       /* Enter LPM3, interrupts enabled */
 	
-	set_msp430(*msp430_ptr);				//Initialize msp430 to this uart.
+	
 }
 
 void set_msp430(msp430_obj msp430)
@@ -69,35 +71,39 @@ void uart_clear_screen(void) {
 #pragma vector=USCIAB0RX_VECTOR
 __interrupt void USCI0RX_ISR(void)
 {
-	uart_putc(UCA0RXBUF);
-	
 	int i =0;
+	//uart_putc(UCA0RXBUF);
+	
+	
 	out[index++] = UCA0RXBUF;
 	//clears out the rest after end
 	if (UCA0RXBUF == '\r'){
 		uart_puts("\r\nEntered:\n");
-		//i =0;
-		for(int i=0;i<255;i++){
+		i =0;
+		for(i;i<255;i++){
 			if (i<index){
 				another[i] = out[i];
+				my_msp430.message[i] = out[i];
 			}else{
 				another[i] = 0;
 				out[i] = 0;
+				my_msp430.message[i] = 0;
 			}
 		}
 		index = 0;
-		my_msp430.message = another;
+		
 		uart_puts(&another[0]);
 		uart_putc('\n');
+		
 	}else if(index == 255){
 		uart_puts("\r\nThe limit is 255 characters, your entry has been restarted.\r\n");
-		//i = 0;
-		for(int i = 0;i<255;i++) {out[i]=0;}
+		i = 0;
+		for(i;i<255;i++) {out[i]=0;}
 		index = 0;
 	}
-	else{
+	/*else{
 		uart_puts("Proper radio message not received");
-	}
+	}*/
 }
 
 /*//Interrupt for receiving uart input
@@ -121,14 +127,22 @@ void MRFI_RxCompleteISR(void) {
  * */
 }
 ///*
-int main (void) {
+/*int main (void) {
+	msp430_obj *dummy = (msp430_obj*)malloc(sizeof(msp430_obj));
+	char *dummy_msg = (char*)malloc(sizeof(char));
 	WDTCTL = WDTPW + WDTHOLD;
  	P1DIR = 0x03;
  	P1OUT = 0x00;
- 	init_uart(NULL);	
+ 	
+ 	
+ 	dummy->ID = 1;
+ 	dummy->message = dummy_msg;
+ 	dummy->signal_next = NULL;
+ 	
+ 	init_uart(dummy);	
  	uart_clear_screen();
  	
  	while (1) ;
  	return 0;
-}
+}*/
 //*/

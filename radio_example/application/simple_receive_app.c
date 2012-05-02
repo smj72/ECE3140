@@ -19,18 +19,18 @@ void sleep(unsigned int count);
 msp430_obj my_msp430 = NULL;
 
 /* Main function for receive application */
-void main(void) {
+/*void main(void) {
 	
 	
-	/* Perform board-specific initialization */
+	//Perform board-specific initialization 
 	BSP_Init();
 	
-	/* Initialize minimal RF interface, wake up radio */
+	// Initialize minimal RF interface, wake up radio 
 	MRFI_Init();
 	MRFI_WakeUp();
 			
 	void receive_message();
-}
+}*/
 
 void receive_message(msp430_obj msp430){
 	
