@@ -34,9 +34,9 @@ void send_message (void){
 	//P1DIR = RED_SEND_LED;
 	//P1OUT ^= RED_SEND_LED;
 	
-	__bis_SR_register(GIE);
+	
 	/* Main (infinite) transmit loop */
-	while(1){
+	//while(1){
 		int i = 0;
 		/* Construct a packet to send over the radio.
 		 * 
@@ -46,6 +46,12 @@ void send_message (void){
 		 *  ---------------------------------------------------
 		 */
 		mrfiPacket_t 	packet;
+		
+		//clear packet
+		for(i;i<sizeof(packet.frame);i++){
+			packet.frame[i]=0;
+		}
+		
 		//char msg[] = "ECE3140 rocks!\r\n"; 
 		//char msg[] = *msp430.message;
 		/* First byte of packet frame holds message length in bytes */
@@ -63,16 +69,13 @@ void send_message (void){
 		packet.frame[8] = 0x02;
 		
 		//Frame 9 for input ID, frame 10 for wanted ID
-		packet.frame[9] = root->ID;
+		packet.frame[9] = root->ID
 		
-		//Frames 10-30? for chat IDs
-		for(i;i<sizeof(root->chat_IDs);i++)
-		{
-			packet.frame[9+i] = root->chat_IDs[i];
-		}
+		packet.frame[10] = root->chat_IDs[0];
+		
 		
 		/* Remaining bytes are the message/data payload */
-		strcpy( (char *) &packet.frame[i+9] , root->message );
+		strcpy( (char *) &packet.frame[11] , root->message );
 		
 		
 		/* Transmit the packet over the radio */
@@ -82,7 +85,7 @@ void send_message (void){
 		P1OUT ^= RED_SEND_LED;
 		sleep(60000);
 		P1OUT ^= RED_SEND_LED;
-	}
+	//}
 }
 
 

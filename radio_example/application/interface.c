@@ -95,8 +95,10 @@ void interface_loop(void){
 		// NETWORK STATE
 		}
 		else if (root->state == NETWORK_MODE){
-			if(root->message!=NULL){
+			if(root->message!=NULL&& strcmp (root->message,"\0") != 0){
 				uart_puts(root->message);
+				send_message();
+				root->message = "\0";
 			}
 			/*uart_puts("Located ID: \n");
 

@@ -23,6 +23,7 @@ msp430_obj *root;
 void init_uart(void) {
 	msp430_obj *root_init = (msp430_obj*)malloc(sizeof(msp430_obj));
 	char *msg_init = (char*)malloc(sizeof(char));
+	int i = 0;
 	BCSCTL1 = CALBC1_1MHZ;        /* Set DCO for 1 MHz */
 	DCOCTL  = CALDCO_1MHZ;
 	P3SEL = 0x30;                 /* P3.4,5 = USCI_A0 TXD/RXD */
@@ -36,9 +37,13 @@ void init_uart(void) {
 	//extern msp430_obj *root;
 	
 	// Define Root parameters
-	root_init->ID = 100;
+	root_init->ID = 5;
 	msg_init = "\0";
 	root_init->message = msg_init;
+	for(i;i<sizeof(root->chat_IDs);i++){
+	
+		root_init->chat_IDs[i] = 0;
+	}
 	//msg_init = "/empty/";
 	//root_init->message = NULL;
 	root_init->signal_next = NULL;
@@ -111,7 +116,7 @@ __interrupt void USCI0RX_ISR(void)
 		}
 		
 		root->message = another; 
-		uart_puts(root->message);
+		
 		// Restart index to the beginning of the array
 		index = 0;
 		// Echo back the user input
