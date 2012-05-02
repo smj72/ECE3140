@@ -42,9 +42,9 @@ void init_uart(void) {
 	
 	root = root_init;
 	
-	//__enable_interrupt();
+	__enable_interrupt();
 //	set_msp430(*msp430_ptr);				//Initialize msp430 to this uart.
-	__bis_SR_register(LPM3_bits + GIE);       /* Enter LPM3, interrupts enabled */
+	//__bis_SR_register(LPM3_bits + GIE);       /* Enter LPM3, interrupts enabled */
 }
 
 /*void set_msp430(msp430_obj msp430)

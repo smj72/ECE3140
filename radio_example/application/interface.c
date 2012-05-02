@@ -30,10 +30,10 @@ int main(void){
 	
 	init_uart();
 	uart_clear_screen();
-	uart_puts("Uart initiated for MSP430 Chat interface.\n");
+	uart_puts("\nUart initiated for MSP430 Chat interface.\n");
 	
 	init_radio();
-	uart_puts("Radio established. Communication with other radio devices enabled.\n");
+	uart_puts("\nRadio established. \nCommunication with other radio devices enabled.\n");
 	
 	
 	

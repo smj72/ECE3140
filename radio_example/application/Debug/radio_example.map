@@ -1,10 +1,10 @@
 ******************************************************************************
        MSP430 Evaluation Linker PC v3.2.1                      
 ******************************************************************************
->> Linked Wed May 02 11:00:57 2012
+>> Linked Wed May 02 11:33:38 2012
 
 OUTPUT FILE NAME:   <radio_example.out>
-ENTRY POINT SYMBOL: "_c_int00"  address: 0000a304
+ENTRY POINT SYMBOL: "_c_int00"  address: 0000abc2
 
 
 MEMORY CONFIGURATION
@@ -19,7 +19,7 @@ MEMORY CONFIGURATION
   INFOC                 00001040   00000040  00000000  00000040  RWIX
   INFOB                 00001080   00000040  00000000  00000040  RWIX
   INFOA                 000010c0   00000040  00000000  00000040  RWIX
-  FLASH                 00008000   00007fde  0000271c  000058c2  RWIX
+  FLASH                 00008000   00007fde  00003193  00004e4b  RWIX
   INT00                 0000ffe0   00000002  00000000  00000002  RWIX
   INT01                 0000ffe2   00000002  00000000  00000002  RWIX
   INT02                 0000ffe4   00000002  00000000  00000002  RWIX
@@ -63,98 +63,133 @@ section   page    origin      length       input sections
                   000005b0    00000002     rts430.lib : boot.obj (.stack)
                   000005b2    0000004e     --HOLE--
 
-.text      0    00008000    000024c8     
+.text      0    00008000    00002e8a     
                   00008000    000003ce     process.obj (.text:process_select)
                   000083ce    00000216     rts430.lib : _printfi.obj (.text:_setfield)
-                  000085e4    000001b6                : _printfi.obj (.text:_printfi)
-                  0000879a    0000017c     interface.obj (.text:main)
-                  00008916    00000168     rts430.lib : _printfi.obj (.text:ecvt)
-                  00008a7e    00000160                : _printfi.obj (.text:fcvt)
-                  00008bde    00000154                : _printfi.obj (.text:_pconv_e)
-                  00008d32    00000118                : fs_add.obj (.text)
-                  00008e4a    00000102                : _printfi.obj (.text:_pconv_g)
-                  00008f4c    00000100                : _printfi.obj (.text:_getarg_diouxp)
-                  0000904c    000000fe     process.obj (.text:TBC_ISR)
-                  0000914a    000000fe     rts430.lib : _printfi.obj (.text:_pproc_fwp)
-                  00009248    000000f2                : _printfi.obj (.text:_pproc_diouxp)
-                  0000933a    000000ea     mrfi.obj (.text:Mrfi_SyncPinRxIsr)
-                  00009424    000000de     uart.obj (.text:USCI0RX_ISR)
-                  00009502    000000ac     rts430.lib : _printfi.obj (.text:_pproc_str)
-                  000095ae    000000ac     mrfi.obj (.text:spiBurstFifoAccess)
-                  0000965a    000000aa     rts430.lib : fs_mpy.obj (.text)
-                  00009704    000000a8                : memory.obj (.text:malloc)
-                  000097ac    0000009a                : fs_div.obj (.text)
-                  00009846    00000096                : _printfi.obj (.text:_ltostr)
-                  000098dc    00000090                : _printfi.obj (.text:_mcpy)
-                  0000996c    00000086                : _printfi.obj (.text:_pproc_fge)
-                  000099f2    00000084                : ltoa.obj (.text:ltoa)
-                  00009a76    00000080                : memory.obj (.text:free)
-                  00009af6    0000007e                : fs_tol.obj (.text)
-                  00009b74    0000007a                : _printfi.obj (.text:_ecpy)
-                  00009bee    00000074                : _printfi.obj (.text:_pconv_f)
-                  00009c62    00000070     mrfi.obj (.text:MRFI_RxAddrIsFiltered)
-                  00009cd2    0000006e     rts430.lib : lsr32.obj (.text)
-                  00009d40    0000005e     mrfi.obj (.text:spiRegAccess)
-                  00009d9e    0000005c     3140.obj (.text)
-                  00009dfa    0000005c     mrfi.obj (.text:mrfiSpiCmdStrobe)
-                  00009e56    00000058     rts430.lib : div32u.obj (.text)
-                  00009eae    00000054                : atoi.obj (.text:atoi)
-                  00009f02    0000004e                : _printfi.obj (.text:_fcpy)
-                  00009f50    0000004e                : asr32.obj (.text)
-                  00009f9e    0000004c     mrfi.obj (.text:Mrfi_CalculateRssi)
-                  00009fea    0000004c     rts430.lib : lsr16.obj (.text)
-                  0000a036    0000004a                : fs_cmp.obj (.text)
-                  0000a080    0000004a                : fs_ltof.obj (.text)
-                  0000a0ca    00000046                : autoinit.obj (.text:_auto_init)
-                  0000a110    00000046                : fs_tou.obj (.text)
-                  0000a156    00000044                : _printfi.obj (.text:_pproc_fflags)
-                  0000a19a    00000040                : div32s.obj (.text)
-                  0000a1da    0000003a                : memory.obj (.text:minit)
-                  0000a214    00000038                : sprintf.obj (.text:sprintf)
-                  0000a24c    00000034                : _printfi.obj (.text:_div)
-                  0000a280    00000030     uart.obj (.text:uart_puts)
-                  0000a2b0    0000002c     rts430.lib : div16s.obj (.text)
-                  0000a2dc    00000028                : memccpy.obj (.text:memccpy)
-                  0000a304    00000026                : boot.obj (.text:_c_int00_noexit)
-                  0000a32a    00000026     mrfi.obj (.text:mrfiSpiReadReg)
-                  0000a350    00000026     rts430.lib : mult32.obj (.text)
-                  0000a376    0000001c     mrfi.obj (.text:MRFI_GpioIsr)
-                  0000a392    0000001c     mrfi.obj (.text:mrfiSpiReadRxFifo)
-                  0000a3ae    0000001a     mrfi.obj (.text:BSP_GpioPort1Isr)
-                  0000a3c8    0000001a     rts430.lib : sprintf.obj (.text:_outs)
-                  0000a3e2    00000016     mrfi.obj (.text:MRFI_Receive)
-                  0000a3f8    00000016     rts430.lib : div16u.obj (.text)
-                  0000a40e    00000014     simple_receive_app.obj (.text:MRFI_RxCompleteISR)
-                  0000a422    00000014     rts430.lib : memset.obj (.text:memset)
-                  0000a436    00000014                : mult16.obj (.text)
-                  0000a44a    00000014     uart.obj (.text:uart_putc)
-                  0000a45e    00000012     rts430.lib : sprintf.obj (.text:_outc)
-                  0000a470    00000012                : memcpy.obj (.text:memcpy)
-                  0000a482    00000012                : strlen.obj (.text:strlen)
-                  0000a494    00000010                : epilog.obj (.text)
-                  0000a4a4    0000000a     bsp.obj (.text:_system_pre_init)
-                  0000a4ae    0000000a     rts430.lib : abs.obj (.text:abs)
-                  0000a4b8    0000000a                : fs_neg.obj (.text)
-                  0000a4c2    00000004                : exit.obj (.text:abort)
-                  0000a4c6    00000002                : _lock.obj (.text:_nop)
+                  000085e4    00000200     mrfi.obj (.text:MRFI_Init)
+                  000087e4    000001b6     rts430.lib : _printfi.obj (.text:_printfi)
+                  0000899a    00000198     interface.obj (.text:main)
+                  00008b32    00000168     rts430.lib : _printfi.obj (.text:ecvt)
+                  00008c9a    00000160                : _printfi.obj (.text:fcvt)
+                  00008dfa    00000154                : _printfi.obj (.text:_pconv_e)
+                  00008f4e    0000011e     mrfi.obj (.text:MRFI_Transmit)
+                  0000906c    00000118     rts430.lib : fs_add.obj (.text)
+                  00009184    00000102                : _printfi.obj (.text:_pconv_g)
+                  00009286    00000100                : _printfi.obj (.text:_getarg_diouxp)
+                  00009386    000000fe     process.obj (.text:TBC_ISR)
+                  00009484    000000fe     rts430.lib : _printfi.obj (.text:_pproc_fwp)
+                  00009582    000000f2                : _printfi.obj (.text:_pproc_diouxp)
+                  00009674    000000ea     mrfi.obj (.text:Mrfi_SyncPinRxIsr)
+                  0000975e    000000de     uart.obj (.text:USCI0RX_ISR)
+                  0000983c    000000b2     simple_send_app.obj (.text:send_message)
+                  000098ee    000000ac     rts430.lib : _printfi.obj (.text:_pproc_str)
+                  0000999a    000000ac     mrfi.obj (.text:spiBurstFifoAccess)
+                  00009a46    000000aa     rts430.lib : fs_mpy.obj (.text)
+                  00009af0    000000a8                : memory.obj (.text:malloc)
+                  00009b98    0000009a                : fs_div.obj (.text)
+                  00009c32    00000096                : _printfi.obj (.text:_ltostr)
+                  00009cc8    00000094     3140_concur.obj (.text:process_init)
+                  00009d5c    00000090     rts430.lib : _printfi.obj (.text:_mcpy)
+                  00009dec    00000086                : _printfi.obj (.text:_pproc_fge)
+                  00009e72    00000084                : ltoa.obj (.text:ltoa)
+                  00009ef6    00000084     process.obj (.text:process_create)
+                  00009f7a    00000080     rts430.lib : memory.obj (.text:free)
+                  00009ffa    0000007e                : fs_tol.obj (.text)
+                  0000a078    0000007a                : _printfi.obj (.text:_ecpy)
+                  0000a0f2    00000074                : _printfi.obj (.text:_pconv_f)
+                  0000a166    00000070     mrfi.obj (.text:MRFI_RxAddrIsFiltered)
+                  0000a1d6    0000006e     rts430.lib : lsr32.obj (.text)
+                  0000a244    0000005e     uart.obj (.text:init_uart)
+                  0000a2a2    0000005e     mrfi.obj (.text:spiRegAccess)
+                  0000a300    0000005c     3140.obj (.text)
+                  0000a35c    0000005c     mrfi.obj (.text:mrfiSpiCmdStrobe)
+                  0000a3b8    0000005a     radio.obj (.text:init_radio)
+                  0000a412    00000058     rts430.lib : div32u.obj (.text)
+                  0000a46a    00000054     mrfi.obj (.text:MRFI_WakeUp)
+                  0000a4be    00000054     rts430.lib : atoi.obj (.text:atoi)
+                  0000a512    0000004e                : _printfi.obj (.text:_fcpy)
+                  0000a560    0000004e                : asr32.obj (.text)
+                  0000a5ae    0000004c     mrfi.obj (.text:Mrfi_CalculateRssi)
+                  0000a5fa    0000004c     simple_receive_app.obj (.text:receive_message)
+                  0000a646    0000004c     rts430.lib : lsr16.obj (.text)
+                  0000a692    0000004a                : fs_cmp.obj (.text)
+                  0000a6dc    0000004a                : fs_ltof.obj (.text)
+                  0000a726    00000046                : autoinit.obj (.text:_auto_init)
+                  0000a76c    00000046                : fs_tou.obj (.text)
+                  0000a7b2    00000044                : _printfi.obj (.text:_pproc_fflags)
+                  0000a7f6    00000042     mrfi.obj (.text:MRFI_SetRxAddrFilter)
+                  0000a838    00000040     mrfi.obj (.text:Mrfi_DelayUsec)
+                  0000a878    00000040     rts430.lib : div32s.obj (.text)
+                  0000a8b8    0000003a                : memory.obj (.text:minit)
+                  0000a8f2    00000038                : sprintf.obj (.text:sprintf)
+                  0000a92a    00000036     mrfi.obj (.text:MRFI_SetRFPwr)
+                  0000a960    00000034     mrfi.obj (.text:MRFI_SetLogicalChannel)
+                  0000a994    00000034     rts430.lib : _printfi.obj (.text:_div)
+                  0000a9c8    00000034     mrfi.obj (.text:mrfiSpiInit)
+                  0000a9fc    00000034     interface.obj (.text:sleep)
+                  0000aa30    00000032     process.obj (.text:process_start)
+                  0000aa62    00000030     bsp.obj (.text:BSP_Init)
+                  0000aa92    00000030     uart.obj (.text:uart_puts)
+                  0000aac2    0000002c     mrfi.obj (.text:Mrfi_RandomBackoffDelay)
+                  0000aaee    0000002c     mrfi.obj (.text:Mrfi_RxModeOff)
+                  0000ab1a    0000002c     mrfi.obj (.text:mrfiSpiWriteReg)
+                  0000ab46    0000002c     rts430.lib : div16s.obj (.text)
+                  0000ab72    00000028     bsp.obj (.text:BSP_Delay)
+                  0000ab9a    00000028     rts430.lib : memccpy.obj (.text:memccpy)
+                  0000abc2    00000026                : boot.obj (.text:_c_int00_noexit)
+                  0000abe8    00000026     mrfi.obj (.text:mrfiSpiReadReg)
+                  0000ac0e    00000026     rts430.lib : mult32.obj (.text)
+                  0000ac34    00000022     uart.obj (.text:uart_clear_screen)
+                  0000ac56    00000020     mrfi.obj (.text:MRFI_EnableRxAddrFilter)
+                  0000ac76    00000020     mrfi.obj (.text:MRFI_RxOn)
+                  0000ac96    0000001e     mrfi.obj (.text:mrfiSpiWriteTxFifo)
+                  0000acb4    0000001c     bsp.obj (.text:BSP_InitBoard)
+                  0000acd0    0000001c     mrfi.obj (.text:MRFI_GpioIsr)
+                  0000acec    0000001c     mrfi.obj (.text:mrfiSpiReadRxFifo)
+                  0000ad08    0000001a     mrfi.obj (.text:BSP_GpioPort1Isr)
+                  0000ad22    0000001a     rts430.lib : sprintf.obj (.text:_outs)
+                  0000ad3c    00000016     mrfi.obj (.text:MRFI_RandomByte)
+                  0000ad52    00000016     mrfi.obj (.text:MRFI_Receive)
+                  0000ad68    00000016     mrfi.obj (.text:Mrfi_RxModeOn)
+                  0000ad7e    00000016     rts430.lib : div16u.obj (.text)
+                  0000ad94    00000016                : strcpy.obj (.text:strcpy)
+                  0000adaa    00000014     simple_receive_app.obj (.text:MRFI_RxCompleteISR)
+                  0000adbe    00000014     rts430.lib : memset.obj (.text:memset)
+                  0000add2    00000014                : mult16.obj (.text)
+                  0000ade6    00000014     uart.obj (.text:uart_putc)
+                  0000adfa    00000012     bsp.obj (.text:BSP_InitLeds)
+                  0000ae0c    00000012     rts430.lib : sprintf.obj (.text:_outc)
+                  0000ae1e    00000012                : memcpy.obj (.text:memcpy)
+                  0000ae30    00000012                : strlen.obj (.text:strlen)
+                  0000ae42    00000010                : epilog.obj (.text)
+                  0000ae52    0000000a     bsp.obj (.text:BSP_InitButtons)
+                  0000ae5c    0000000a     bsp.obj (.text:BSP_InitDrivers)
+                  0000ae66    0000000a     bsp.obj (.text:_system_pre_init)
+                  0000ae70    0000000a     rts430.lib : abs.obj (.text:abs)
+                  0000ae7a    0000000a                : fs_neg.obj (.text)
+                  0000ae84    00000004                : exit.obj (.text:abort)
+                  0000ae88    00000002                : _lock.obj (.text:_nop)
 
-.const     0    0000a4c8    000001d6     
-                  0000a4c8    00000101     rts430.lib : ctype.obj (.const:_ctypes_)
-                  0000a5c9    00000001     --HOLE-- [fill = 0]
-                  0000a5ca    00000056     interface.obj (.const:.string)
-                  0000a620    00000056     uart.obj (.const:.string)
-                  0000a676    00000024     rts430.lib : _printfi.obj (.const:.string)
-                  0000a69a    00000004     mrfi.obj (.const:mrfiBroadcastAddr)
+.const     0    0000ae8a    0000028d     
+                  0000ae8a    00000101     rts430.lib : ctype.obj (.const:_ctypes_)
+                  0000af8b    00000001     --HOLE-- [fill = 0]
+                  0000af8c    000000c6     interface.obj (.const:.string)
+                  0000b052    00000056     uart.obj (.const:.string)
+                  0000b0a8    0000003c     mrfi.obj (.const:mrfiRadioCfg)
+                  0000b0e4    00000024     rts430.lib : _printfi.obj (.const:.string)
+                  0000b108    00000004     simple_receive_app.obj (.const:$P$T0$1)
+                  0000b10c    00000004     mrfi.obj (.const:mrfiBroadcastAddr)
+                  0000b110    00000004     mrfi.obj (.const:mrfiLogicalChanTable)
+                  0000b114    00000003     mrfi.obj (.const:mrfiRFPowerTable)
 
-.cinit     0    0000a69e    0000007e     
-                  0000a69e    00000036     process.obj (.cinit)
-                  0000a6d4    0000002f     mrfi.obj (.cinit)
-                  0000a703    00000001     --HOLE-- [fill = 0]
-                  0000a704    00000006     radio.obj (.cinit)
-                  0000a70a    00000006     rts430.lib : memory.obj (.cinit)
-                  0000a710    00000006     uart.obj (.cinit)
-                  0000a716    00000002     --HOLE-- [fill = 0]
-                  0000a718    00000004     (.pad.cinit) [fill = 0]
+.cinit     0    0000b118    0000007c     
+                  0000b118    00000036     process.obj (.cinit)
+                  0000b14e    0000002f     mrfi.obj (.cinit)
+                  0000b17d    00000001     --HOLE-- [fill = 0]
+                  0000b17e    00000006     radio.obj (.cinit)
+                  0000b184    00000006     rts430.lib : memory.obj (.cinit)
+                  0000b18a    00000006     uart.obj (.cinit)
+                  0000b190    00000004     --HOLE-- [fill = 0]
 
 .int03     0    0000ffe6    00000002     
                   0000ffe6    00000002     mrfi.obj (.int03)
@@ -189,8 +224,14 @@ address    name
 00000057   BCSCTL1
 00000058   BCSCTL2
 00000053   BCSCTL3
-0000a3ae   BSP_GpioPort1Isr
-0000a4c2   C$$EXIT
+0000ab72   BSP_Delay
+0000ad08   BSP_GpioPort1Isr
+0000aa62   BSP_Init
+0000acb4   BSP_InitBoard
+0000ae52   BSP_InitButtons
+0000ae5c   BSP_InitDrivers
+0000adfa   BSP_InitLeds
+0000ae84   C$$EXIT
 000010fb   CALBC1_12MHZ
 000010f9   CALBC1_16MHZ
 000010ff   CALBC1_1MHZ
@@ -207,58 +248,67 @@ address    name
 00000001   IE2
 00000002   IFG1
 00000003   IFG2
-00009fea   I_LSR
-0000a030   I_LSR_1
-0000a00c   I_LSR_10
-0000a008   I_LSR_11
-0000a004   I_LSR_12
-0000a000   I_LSR_13
-00009ffc   I_LSR_14
-00009ff8   I_LSR_15
-0000a02c   I_LSR_2
-0000a028   I_LSR_3
-0000a024   I_LSR_4
-0000a020   I_LSR_5
-0000a01c   I_LSR_6
-0000a018   I_LSR_7
-0000a014   I_LSR_8
-0000a010   I_LSR_9
-00009f50   L_ASR
-00009f98   L_ASR_1
-00009f74   L_ASR_10
-00009f70   L_ASR_11
-00009f6c   L_ASR_12
-00009f68   L_ASR_13
-00009f64   L_ASR_14
-00009f60   L_ASR_15
-00009f94   L_ASR_2
-00009f90   L_ASR_3
-00009f8c   L_ASR_4
-00009f88   L_ASR_5
-00009f84   L_ASR_6
-00009f80   L_ASR_7
-00009f7c   L_ASR_8
-00009f78   L_ASR_9
-00009cd2   L_LSR
-00009d38   L_LSR_1
-00009d02   L_LSR_10
-00009cfc   L_LSR_11
-00009cf6   L_LSR_12
-00009cf0   L_LSR_13
-00009cea   L_LSR_14
-00009ce4   L_LSR_15
-00009d32   L_LSR_2
-00009d2c   L_LSR_3
-00009d26   L_LSR_4
-00009d20   L_LSR_5
-00009d1a   L_LSR_6
-00009d14   L_LSR_7
-00009d0e   L_LSR_8
-00009d08   L_LSR_9
-0000a376   MRFI_GpioIsr
-0000a3e2   MRFI_Receive
-00009c62   MRFI_RxAddrIsFiltered
-0000a40e   MRFI_RxCompleteISR
+0000a646   I_LSR
+0000a68c   I_LSR_1
+0000a668   I_LSR_10
+0000a664   I_LSR_11
+0000a660   I_LSR_12
+0000a65c   I_LSR_13
+0000a658   I_LSR_14
+0000a654   I_LSR_15
+0000a688   I_LSR_2
+0000a684   I_LSR_3
+0000a680   I_LSR_4
+0000a67c   I_LSR_5
+0000a678   I_LSR_6
+0000a674   I_LSR_7
+0000a670   I_LSR_8
+0000a66c   I_LSR_9
+0000a560   L_ASR
+0000a5a8   L_ASR_1
+0000a584   L_ASR_10
+0000a580   L_ASR_11
+0000a57c   L_ASR_12
+0000a578   L_ASR_13
+0000a574   L_ASR_14
+0000a570   L_ASR_15
+0000a5a4   L_ASR_2
+0000a5a0   L_ASR_3
+0000a59c   L_ASR_4
+0000a598   L_ASR_5
+0000a594   L_ASR_6
+0000a590   L_ASR_7
+0000a58c   L_ASR_8
+0000a588   L_ASR_9
+0000a1d6   L_LSR
+0000a23c   L_LSR_1
+0000a206   L_LSR_10
+0000a200   L_LSR_11
+0000a1fa   L_LSR_12
+0000a1f4   L_LSR_13
+0000a1ee   L_LSR_14
+0000a1e8   L_LSR_15
+0000a236   L_LSR_2
+0000a230   L_LSR_3
+0000a22a   L_LSR_4
+0000a224   L_LSR_5
+0000a21e   L_LSR_6
+0000a218   L_LSR_7
+0000a212   L_LSR_8
+0000a20c   L_LSR_9
+0000ac56   MRFI_EnableRxAddrFilter
+0000acd0   MRFI_GpioIsr
+000085e4   MRFI_Init
+0000ad3c   MRFI_RandomByte
+0000ad52   MRFI_Receive
+0000a166   MRFI_RxAddrIsFiltered
+0000adaa   MRFI_RxCompleteISR
+0000ac76   MRFI_RxOn
+0000a960   MRFI_SetLogicalChannel
+0000a92a   MRFI_SetRFPwr
+0000a7f6   MRFI_SetRxAddrFilter
+00008f4e   MRFI_Transmit
+0000a46a   MRFI_WakeUp
 000000c0   OA0CTL0
 000000c1   OA0CTL1
 000000c2   OA1CTL0
@@ -305,7 +355,7 @@ address    name
 00000184   TBCCTL1
 00000186   TBCCTL2
 00000180   TBCTL
-0000904c   TBC_ISR
+00009386   TBC_ISR
 0000011e   TBIV
 00000190   TBR
 0000005d   UCA0ABCTL
@@ -329,7 +379,7 @@ address    name
 0000006e   UCB0RXBUF
 0000006d   UCB0STAT
 0000006f   UCB0TXBUF
-00009424   USCI0RX_ISR
+0000975e   USCI0RX_ISR
 00000120   WDTCTL
 00000600   __STACK_END
 00000050   __STACK_SIZE
@@ -340,93 +390,106 @@ address    name
 ffffffff   __binit__
 00000200   __bss__
 ffffffff   __c_args__
-0000a69e   __cinit__
-0000a2b0   __divi
-0000a19a   __divli
-0000a3f8   __divu
-00009e56   __divul
+0000b118   __cinit__
+0000ab46   __divi
+0000a878   __divli
+0000ad7e   __divu
+0000a412   __divul
 0000045e   __end__
-0000a4c8   __etext__
-00008d38   __fs_add
-0000a036   __fs_cmp
-000097ac   __fs_div
-0000a080   __fs_ltof
-0000965a   __fs_mpy
-0000a4b8   __fs_neg
-00008d32   __fs_sub
-00009af6   __fs_tol
-0000a110   __fs_tou
-0000a436   __mpyi
-0000a350   __mpyl
+0000ae8a   __etext__
+00009072   __fs_add
+0000a692   __fs_cmp
+00009b98   __fs_div
+0000a6dc   __fs_ltof
+00009a46   __fs_mpy
+0000ae7a   __fs_neg
+0000906c   __fs_sub
+00009ffa   __fs_tol
+0000a76c   __fs_tou
+0000add2   __mpyi
+0000ac0e   __mpyl
 ffffffff   __pinit__
-0000a2b0   __remi
-0000a19a   __remli
-0000a3f8   __remu
-00009e56   __remul
+0000ab46   __remi
+0000a878   __remli
+0000ad7e   __remu
+0000a412   __remul
 00008000   __text__
-0000a0ca   _auto_init
-0000a304   _c_int00
-0000a304   _c_int00_noexit
+0000a726   _auto_init
+0000abc2   _c_int00
+0000abc2   _c_int00_noexit
 00000458   _cleanup_ptr
-0000a4c8   _ctypes_
+0000ae8a   _ctypes_
 0000045a   _dtors_ptr
 00000454   _lock
-0000a4c6   _nop
-000085e4   _printfi
+0000ae88   _nop
+000087e4   _printfi
 0000fffe   _reset_vector
 000005b0   _stack
 00000460   _sys_memory
-0000a4a4   _system_pre_init
+0000ae66   _system_pre_init
 00000456   _unlock
-0000a4c2   abort
-0000a4ae   abs
+0000ae84   abort
+0000ae70   abs
 00000444   add_realtime
 00000302   another
-00009eae   atoi
+0000a4be   atoi
 ffffffff   binit
-0000a69e   cinit
+0000b118   cinit
 00000432   current_process
 0000043c   current_time
 0000045e   end
-0000a4c8   etext
-00009a76   free
-0000a4a0   func_epilog_1
-0000a49e   func_epilog_2
-0000a49c   func_epilog_3
-0000a49a   func_epilog_4
-0000a498   func_epilog_5
-0000a496   func_epilog_6
-0000a494   func_epilog_7
+0000ae8a   etext
+00009f7a   free
+0000ae4e   func_epilog_1
+0000ae4c   func_epilog_2
+0000ae4a   func_epilog_3
+0000ae48   func_epilog_4
+0000ae46   func_epilog_5
+0000ae44   func_epilog_6
+0000ae42   func_epilog_7
 00000434   head
 00000436   holder
 00000200   index
+0000a3b8   init_radio
+0000a244   init_uart
 00000450   l
-000099f2   ltoa
-0000879a   main
-00009704   malloc
-0000a2dc   memccpy
-0000a470   memcpy
-0000a422   memset
-0000a1da   minit
-0000a69a   mrfiBroadcastAddr
-00009dfa   mrfiSpiCmdStrobe
-0000a32a   mrfiSpiReadReg
-0000a392   mrfiSpiReadRxFifo
+00009e72   ltoa
+0000899a   main
+00009af0   malloc
+0000ab9a   memccpy
+0000ae1e   memcpy
+0000adbe   memset
+0000a8b8   minit
+0000b10c   mrfiBroadcastAddr
+0000a35c   mrfiSpiCmdStrobe
+0000a9c8   mrfiSpiInit
+0000abe8   mrfiSpiReadReg
+0000acec   mrfiSpiReadRxFifo
+0000ab1a   mrfiSpiWriteReg
+0000ac96   mrfiSpiWriteTxFifo
 00000452   my_msp430_ptr
 00000202   out
 ffffffff   pinit
-00009da4   process_begin
-00009dae   process_blocked
+0000a306   process_begin
+0000a310   process_blocked
+00009ef6   process_create
 00000446   process_deadline_miss
+00009cc8   process_init
 00008000   process_select
-00009d9e   process_terminated
+0000aa30   process_start
+0000a300   process_terminated
 00000440   realtime_current
 00000442   realtime_queue
+0000a5fa   receive_message
 00000402   root
-0000a214   sprintf
-0000a482   strlen
-0000a44a   uart_putc
-0000a280   uart_puts
+0000983c   send_message
+0000a9fc   sleep
+0000a8f2   sprintf
+0000ad94   strcpy
+0000ae30   strlen
+0000ac34   uart_clear_screen
+0000ade6   uart_putc
+0000aa92   uart_puts
 0000043a   waiter_curr
 00000438   waiter_first
 
@@ -567,121 +630,149 @@ address    name
 00008000   .text
 00008000   __text__
 00008000   process_select
-000085e4   _printfi
-0000879a   main
-00008d32   __fs_sub
-00008d38   __fs_add
-0000904c   TBC_ISR
-00009424   USCI0RX_ISR
-0000965a   __fs_mpy
-00009704   malloc
-000097ac   __fs_div
-000099f2   ltoa
-00009a76   free
-00009af6   __fs_tol
-00009c62   MRFI_RxAddrIsFiltered
-00009cd2   L_LSR
-00009ce4   L_LSR_15
-00009cea   L_LSR_14
-00009cf0   L_LSR_13
-00009cf6   L_LSR_12
-00009cfc   L_LSR_11
-00009d02   L_LSR_10
-00009d08   L_LSR_9
-00009d0e   L_LSR_8
-00009d14   L_LSR_7
-00009d1a   L_LSR_6
-00009d20   L_LSR_5
-00009d26   L_LSR_4
-00009d2c   L_LSR_3
-00009d32   L_LSR_2
-00009d38   L_LSR_1
-00009d9e   process_terminated
-00009da4   process_begin
-00009dae   process_blocked
-00009dfa   mrfiSpiCmdStrobe
-00009e56   __divul
-00009e56   __remul
-00009eae   atoi
-00009f50   L_ASR
-00009f60   L_ASR_15
-00009f64   L_ASR_14
-00009f68   L_ASR_13
-00009f6c   L_ASR_12
-00009f70   L_ASR_11
-00009f74   L_ASR_10
-00009f78   L_ASR_9
-00009f7c   L_ASR_8
-00009f80   L_ASR_7
-00009f84   L_ASR_6
-00009f88   L_ASR_5
-00009f8c   L_ASR_4
-00009f90   L_ASR_3
-00009f94   L_ASR_2
-00009f98   L_ASR_1
-00009fea   I_LSR
-00009ff8   I_LSR_15
-00009ffc   I_LSR_14
-0000a000   I_LSR_13
-0000a004   I_LSR_12
-0000a008   I_LSR_11
-0000a00c   I_LSR_10
-0000a010   I_LSR_9
-0000a014   I_LSR_8
-0000a018   I_LSR_7
-0000a01c   I_LSR_6
-0000a020   I_LSR_5
-0000a024   I_LSR_4
-0000a028   I_LSR_3
-0000a02c   I_LSR_2
-0000a030   I_LSR_1
-0000a036   __fs_cmp
-0000a080   __fs_ltof
-0000a0ca   _auto_init
-0000a110   __fs_tou
-0000a19a   __divli
-0000a19a   __remli
-0000a1da   minit
-0000a214   sprintf
-0000a280   uart_puts
-0000a2b0   __divi
-0000a2b0   __remi
-0000a2dc   memccpy
-0000a304   _c_int00
-0000a304   _c_int00_noexit
-0000a32a   mrfiSpiReadReg
-0000a350   __mpyl
-0000a376   MRFI_GpioIsr
-0000a392   mrfiSpiReadRxFifo
-0000a3ae   BSP_GpioPort1Isr
-0000a3e2   MRFI_Receive
-0000a3f8   __divu
-0000a3f8   __remu
-0000a40e   MRFI_RxCompleteISR
-0000a422   memset
-0000a436   __mpyi
-0000a44a   uart_putc
-0000a470   memcpy
-0000a482   strlen
-0000a494   func_epilog_7
-0000a496   func_epilog_6
-0000a498   func_epilog_5
-0000a49a   func_epilog_4
-0000a49c   func_epilog_3
-0000a49e   func_epilog_2
-0000a4a0   func_epilog_1
-0000a4a4   _system_pre_init
-0000a4ae   abs
-0000a4b8   __fs_neg
-0000a4c2   C$$EXIT
-0000a4c2   abort
-0000a4c6   _nop
-0000a4c8   __etext__
-0000a4c8   _ctypes_
-0000a4c8   etext
-0000a69a   mrfiBroadcastAddr
-0000a69e   __cinit__
-0000a69e   cinit
+000085e4   MRFI_Init
+000087e4   _printfi
+0000899a   main
+00008f4e   MRFI_Transmit
+0000906c   __fs_sub
+00009072   __fs_add
+00009386   TBC_ISR
+0000975e   USCI0RX_ISR
+0000983c   send_message
+00009a46   __fs_mpy
+00009af0   malloc
+00009b98   __fs_div
+00009cc8   process_init
+00009e72   ltoa
+00009ef6   process_create
+00009f7a   free
+00009ffa   __fs_tol
+0000a166   MRFI_RxAddrIsFiltered
+0000a1d6   L_LSR
+0000a1e8   L_LSR_15
+0000a1ee   L_LSR_14
+0000a1f4   L_LSR_13
+0000a1fa   L_LSR_12
+0000a200   L_LSR_11
+0000a206   L_LSR_10
+0000a20c   L_LSR_9
+0000a212   L_LSR_8
+0000a218   L_LSR_7
+0000a21e   L_LSR_6
+0000a224   L_LSR_5
+0000a22a   L_LSR_4
+0000a230   L_LSR_3
+0000a236   L_LSR_2
+0000a23c   L_LSR_1
+0000a244   init_uart
+0000a300   process_terminated
+0000a306   process_begin
+0000a310   process_blocked
+0000a35c   mrfiSpiCmdStrobe
+0000a3b8   init_radio
+0000a412   __divul
+0000a412   __remul
+0000a46a   MRFI_WakeUp
+0000a4be   atoi
+0000a560   L_ASR
+0000a570   L_ASR_15
+0000a574   L_ASR_14
+0000a578   L_ASR_13
+0000a57c   L_ASR_12
+0000a580   L_ASR_11
+0000a584   L_ASR_10
+0000a588   L_ASR_9
+0000a58c   L_ASR_8
+0000a590   L_ASR_7
+0000a594   L_ASR_6
+0000a598   L_ASR_5
+0000a59c   L_ASR_4
+0000a5a0   L_ASR_3
+0000a5a4   L_ASR_2
+0000a5a8   L_ASR_1
+0000a5fa   receive_message
+0000a646   I_LSR
+0000a654   I_LSR_15
+0000a658   I_LSR_14
+0000a65c   I_LSR_13
+0000a660   I_LSR_12
+0000a664   I_LSR_11
+0000a668   I_LSR_10
+0000a66c   I_LSR_9
+0000a670   I_LSR_8
+0000a674   I_LSR_7
+0000a678   I_LSR_6
+0000a67c   I_LSR_5
+0000a680   I_LSR_4
+0000a684   I_LSR_3
+0000a688   I_LSR_2
+0000a68c   I_LSR_1
+0000a692   __fs_cmp
+0000a6dc   __fs_ltof
+0000a726   _auto_init
+0000a76c   __fs_tou
+0000a7f6   MRFI_SetRxAddrFilter
+0000a878   __divli
+0000a878   __remli
+0000a8b8   minit
+0000a8f2   sprintf
+0000a92a   MRFI_SetRFPwr
+0000a960   MRFI_SetLogicalChannel
+0000a9c8   mrfiSpiInit
+0000a9fc   sleep
+0000aa30   process_start
+0000aa62   BSP_Init
+0000aa92   uart_puts
+0000ab1a   mrfiSpiWriteReg
+0000ab46   __divi
+0000ab46   __remi
+0000ab72   BSP_Delay
+0000ab9a   memccpy
+0000abc2   _c_int00
+0000abc2   _c_int00_noexit
+0000abe8   mrfiSpiReadReg
+0000ac0e   __mpyl
+0000ac34   uart_clear_screen
+0000ac56   MRFI_EnableRxAddrFilter
+0000ac76   MRFI_RxOn
+0000ac96   mrfiSpiWriteTxFifo
+0000acb4   BSP_InitBoard
+0000acd0   MRFI_GpioIsr
+0000acec   mrfiSpiReadRxFifo
+0000ad08   BSP_GpioPort1Isr
+0000ad3c   MRFI_RandomByte
+0000ad52   MRFI_Receive
+0000ad7e   __divu
+0000ad7e   __remu
+0000ad94   strcpy
+0000adaa   MRFI_RxCompleteISR
+0000adbe   memset
+0000add2   __mpyi
+0000ade6   uart_putc
+0000adfa   BSP_InitLeds
+0000ae1e   memcpy
+0000ae30   strlen
+0000ae42   func_epilog_7
+0000ae44   func_epilog_6
+0000ae46   func_epilog_5
+0000ae48   func_epilog_4
+0000ae4a   func_epilog_3
+0000ae4c   func_epilog_2
+0000ae4e   func_epilog_1
+0000ae52   BSP_InitButtons
+0000ae5c   BSP_InitDrivers
+0000ae66   _system_pre_init
+0000ae70   abs
+0000ae7a   __fs_neg
+0000ae84   C$$EXIT
+0000ae84   abort
+0000ae88   _nop
+0000ae8a   __etext__
+0000ae8a   _ctypes_
+0000ae8a   etext
+0000b10c   mrfiBroadcastAddr
+0000b118   __cinit__
+0000b118   cinit
 0000fffe   _reset_vector
 ffffffff   __binit__
 ffffffff   __c_args__
@@ -689,4 +780,4 @@ ffffffff   __pinit__
 ffffffff   binit
 ffffffff   pinit
 
-[253 symbols]
+[281 symbols]
