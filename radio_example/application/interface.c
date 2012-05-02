@@ -28,6 +28,15 @@ int main(void){
 	char *id_str;
 	int quit;
 	
+	init_uart();
+	uart_clear_screen();
+	uart_puts("Uart initiated for MSP430 Chat interface.\n");
+	
+	init_radio();
+	uart_puts("Radio established. Communication with other radio devices enabled.\n");
+	
+	
+	
 	while(1){
 	// Get head of messages received
 	msp430_obj* head = root->signal_next;

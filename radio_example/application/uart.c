@@ -20,7 +20,7 @@ msp430_obj *root;
 
 /* Initialize the UART for TX (9600, 8N1) */
 /* Settings taken from TI UART demo */ 
-void init_uart(msp430_obj *msp430_ptr) {
+void init_uart(void) {
 	msp430_obj *root_init = (msp430_obj*)malloc(sizeof(msp430_obj));
 	BCSCTL1 = CALBC1_1MHZ;        /* Set DCO for 1 MHz */
 	DCOCTL  = CALDCO_1MHZ;

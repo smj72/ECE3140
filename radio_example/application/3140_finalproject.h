@@ -47,7 +47,7 @@ MCU using a serial terminal.
 extern char out[255];
 
 /* Sets up uart bits */
-void init_uart (msp430_obj *msp430_ptr);
+void init_uart (void);
 
 /* Print a character in terminal */
 void uart_putc (char c);
