@@ -35,8 +35,8 @@ int main(void){
 				}
 			}
 		}
-		
-		if (found_id){	
+		// If id was found and state is in chat mode
+		if (found_id && root.state == 2){	
 			uart_puts("Message From ID: ");
 			//char *id;
 			itoa(head->ID,id,10);
@@ -56,7 +56,7 @@ int main(void){
 				}
 			}
 			
-			
+			// If there was no quit message
 			if (!quit){
 				uart_puts("Respond To (enter id): ");
 				root.message = NULL;
@@ -66,26 +66,25 @@ int main(void){
 				uart_puts("Enter message: \n");
 				root.message = NULL;
 				// busy wait for message
-				while(root.message[0] = NULL);
+				while(root.message[0] == NULL);
 		
 				// SEND RADIO SIGNAL
 			}
+		// NETWORK STATE
+		}else if (root.state == 0){
+			uart_puts("Located ID: \n");
+			itoa(head->ID,id,10);
+			uart_puts(id);
+			uart_puts("\n");
 		}
 	
 	
-	}
+	}//end program loop
 	
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	return 0;
 }
