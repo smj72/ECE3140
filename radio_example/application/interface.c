@@ -7,40 +7,41 @@ typedef struct msp430_impl{
  	msp430_obj *signal_next;
  	int state;
  }msp430_obj; 
+extern msp430_obj *root;
 
 int main(void){
 	int found_id;
 	int array_size;
-	char *id;
+	char *id_str;
 	int quit;
 	
 	while(1){
 	// Get head of messages received
-	msp430_obj* head = root.signal_next;
+	msp430_obj* head = root->signal_next;
 	
 	// Pop off top message and print out the message
 	if(head != NULL){
-		root.signal_next = head->signal_next;
+		root->signal_next = head->signal_next;
 		head->signal_next = NULL;
 		
 		// If there are chat ids, make sure the message sender is part of the ids
-		array_size = sizeof(root.chat_IDs)/sizeof(int);
+		array_size = sizeof(root->chat_IDs)/sizeof(int);
 		found_id = 0;
 		if (array_size != 0){
 			int i = 0;
 			for(i;i<array_size;i++){
-				if(root.chat_IDs[i] == head->ID){
+				if(root->chat_IDs[i] == head->ID){
 					found_id = 1;
 					break;
 				}
 			}
 		}
 		// If id was found and state is in chat mode
-		if (found_id && root.state == 2){	
+		if (found_id && root->state == 2){	
 			uart_puts("Message From ID: ");
 			//char *id;
-			itoa(head->ID,id,10);
-			uart_puts(id);
+			sprintf(id_str,"%i",root->ID);
+			uart_puts(id_str);
 			uart_puts("\n");
 			uart_puts(head->message);
 			// If message quit then remove from chat ids
@@ -48,8 +49,8 @@ int main(void){
 			if (head->message == "quit"){
 				int i = 0;
 				for(i;i<array_size;i++){
-					if(root.chat_IDs[i] == head->ID){
-						root.chat_IDs[i] = NULL;
+					if(root->chat_IDs[i] == head->ID){
+						root->chat_IDs[i] = NULL;
 						quit = 1;
 						break;
 					}
@@ -59,22 +60,22 @@ int main(void){
 			// If there was no quit message
 			if (!quit){
 				uart_puts("Respond To (enter id): ");
-				root.message = NULL;
+				root->message = NULL;
 				// busy wait for message
-				while(root.message == NULL);
+				while(root->message == NULL);
 		
 				uart_puts("Enter message: \n");
-				root.message = NULL;
+				root->message = NULL;
 				// busy wait for message
-				while(root.message[0] == NULL);
+				while(root->message[0] == NULL);
 		
 				// SEND RADIO SIGNAL
 			}
 		// NETWORK STATE
-		}else if (root.state == 0){
+		}else if (root->state == 0){
 			uart_puts("Located ID: \n");
-			itoa(head->ID,id,10);
-			uart_puts(id);
+			sprintf(id_str,"%i",root->ID);
+			uart_puts(id_str);
 			uart_puts("\n");
 		}
 	
@@ -87,4 +88,5 @@ int main(void){
 
 	
 	return 0;
+}
 }
