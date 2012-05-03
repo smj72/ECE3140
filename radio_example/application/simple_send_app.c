@@ -77,13 +77,14 @@ void send_message (void){
 		/* Remaining bytes are the message/data payload */
 		strcpy( (char *) &packet.frame[11] , root->message );
 		
-		
+		/* Toggle red LED before transmitting, then wait a while */
+		P1OUT ^= RED_SEND_LED;
+		sleep(30000);
 		/* Transmit the packet over the radio */
 		MRFI_Transmit(&packet , MRFI_TX_TYPE_FORCED);
 		
-		/* Toggle red LED after transmitting, then wait a while */
-		P1OUT ^= RED_SEND_LED;
-		sleep(60000);
+		
+		sleep(30000);
 		P1OUT ^= RED_SEND_LED;
 	//}
 }
