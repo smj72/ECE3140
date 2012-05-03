@@ -69,7 +69,7 @@ void send_message (void){
 		packet.frame[8] = 0x02;
 		
 		//Frame 9 for input ID, frame 10 for wanted ID
-		packet.frame[9] = root->ID
+		packet.frame[9] = root->ID;
 		
 		packet.frame[10] = root->chat_IDs[0];
 		
