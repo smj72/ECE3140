@@ -8,7 +8,7 @@ char another[20];
 typedef struct msp430_impl{
  	int ID;
  	char *message;
- 	int chat_IDs[20];
+ 	int chat_IDs[4];
  	msp430_obj *signal_next;
  	int state;
  }msp430_obj; 
@@ -21,7 +21,7 @@ msp430_obj *root;
 /* Initialize the UART for TX (9600, 8N1) */
 /* Settings taken from TI UART demo */ 
 void init_uart(void) {
-	msp430_obj *root_init = (msp430_obj*)malloc(sizeof(msp430_obj));
+	root_init = (msp430_obj*)malloc(sizeof(msp430_obj));
 	char *msg_init = (char*)malloc(50);
 	int i = 0;
 	BCSCTL1 = CALBC1_1MHZ;        /* Set DCO for 1 MHz */
