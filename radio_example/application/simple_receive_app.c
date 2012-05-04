@@ -8,6 +8,8 @@
 #include "mrfi.h"
 #include "radios/family1/mrfi_spi.h"
 #include "3140_finalproject.h"
+#include <string.h>
+#include<stdio.h>
 
 /* Useful #defines */
 #define RED_RECEIVE_LED 0x01
@@ -19,7 +21,7 @@ void sleep(unsigned int count);
 typedef struct msp430_impl{
  	int ID;
  	char *message;
- 	int chat_IDs[20];
+ 	int chat_IDs[4];
  	msp430_obj *signal_next;
  	int state;
  }msp430_obj; 
@@ -55,6 +57,7 @@ void receive_message(void){
 	
 	/* Turn on the radio receiver */
 	MRFI_RxOn();
+	//MRFI_GpioIsr();
 	
 	/* Main loop just toggles the green LED with some delay */
 	__bis_SR_register(GIE);
@@ -71,14 +74,45 @@ void receive_message(void){
  *   Called by the driver when new packet arrives */
 void MRFI_RxCompleteISR(void) {
 	/* Read the received data packet */
+	int sender_id;
+	int sender_want_chat_id;
+	//char * packet_message;
+	char packet_message[20];
 	mrfiPacket_t	packet;
 	MRFI_Receive(&packet);
+	
+	sender_id = packet.frame[9];
+	sender_want_chat_id = packet.frame[10];
+	
+	if(sender_want_chat_id == 0 || sender_want_chat_id == root->ID){
+		//packet_message = (char *) malloc(2);
+		uart_puts("\nRadio Message Received!\n");
+		root->message = "empty";
+		uart_puts("sender: ");
+		sprintf(packet_message,"%d",sender_id);
+		uart_puts(packet_message);
+		root->message = "empty2";
+		uart_puts("\nmessage: ");
+		sprintf(packet_message,"%s", &packet.frame[11]);
+		uart_puts(packet_message);
+		root->message = "\0";
+		uart_putc('\n');
+		
+	}
+	else{
+		uart_puts("DEBUG: Message Blocked\n");
+		
+	}
+	free(packet_message);
 	
 	/* We ignore the data in the packet structure.
 	 * You probably want to do something with it here. */
 	 
-	/* Toggle the red LED to signal that data has arrived */
-	P1OUT ^= RED_RECEIVE_LED;
+	/* Toggle the red GREEN to signal that data has arrived */
+	
+	P1OUT ^= GREEN_LED;
+	sleep(60000);
+	P1OUT ^= GREEN_LED;
 }
 
 

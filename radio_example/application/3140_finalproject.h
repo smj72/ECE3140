@@ -9,6 +9,7 @@
 #include "mrfi.h"
 #include "radios/family1/mrfi_spi.h"
 #include <string.h>
+#include<stdio.h>
 
 /* Useful #defines */
 #define RED_SEND_LED 		0x01
@@ -47,7 +48,7 @@ MCU using a serial terminal.
 ------------------------------------------------------------------------*/
 
 /* This variable maintains what the user typed in */
-extern char out[255];
+extern char out[20];
 
 /* Sets up uart bits */
 void init_uart (void);
@@ -70,6 +71,8 @@ The following functions are for use in Radio Transmission.
 ------------------------------------------------------------------------*/
 
 int init_radio(void);
+
+void MRFI_RxCompleteISR(void);
 
 //char* send_message(char *msg);
 

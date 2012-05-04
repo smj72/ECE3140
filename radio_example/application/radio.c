@@ -10,7 +10,7 @@ msp430_obj *my_msp430_ptr = NULL;
 typedef struct msp430_impl{
  	int ID;
  	char *message;
- 	int chat_IDs[20];
+ 	int chat_IDs[4];
  	msp430_obj *signal_next;
  	int state;
  }msp430_obj; 

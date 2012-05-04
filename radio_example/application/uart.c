@@ -1,8 +1,8 @@
 #include "3140_finalproject.h"
 
 volatile int index = 0;
-char out[255];
-char another[255];
+char out[20];
+char another[20];
 
 //msp430_obj my_msp430;
 typedef struct msp430_impl{
@@ -22,7 +22,7 @@ msp430_obj *root;
 /* Settings taken from TI UART demo */ 
 void init_uart(void) {
 	msp430_obj *root_init = (msp430_obj*)malloc(sizeof(msp430_obj));
-	char *msg_init = (char*)malloc(sizeof(char));
+	char *msg_init = (char*)malloc(50);
 	int i = 0;
 	BCSCTL1 = CALBC1_1MHZ;        /* Set DCO for 1 MHz */
 	DCOCTL  = CALDCO_1MHZ;

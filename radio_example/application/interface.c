@@ -1,11 +1,10 @@
 #include "3140_finalproject.h"
-#include<stdio.h>
-#include<string.h>
+
 
 typedef struct msp430_impl{
  	int ID;
  	char *message;
- 	int chat_IDs[20];
+ 	int chat_IDs[4];
  	msp430_obj *signal_next;
  	int state;
  }msp430_obj; 
@@ -27,7 +26,7 @@ void sleep(unsigned int count) {
 void interface_loop(void){
 	
 	//char buffer[10] = {0};
-	char *id_str = (char*)malloc(sizeof(char));
+	char *id_str;
 	//char *id_str = &buffer[0];
 	int found_id;
 	int array_size;
@@ -95,8 +94,13 @@ void interface_loop(void){
 		// NETWORK STATE
 		}
 		else if (root->state == NETWORK_MODE){
+			/*root->message = "smj72";
+			while(1){
+				send_message();
+				}*/
 			if(root->message!=NULL&& strcmp (root->message,"\0") != 0){
 				uart_puts(root->message);
+				
 				send_message();
 				root->message = "\0";
 			}
