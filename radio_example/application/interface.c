@@ -1,6 +1,18 @@
 #include "3140_finalproject.h"
 
 char *id_str;
+
+
+/* Parameterized "sleep" helper function */
+void sleep(unsigned long count) {
+	int i;
+	for (i = 0; i < 10; i++) {
+		while(count > 0) {
+			count--;
+			__no_operation();
+		}
+	}
+}
 void interface_loop(void){
 	
 	//char buffer[10] = {0};
@@ -101,7 +113,7 @@ void interface_loop(void){
 			
 			
 		}
-	__bis_SR_register(LPM3_bits + GIE);       // Enter LPM3, interrupts enabled 
+	//__bis_SR_register(LPM3_bits + GIE);       // Enter LPM3, interrupts enabled 
 	sleep(100000);
 	}//end program loop
 	

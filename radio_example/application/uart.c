@@ -112,7 +112,7 @@ __interrupt void USCI0RX_ISR(void)
 		uart_puts("\r\nThe limit is 20 characters, your entry has been restarted.\r\n");
 		//Clear buffer
 		memset(&out[0], 0, sizeof(out));
-		__bic_SR_register_on_exit(LPM3_bits);
+		//__bic_SR_register_on_exit(LPM3_bits);
 		
 	}
 }
