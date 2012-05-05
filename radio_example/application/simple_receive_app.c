@@ -90,22 +90,30 @@ void MRFI_RxCompleteISR(void) {
 		
 		//packet_message = (char *) malloc(2);
 		uart_puts("\nRadio Message Received!\n");
-		root->message = "empty";
 		uart_puts("sender: ");
 		sprintf(packet_message,"%d",sender_id);
 		uart_puts(packet_message);
-		root->message = "empty2";
 		uart_puts("\nmessage: ");
 		sprintf(packet_message,"%s", &packet.frame[11]);
 		uart_puts(packet_message);
-		root->message = "\0";
 		uart_putc('\n');
 		
 		
 		
 		if(root->state == CHAT_ACCEPT_MODE && root->chat_IDs[0] == sender_id )
 		{
-			if(strcmp(packet_message, "y")==0 || strcmp(packet_message, "Y")){
+			int chat_accept_id = packet_message[0] - '0';
+			if(chat_accept_id == root->ID){
+				root->state = CHAT_MODE;
+				uart_puts("Chat initiated\n");
+				//clear msp430 list
+				root->signal_next = NULL;
+			}
+			else{
+				root->state = NETWORK_MODE;
+				uart_puts ("Chat rejected\n");
+			}
+			/*if(strcmp(packet_message, "y")==0 || strcmp(packet_message, "Y")){
 				root->state = CHAT_MODE;
 				uart_puts("Chat initiated\n");
 			}
@@ -118,7 +126,7 @@ void MRFI_RxCompleteISR(void) {
 				uart_puts("Received invalid acceptance, still waiting\n");
 				send_message("SYS: invalid msg");
 				
-			}
+			}*/
 			
 			
 		}
@@ -145,6 +153,15 @@ void MRFI_RxCompleteISR(void) {
 				}
 				senders = senders->signal_next;
 			}
+			//Update list of available msp430s to chat with
+			uart_puts("\n These msp430s wish to chat with you:\n");
+			senders = root->signal_next;
+			memset(&packet_message[0], 0, sizeof(packet_message));
+			while(senders!=NULL){
+				sprintf(packet_message,"%d ",senders->ID);
+				uart_puts(packet_message);
+			}
+			uart_putc('\n');
 			free(senders);
 		}
 		//If in chat mode, check ID and automatically add to stack
