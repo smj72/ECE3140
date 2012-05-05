@@ -73,6 +73,10 @@ void MRFI_RxCompleteISR(void) {
 		{
 			int chat_accept_id = packet_message[0] - '0';
 			if(chat_accept_id == root->ID){
+				root->chat_IDs[0] = chat_accept_id;
+				memset(&packet_message[0], 0, sizeof(packet_message));
+				sprintf(packet_message,"%d",root->ID);
+				send_message(packet_message);
 				root->state = CHAT_MODE;
 				uart_puts("Chat initiated\n");
 				//clear msp430 list

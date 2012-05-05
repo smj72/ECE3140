@@ -1,6 +1,6 @@
 /*------------------------------------------------------------
  * Example radio "send" application
- *   Sends packets with a data payload in an infinite loop
+ *   Sends packets with a data payload 
  *----------------------------------------------------------*/
 #include "3140_finalproject.h"
 
@@ -53,7 +53,3 @@ void send_message (char *msg){
 		P1OUT ^= RED_SEND_LED;
 	
 }
-
-
-
-

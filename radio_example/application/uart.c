@@ -83,8 +83,6 @@ __interrupt void USCI0RX_ISR(void)
 	
 	// If carriage return process the array constructed
 	if (UCA0RXBUF == '\r'){
-		//uart_puts("\r\nEntered:\n");
-		
 		
 		root->message = out; 
 		
@@ -110,6 +108,7 @@ __interrupt void USCI0RX_ISR(void)
 			uart_puts("\nSending chat request to ID ");
 			uart_putc(out[0]);
 			uart_putc('\n');
+			root->state = CHAT_ACCEPT_MODE;
 		}
 		
    // Overflow error, will only accept messages that are 20 characters long
