@@ -4,7 +4,7 @@
  *   Toggles red LED every time a packet is received.
  *----------------------------------------------------------*/
 #include "3140_finalproject.h"
-char packet_message[20];
+char packet_message[CHAR_LIMIT];
 msp430_obj *senders;
 
 //Initialization for receiving messages
@@ -159,7 +159,7 @@ void MRFI_RxCompleteISR(void) {
 	/* Toggle the red GREEN to signal that data has arrived */
 	
 	P1OUT ^= GREEN_LED;
-	sleep(60000);
+	sleep(20000);
 	P1OUT ^= GREEN_LED;
 	//__bis_SR_register(GIE);
 }

@@ -1,7 +1,7 @@
 #include "3140_finalproject.h"
 
 volatile int index = 0;
-char out[20];
+char out[CHAR_LIMIT];
 
 msp430_obj *root;
 
@@ -13,7 +13,7 @@ msp430_obj *root;
 /* Settings taken from TI UART demo */ 
 void init_uart(void) {
 	msp430_obj *root_init = (msp430_obj*)malloc(sizeof(msp430_obj));
-	char *msg_init = (char*)malloc(30);
+	char *msg_init = (char*)malloc(CHAR_LIMIT);
 	BCSCTL1 = CALBC1_1MHZ;        /* Set DCO for 1 MHz */
 	DCOCTL  = CALDCO_1MHZ;
 	P3SEL = 0x30;                 /* P3.4,5 = USCI_A0 TXD/RXD */
@@ -97,7 +97,7 @@ __interrupt void USCI0RX_ISR(void)
 			root->state = NETWORK_MODE;
 			uart_puts("\n ID is now: ");
 			uart_putc(out[0]);
-			uart_puts("\nNow choose another ID 0-9 (0 for anyone) you wish to chat with\nFollowed by any message\n");
+			uart_puts("\nNow choose another ID (0 for anyone) you wish to chat with\nFollowed by any message\n");
 		}
 		//Network mode: send chat acceptance to msp430 with specific ID
 		else if(root->state == NETWORK_MODE || root->state == CHAT_ACCEPT_MODE){
@@ -117,9 +117,9 @@ __interrupt void USCI0RX_ISR(void)
 		}
 		//__bic_SR_register_on_exit(LPM3_bits);
 		
-   // Overflow error, will only accept messages that are 20 characters long
-	}else if(index >= 20){
-		uart_puts("\r\nThe limit is 20 characters, your entry has been restarted.\r\n");
+   // Overflow error, will only accept messages that are so many characters long
+	}else if(index >= CHAR_LIMIT){
+		uart_puts("\r\nThe limit is so many characters, your entry has been restarted.\r\n");
 		//Clear buffer
 		memset(&out[0], 0, sizeof(out));
 		//__bic_SR_register_on_exit(LPM3_bits);

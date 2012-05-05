@@ -126,7 +126,7 @@ int main(void){
 	WDTCTL = WDTPW + WDTHOLD;
  	P1DIR = 0x03;
  	P1OUT = 0x00;
-	id_str = (char *) malloc(2);
+	id_str = (char *) malloc(10);
 	
 	init_uart();
 	uart_clear_screen();
@@ -145,7 +145,7 @@ int main(void){
 			
 	uart_puts("\nRadio initialized.\n");
 	uart_puts("\nStarting interface.\n");
-	uart_puts("\nPlease type in the ID you would like to have 1-9 \n");
+	uart_puts("\nPlease type in the ID number you would like to have. \n");
 	
 	interface_loop();
 	

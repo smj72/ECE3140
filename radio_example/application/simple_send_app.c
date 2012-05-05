@@ -23,7 +23,7 @@ void send_message (char *msg){
 		memset(&packet.frame[0], 0, sizeof(packet.frame));
 		
 		/* First byte of packet frame holds message length in bytes */
-		packet.frame[0] = strlen(msg) + 8;	/* Includes 8-byte address header */
+		packet.frame[0] = strlen(msg) + 14;	/* Includes 8-byte address header */
 		
 		/* Next 8 bytes are addresses, 4 each for source and dest. */
 		packet.frame[1] = 0x12;		/* Destination */
@@ -50,11 +50,11 @@ void send_message (char *msg){
 		
 		/* Toggle red LED before transmitting, then wait a while */
 		P1OUT ^= RED_SEND_LED;
-		sleep(30000);
+		
 		/* Transmit the packet over the radio */
 		MRFI_Transmit(&packet , MRFI_TX_TYPE_FORCED);
 		
-		sleep(30000);
+		sleep(100000);
 		P1OUT ^= RED_SEND_LED;
 	
 }

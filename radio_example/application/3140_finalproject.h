@@ -20,6 +20,7 @@
 #define CHAT_ACCEPT_MODE	0x01
 #define CHAT_MODE 			0x02
 #define CHOOSE_ID_MODE		0x03
+#define CHAR_LIMIT			15
 #ifndef NULL
 #define NULL 0
 #endif
