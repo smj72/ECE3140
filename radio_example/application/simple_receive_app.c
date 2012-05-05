@@ -140,8 +140,8 @@ void MRFI_RxCompleteISR(void) {
 			new_msp430->chat_IDs[0]=sender_want_chat_id;
 			new_msp430->state = NETWORK_MODE;
 			new_msp430->signal_next = root->signal_next;
-			new_msp430->message = (char *) &packet.frame[15];
-			
+			//new_msp430->message = (char *) &packet.frame[15];
+			strcpy( (char *) new_msp430->message, (char *) &packet.frame[15]  );
 			
 			root->signal_next = new_msp430;
 			uart_puts("\n message received \n");
