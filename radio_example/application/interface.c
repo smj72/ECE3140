@@ -67,6 +67,9 @@ void interface_loop(void){
 					}
 				}
 			}
+			//free head memory
+			free(head->message);
+			free(head);
 			
 			
 			// If there was no quit message
