@@ -28,7 +28,7 @@ void send_message (char *msg){
 		/* Next 8 bytes are addresses, 4 each for source and dest. */
 		packet.frame[1] = 0x12;		/* Destination */
 		packet.frame[2] = 0x34;
-		packet.frame[3] = 0xab;
+		packet.frame[3] = 0xac;
 		packet.frame[4] = 0xcd;
 		
 		packet.frame[5] = 0x02;		/* Source */
