@@ -70,7 +70,7 @@ void MRFI_RxCompleteISR(void) {
 		
 		
 		//Conditions for chat mode. chat_ID = 0 means it will accept any chat request
-		if(root->state == CHAT_ACCEPT_MODE && (root->chat_IDs[0] == sender_id /*|| root->chat_IDs[0]==0)*/)
+		if(root->state == NETWORK_MODE && (root->chat_IDs[0] == sender_id && root->chat_IDs[0]!=0))
 		{
 			//int chat_accept_id = packet_message[0] - '0';
 			if(sender_want_chat_id == root->ID){
@@ -91,7 +91,7 @@ void MRFI_RxCompleteISR(void) {
 			
 		}
 		//Add msp430 to linked list in network/chat accept modes
-		else if(root->state == NETWORK_MODE || root->state == CHAT_ACCEPT_MODE){
+		else if(root->state == NETWORK_MODE /*|| root->state == CHAT_ACCEPT_MODE*/){
 			
 			senders = root;
 			while(senders)
@@ -109,7 +109,7 @@ void MRFI_RxCompleteISR(void) {
 					new_msp430->signal_next = root->signal_next;
 					
 					root->signal_next = new_msp430;
-					root->state = CHAT_ACCEPT_MODE;
+					//root->state = CHAT_ACCEPT_MODE;
 					
 					//Update list of available msp430s to chat with
 					uart_puts("\n These msp430s wish to chat with you:\n");
