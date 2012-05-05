@@ -2,7 +2,7 @@
 
 volatile int index = 0;
 char out[20];
-char another[20];
+
 
 //msp430_obj my_msp430;
 typedef struct msp430_impl{
@@ -21,7 +21,7 @@ msp430_obj *root;
 /* Initialize the UART for TX (9600, 8N1) */
 /* Settings taken from TI UART demo */ 
 void init_uart(void) {
-	root_init = (msp430_obj*)malloc(sizeof(msp430_obj));
+	msp430_obj *root_init = (msp430_obj*)malloc(sizeof(msp430_obj));
 	char *msg_init = (char*)malloc(50);
 	int i = 0;
 	BCSCTL1 = CALBC1_1MHZ;        /* Set DCO for 1 MHz */
@@ -47,7 +47,7 @@ void init_uart(void) {
 	//msg_init = "/empty/";
 	//root_init->message = NULL;
 	root_init->signal_next = NULL;
-	root_init->state = 0;
+	root_init->state = CHOOSE_ID_MODE;
 	
 	root = root_init;
 	
@@ -92,10 +92,10 @@ void uart_clear_screen(void) {
 __interrupt void USCI0RX_ISR(void)
 {
 	int i =0;
-	//if(index == 0){
+	if(index == 0){
 		//Clear buffer
-	//	memset(&out[0], 0, sizeof(out));
-	//}
+		memset(&out[0], 0, sizeof(out));
+	}
 
 	// Grow a user input array with the characters received from user
 	out[index++] = UCA0RXBUF;
@@ -103,39 +103,38 @@ __interrupt void USCI0RX_ISR(void)
 	// If carriage return process the array constructed
 	if (UCA0RXBUF == '\r'){
 		//uart_puts("\r\nEntered:\n");
-		i =0;
-		for(i;i<255;i++){
-			if (i<index){
-				another[i] = out[i];
-				root->message[i] = out[i];
-			}else{
-				another[i] = 0;
-				out[i] = 0;
-				root->message[i] = 0;
-			}
-		}
 		
-		root->message = another; 
+		
+		
+		root->message = out; 
 		
 		// Restart index to the beginning of the array
 		index = 0;
-		// Echo back the user input
-		//uart_puts(&another[0]);
 		uart_putc('\n');
-		/*if(root->state == NETWORK_MODE){
-			root->message = another;
-		}*/
-		//Clear buffer
-		//memset(&out[0], 0, sizeof(out));
+		
+		//State changes based on what was sent
+		if(root->state == CHOOSE_ID_MODE)
+		{
+			int wanted_id = out[0] - '0';
+			root->state = NETWORK_MODE;
+			uart_puts("\n ID is now: ");
+			uart_putc(out[0]);
+			uart_puts("\nNow choose another ID 0-9 (0 for anyone) you wish to chat with\nFollowed by any message\n");
+		}
+		else if(root->state == NETWORK_MODE){
+			int wanted_chat_id = out[0] - '0';
+			root->chat_IDs[0] = wanted_chat_id;
+			uart_puts("\nSending chat request to ID ");
+			uart_putc(out[0]);
+			uart_putc('\n');
+		}
+		
    // Overflow error, will only accept messages that are 255 characters long
-	}else if(index == 255){
+	}else if(index >= 20){
 		uart_puts("\r\nThe limit is 255 characters, your entry has been restarted.\r\n");
 		//Clear buffer
-		//memset(&out[0], 0, sizeof(out));
-		i = 0;
-		// Clean buffer and restart at beginning of array
-		for(i;i<255;i++) {out[i]=0;}
-		index = 0;
+		memset(&out[0], 0, sizeof(out));
+		
 	}
 }
 

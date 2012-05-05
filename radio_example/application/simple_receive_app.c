@@ -76,6 +76,7 @@ void MRFI_RxCompleteISR(void) {
 	/* Read the received data packet */
 	int sender_id;
 	int sender_want_chat_id;
+	char packet_message[20];
 	//char * packet_message;
 	
 	mrfiPacket_t	packet;
@@ -86,7 +87,7 @@ void MRFI_RxCompleteISR(void) {
 	
 	//Accept package if ID matches
 	if(sender_want_chat_id == 0 || sender_want_chat_id == root->ID){
-		char packet_message[20];
+		
 		//packet_message = (char *) malloc(2);
 		uart_puts("\nRadio Message Received!\n");
 		root->message = "empty";
@@ -99,9 +100,29 @@ void MRFI_RxCompleteISR(void) {
 		uart_puts(packet_message);
 		root->message = "\0";
 		uart_putc('\n');
-		free(packet_message);
 		
-		if(root->state == NETWORK_MODE || root->state == CHAT_ACCEPT_MODE){
+		
+		
+		if(root->state == CHAT_ACCEPT_MODE && root->chat_IDs[0] == sender_id )
+		{
+			if(strcmp(packet_message, "y")==0 || strcmp(packet_message, "Y")){
+				root->state = CHAT_MODE;
+				uart_puts("Chat initiated\n");
+			}
+			else if(strcmp(packet_message, "n")==0 || strcmp(packet_message, "N")){
+				root->state = NETWORK_MODE;
+				uart_puts ("Chat rejected\n");
+				
+			}
+			else{
+				uart_puts("Received invalid acceptance, still waiting\n");
+				send_message("SYS: invalid msg");
+				
+			}
+			
+			
+		}
+		else if(root->state == NETWORK_MODE || root->state == CHAT_ACCEPT_MODE){
 			msp430_obj *senders = (msp430_obj*)malloc(sizeof(msp430_obj));
 			msp430_obj *new_msp430;
 			senders = root;
@@ -146,7 +167,7 @@ void MRFI_RxCompleteISR(void) {
 		uart_puts("DEBUG: Message Blocked\n");
 		
 	}
-	
+	free(packet_message);
 	
 	
 	/* We ignore the data in the packet structure.

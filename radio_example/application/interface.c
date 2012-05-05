@@ -99,9 +99,11 @@ void interface_loop(void){
 				send_message();
 				}*/
 			if(root->message!=NULL&& strcmp (root->message,"\0") != 0){
-				uart_puts(root->message);
+				int id_want = root->message[0] - '0';
+				root->chat_IDs[0] = id_want;
+				//uart_puts();
 				
-				send_message();
+				send_message(&(root->message[1]));
 				root->message = "\0";
 			}
 			/*uart_puts("Located ID: \n");
@@ -154,6 +156,8 @@ int main(void){
 	
 	
 	uart_puts("\nStarting interface.\n");
+	
+	uart_puts("\nPlease type in the ID you would like to have 1-9 \n");
 	
 	interface_loop();
 	

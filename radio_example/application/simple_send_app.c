@@ -29,7 +29,7 @@ extern msp430_obj *root;
 
 
 
-void send_message (void){
+void send_message (char *msg){
 	/* Set red LED to output */
 	//P1DIR = RED_SEND_LED;
 	//P1OUT ^= RED_SEND_LED;
@@ -55,7 +55,7 @@ void send_message (void){
 		//char msg[] = "ECE3140 rocks!\r\n"; 
 		//char msg[] = *msp430.message;
 		/* First byte of packet frame holds message length in bytes */
-		packet.frame[0] = strlen(root->message) + 8;	/* Includes 8-byte address header */
+		packet.frame[0] = strlen(msg) + 8;	/* Includes 8-byte address header */
 		
 		/* Next 8 bytes are addresses, 4 each for source and dest. */
 		packet.frame[1] = 0x12;		/* Destination */
@@ -75,13 +75,14 @@ void send_message (void){
 		
 		
 		/* Remaining bytes are the message/data payload */
-		strcpy( (char *) &packet.frame[11] , root->message );
+		strcpy( (char *) &packet.frame[11] , msg );
 		
 		/* Toggle red LED before transmitting, then wait a while */
 		P1OUT ^= RED_SEND_LED;
 		sleep(30000);
 		/* Transmit the packet over the radio */
 		MRFI_Transmit(&packet , MRFI_TX_TYPE_FORCED);
+		
 		
 		
 		sleep(30000);

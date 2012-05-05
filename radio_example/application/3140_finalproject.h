@@ -10,6 +10,7 @@
 #include "radios/family1/mrfi_spi.h"
 #include <string.h>
 #include<stdio.h>
+#include <ctype.h>
 
 /* Useful #defines */
 #define RED_SEND_LED 		0x01
@@ -18,6 +19,7 @@
 #define NETWORK_MODE 		0x00
 #define CHAT_ACCEPT_MODE	0x01
 #define CHAT_MODE 			0x02
+#define CHOOSE_ID_MODE		0x03
 #ifndef NULL
 #define NULL 0
 #endif
@@ -76,7 +78,7 @@ void MRFI_RxCompleteISR(void);
 
 //char* send_message(char *msg);
 
-void send_message (void);
+void send_message (char *msg);
 
 //void receive_message(void);
 
