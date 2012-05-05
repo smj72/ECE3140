@@ -70,13 +70,13 @@ void interface_loop(void){
 			
 			// If there was no quit message
 			if (!quit){
-				uart_puts("Respond To (enter id): ");
+				uart_puts("Response: \n");
 				root->message = NULL;
 				// busy wait for message
 				//while(root->message == NULL);
 		
-				uart_puts("Enter message: \n");
-				root->message = NULL;
+				//uart_puts("Enter message: \n");
+				//root->message = NULL;
 				// busy wait for message
 				//while(root->message[0] == NULL);
 		
