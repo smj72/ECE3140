@@ -72,9 +72,9 @@ void MRFI_RxCompleteISR(void) {
 		//Conditions for chat mode. chat_ID = 0 means it will accept any chat request
 		if(root->state == CHAT_ACCEPT_MODE && (root->chat_IDs[0] == sender_id || root->chat_IDs[0]==0))
 		{
-			int chat_accept_id = packet_message[0] - '0';
-			if(chat_accept_id == root->ID){
-				root->chat_IDs[0] = chat_accept_id;
+			//int chat_accept_id = packet_message[0] - '0';
+			if(sender_want_chat_id == root->ID){
+				root->chat_IDs[0] = sender_want_chat_id;
 				memset(&packet_message[0], 0, sizeof(packet_message));
 				sprintf(packet_message,"%d",root->ID);
 				send_message(packet_message);
