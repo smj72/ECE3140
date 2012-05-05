@@ -14,7 +14,6 @@ msp430_obj *root;
 void init_uart(void) {
 	msp430_obj *root_init = (msp430_obj*)malloc(sizeof(msp430_obj));
 	char *msg_init = (char*)malloc(50);
-	int i = 0;
 	BCSCTL1 = CALBC1_1MHZ;        /* Set DCO for 1 MHz */
 	DCOCTL  = CALDCO_1MHZ;
 	P3SEL = 0x30;                 /* P3.4,5 = USCI_A0 TXD/RXD */
@@ -29,10 +28,7 @@ void init_uart(void) {
 	root_init->ID = 5;
 	msg_init = "\0";
 	root_init->message = msg_init;
-	for(i;i<sizeof(root->chat_IDs);i++){
-	
-		root_init->chat_IDs[i] = 0;
-	}
+	memset(&root_init->chat_IDs,0,sizeof(root_init->chat_IDs));
 	root_init->signal_next = NULL;
 	root_init->state = CHOOSE_ID_MODE;
 	
@@ -72,7 +68,6 @@ void uart_clear_screen(void) {
 #pragma vector=USCIAB0RX_VECTOR
 __interrupt void USCI0RX_ISR(void)
 {
-	int i =0;
 	if(index == 0){
 		//Clear buffer
 		memset(&out[0], 0, sizeof(out));

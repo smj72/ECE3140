@@ -81,6 +81,15 @@ void send_message (char *msg);
 
 void receive_message(void);
 
-void sleep(unsigned int count);
+/* Parameterized "sleep" helper function */
+void sleep(unsigned long count) {
+	int i;
+	for (i = 0; i < 10; i++) {
+		while(count > 0) {
+			count--;
+			__no_operation();
+		}
+	}
+}
 
 #endif /*__3140_FINALPROJECT_H__*/
