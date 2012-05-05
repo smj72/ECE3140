@@ -35,23 +35,15 @@ void init_uart(void) {
 	
 		root_init->chat_IDs[i] = 0;
 	}
-	//msg_init = "/empty/";
-	//root_init->message = NULL;
 	root_init->signal_next = NULL;
 	root_init->state = CHOOSE_ID_MODE;
 	
 	root = root_init;
 	
-	//__enable_interrupt();
-//	set_msp430(*msp430_ptr);				//Initialize msp430 to this uart.
 	//__bis_SR_register(LPM3_bits + GIE);       /* Enter LPM3, interrupts enabled */
 	__bis_SR_register( GIE);
 }
 
-/*void set_msp430(msp430_obj msp430)
-{
-	my_msp430 = msp430;
-}*/
 
 /* Transmit a single character over UART interface */
 void uart_putc(char c) {
@@ -96,7 +88,6 @@ __interrupt void USCI0RX_ISR(void)
 		//uart_puts("\r\nEntered:\n");
 		
 		
-		
 		root->message = out; 
 		
 		// Restart index to the beginning of the array
@@ -104,14 +95,17 @@ __interrupt void USCI0RX_ISR(void)
 		uart_putc('\n');
 		
 		//State changes based on what was sent
+		//Choose ID mode: obtain your ID
 		if(root->state == CHOOSE_ID_MODE)
 		{
 			int wanted_id = out[0] - '0';
+			root->ID = wanted_id;
 			root->state = NETWORK_MODE;
 			uart_puts("\n ID is now: ");
 			uart_putc(out[0]);
 			uart_puts("\nNow choose another ID 0-9 (0 for anyone) you wish to chat with\nFollowed by any message\n");
 		}
+		//Network mode: send chat acceptance to msp430 with specific ID
 		else if(root->state == NETWORK_MODE){
 			int wanted_chat_id = out[0] - '0';
 			root->chat_IDs[0] = wanted_chat_id;
@@ -129,35 +123,3 @@ __interrupt void USCI0RX_ISR(void)
 	}
 }
 
-/*//Interrupt for receiving uart input
- #pragma  vector=USART0RX_VECTOR
-  __interrupt  void  usart0_rx  (void)
-  {
-       while  (!(IFG1  &  UTXIFG0));        //  USART0  TX  buffer  ready?
-       {
-       	TXBUF0  =  RXBUF0; //  RXBUF0  to  TXBUF0
-       }
-       uart_puts(" message returned");
-}*/
-
-
-///*
-/*int main (void) {
-	msp430_obj *dummy = (msp430_obj*)malloc(sizeof(msp430_obj));
-	char *dummy_msg = (char*)malloc(sizeof(char));
-	WDTCTL = WDTPW + WDTHOLD;
- 	P1DIR = 0x03;
- 	P1OUT = 0x00;
- 	
- 	
- 	dummy->ID = 1;
- 	dummy->message = dummy_msg;
- 	dummy->signal_next = NULL;
- 	
- 	init_uart(dummy);	
- 	uart_clear_screen();
- 	
- 	while (1) ;
- 	return 0;
-}*/
-//*/

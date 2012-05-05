@@ -75,15 +75,9 @@ The following functions are for use in Radio Transmission.
 
 ------------------------------------------------------------------------*/
 
-int init_radio(void);
-
 void MRFI_RxCompleteISR(void);
 
-//char* send_message(char *msg);
-
 void send_message (char *msg);
-
-//void receive_message(void);
 
 void receive_message(void);
 

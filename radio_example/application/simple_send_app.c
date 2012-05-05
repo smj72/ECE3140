@@ -27,8 +27,7 @@ void send_message (char *msg){
 			packet.frame[i]=0;
 		}
 		
-		//char msg[] = "ECE3140 rocks!\r\n"; 
-		//char msg[] = *msp430.message;
+		
 		/* First byte of packet frame holds message length in bytes */
 		packet.frame[0] = strlen(msg) + 8;	/* Includes 8-byte address header */
 		

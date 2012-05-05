@@ -87,23 +87,10 @@ void MRFI_RxCompleteISR(void) {
 				root->state = NETWORK_MODE;
 				uart_puts ("Chat rejected\n");
 			}
-			/*if(strcmp(packet_message, "y")==0 || strcmp(packet_message, "Y")){
-				root->state = CHAT_MODE;
-				uart_puts("Chat initiated\n");
-			}
-			else if(strcmp(packet_message, "n")==0 || strcmp(packet_message, "N")){
-				root->state = NETWORK_MODE;
-				uart_puts ("Chat rejected\n");
-				
-			}
-			else{
-				uart_puts("Received invalid acceptance, still waiting\n");
-				send_message("SYS: invalid msg");
-				
-			}*/
 			
 			
 		}
+		//Add msp430 to linked list in network/chat accept modes
 		else if(root->state == NETWORK_MODE || root->state == CHAT_ACCEPT_MODE){
 			msp430_obj *senders = (msp430_obj*)malloc(sizeof(msp430_obj));
 			msp430_obj *new_msp430;
@@ -161,9 +148,7 @@ void MRFI_RxCompleteISR(void) {
 	free(packet_message);
 	
 	
-	/* We ignore the data in the packet structure.
-	 * You probably want to do something with it here. */
-	 
+	
 	/* Toggle the red GREEN to signal that data has arrived */
 	
 	P1OUT ^= GREEN_LED;
