@@ -116,8 +116,8 @@ void interface_loop(void){
 			
 			
 		}
-	//__bis_SR_register(LPM3_bits + GIE);       // Enter LPM3, interrupts enabled 
-	sleep(100000);
+	__bis_SR_register(LPM3_bits + GIE);       // Enter LPM3, interrupts enabled 
+	//sleep(100000);
 	}//end program loop
 	
 }
