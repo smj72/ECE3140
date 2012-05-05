@@ -102,11 +102,12 @@ void interface_loop(void){
 				send_message();
 				}*/
 			if(root->message!=NULL&& strcmp (root->message,"\0") != 0){
-				int id_want = root->message[0] - '0';
+				//int id_want = root->message[0] - '0';
+				int id_want = atoi(root->message);
 				root->chat_IDs[0] = id_want;
 				//uart_puts();
 				
-				send_message(&(root->message[1]));
+				send_message(root->message);
 				root->message = "\0";
 			}
 		
