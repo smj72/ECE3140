@@ -80,6 +80,9 @@ __interrupt void USCI0RX_ISR(void)
 	if (UCA0RXBUF == '\r'){
 		
 		root->message = out; 
+		if (root->message == "\quit"){
+			memset(&root_init->chat_IDs,0,sizeof(root_init->chat_IDs));
+		}
 		
 		// Restart index to the beginning of the array
 		index = 0;
@@ -103,7 +106,7 @@ __interrupt void USCI0RX_ISR(void)
 			uart_puts("\nSending chat request to ID ");
 			uart_putc(out[0]);
 			uart_putc('\n');
-			root->state = CHAT_ACCEPT_MODE;
+			//root->state = CHAT_ACCEPT_MODE;
 		}
 		//__bic_SR_register_on_exit(LPM3_bits);
 		
