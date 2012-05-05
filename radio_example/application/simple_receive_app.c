@@ -134,14 +134,15 @@ void MRFI_RxCompleteISR(void) {
 		else if(root->state == CHAT_MODE && sender_id == root->chat_IDs[0])
 		{
 			msp430_obj *new_msp430 = (msp430_obj*) malloc(sizeof(msp430_obj));
-			
+			char *msg_init = (char*)malloc(30);
 			
 			new_msp430->ID = sender_id;
 			new_msp430->chat_IDs[0]=sender_want_chat_id;
 			new_msp430->state = NETWORK_MODE;
 			new_msp430->signal_next = root->signal_next;
-			//new_msp430->message = (char *) &packet.frame[15];
-			strcpy( (char *) new_msp430->message, (char *) &packet.frame[15]  );
+			strcpy( (char *) msg_init, (char *) &packet.frame[15]  );
+			new_msp430->message = msg_init;
+			//strcpy( (char *) new_msp430->message, (char *) &packet.frame[15]  );
 			
 			root->signal_next = new_msp430;
 			uart_puts("\n message received \n");

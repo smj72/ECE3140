@@ -13,7 +13,7 @@ msp430_obj *root;
 /* Settings taken from TI UART demo */ 
 void init_uart(void) {
 	msp430_obj *root_init = (msp430_obj*)malloc(sizeof(msp430_obj));
-	char *msg_init = (char*)malloc(50);
+	char *msg_init = (char*)malloc(30);
 	BCSCTL1 = CALBC1_1MHZ;        /* Set DCO for 1 MHz */
 	DCOCTL  = CALDCO_1MHZ;
 	P3SEL = 0x30;                 /* P3.4,5 = USCI_A0 TXD/RXD */
