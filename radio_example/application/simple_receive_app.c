@@ -142,7 +142,9 @@ void MRFI_RxCompleteISR(void) {
 			new_msp430->signal_next = root->signal_next;
 			new_msp430->message = (char *) &packet.frame[15];
 			
+			
 			root->signal_next = new_msp430;
+			uart_puts("\n message received \n");
 		}
 		
 	}
