@@ -108,6 +108,13 @@ __interrupt void USCI0RX_ISR(void)
 			uart_putc('\n');
 			//root->state = CHAT_ACCEPT_MODE;
 		}
+		else if(root->state == CHAT_MODE){
+			uart_puts("\nSending message:\n");
+			uart_puts(root->message);
+			uart_putc('\n');
+			
+			send_message(root->message);
+		}
 		//__bic_SR_register_on_exit(LPM3_bits);
 		
    // Overflow error, will only accept messages that are 20 characters long
