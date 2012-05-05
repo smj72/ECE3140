@@ -68,6 +68,7 @@ void uart_clear_screen(void) {
 #pragma vector=USCIAB0RX_VECTOR
 __interrupt void USCI0RX_ISR(void)
 {
+	char *pch;
 	if(index == 0){
 		//Clear buffer
 		memset(&out[0], 0, sizeof(out));
@@ -80,9 +81,13 @@ __interrupt void USCI0RX_ISR(void)
 	if (UCA0RXBUF == '\r'){
 		
 		root->message = out; 
-		if (root->message == "\quit"){
+		pch = strstr(root->message,"/");
+		uart_puts(pch);
+		if (root->message == "quit"){
 			memset(&root->chat_IDs,0,sizeof(root->chat_IDs));
 		}
+		if (strncmp(pch,"/quit",index-1)==0) uart_puts("FOUND IT quit!\n");
+		if (strncmp(pch,"/find",index-1)==0) uart_puts("FOUND IT find!\n");
 		
 		// Restart index to the beginning of the array
 		index = 0;
@@ -125,7 +130,7 @@ __interrupt void USCI0RX_ISR(void)
 		//Clear buffer
 		memset(&out[0], 0, sizeof(out));
 		//__bic_SR_register_on_exit(LPM3_bits);
-		
+	
 	}
 }
 
