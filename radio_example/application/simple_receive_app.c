@@ -59,6 +59,19 @@ void MRFI_RxCompleteISR(void) {
 	sender_id = packet.frame[9];
 	sender_want_chat_id = packet.frame[10];
 	
+	//Commands
+		
+		//Find: Send back response command
+		//strcpy(  packet_message, (char *) &packet.frame[15]  );
+		if(strcmp((char*) &packet.frame[15], "\find")==0){
+			send_message("\response");
+		}
+		else if(strcmp((char*) &packet.frame[15], "\response")==0){
+			memset(&packet_message[0], 0, sizeof(packet_message));
+			sprintf(packet_message," [%d] ",root->ID);
+			uart_puts(packet_message);
+		}
+	
 	//Accept package if ID matches
 	if(sender_want_chat_id == 0 || sender_want_chat_id == root->ID){
 		
@@ -71,6 +84,7 @@ void MRFI_RxCompleteISR(void) {
 		sprintf(packet_message,"%s", &packet.frame[11]);
 		uart_puts(packet_message);
 		uart_putc('\n');*/
+		
 		
 		
 		//Conditions for chat mode. chat_ID = 0 means it will accept any chat request
@@ -163,7 +177,7 @@ void MRFI_RxCompleteISR(void) {
 	/* Toggle the red GREEN to signal that data has arrived */
 	
 	P1OUT ^= GREEN_LED;
-	sleep(20000);
+	sleep(1000);
 	P1OUT ^= GREEN_LED;
 	
 }
