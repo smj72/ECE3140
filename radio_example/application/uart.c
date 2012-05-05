@@ -103,10 +103,10 @@ __interrupt void USCI0RX_ISR(void)
 		//Network mode: send chat acceptance to msp430 with specific ID
 		else if(root->state == NETWORK_MODE || root->state == CHAT_ACCEPT_MODE){
 			//int wanted_chat_id = out[0] - '0';
-			int wanted_id = atoi(out);
+			int wanted_chat_id = atoi(out);
 			root->chat_IDs[0] = wanted_chat_id;
 			uart_puts("\nSending chat request to ID ");
-			uart_putc(out);
+			uart_puts(out);
 			uart_putc('\n');
 			//root->state = CHAT_ACCEPT_MODE;
 		}
