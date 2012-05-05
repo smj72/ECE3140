@@ -27,19 +27,14 @@ void receive_message(void){
 	}
 		
 	
-	
-	
 	/* Turn on the radio receiver */
 	MRFI_RxOn();
 	//MRFI_GpioIsr();
 	
-	/* Main loop just toggles the green LED with some delay */
+	
 	__bis_SR_register(GIE);
-	/*while(1){
-		__enable_interrupt();
-		sleep(60000);
-		P1OUT ^= GREEN_LED;
-	}*/
+
+//Green LED signals radio receiver is on and can obtain messages
 	P1OUT = GREEN_LED;
 }
 
@@ -146,7 +141,6 @@ void MRFI_RxCompleteISR(void) {
 		
 	}
 	free(packet_message);
-	
 	
 	
 	/* Toggle the red GREEN to signal that data has arrived */

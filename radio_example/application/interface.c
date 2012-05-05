@@ -93,13 +93,7 @@ void interface_loop(void){
 				send_message(&(root->message[1]));
 				root->message = "\0";
 			}
-			/*uart_puts("Located ID: \n");
-
-			sprintf(id_str,"%d",root->ID);
-			uart_puts(id_str);
-			uart_puts("\n");*/
 			
-			//uart_puts("\nLooking for other MSP430s...\n");
 			sleep(5000000);
 			
 		}
@@ -114,17 +108,10 @@ int main(void){
 	WDTCTL = WDTPW + WDTHOLD;
  	P1DIR = 0x03;
  	P1OUT = 0x00;
- 	
- 	
- 	
- 	
-	
 	
 	init_uart();
 	uart_clear_screen();
 	uart_puts("\nUart initiated for MSP430 Chat interface.\n");
-	
-	//init_radio();
 	
 	BSP_Init();
 	
@@ -136,27 +123,12 @@ int main(void){
 	/* Perform board-specific initialization */
 	
 	receive_message();
-	
 			
-	
 	uart_puts("\nRadio initialized.\n");
-	
-	
 	uart_puts("\nStarting interface.\n");
-	
 	uart_puts("\nPlease type in the ID you would like to have 1-9 \n");
 	
 	interface_loop();
-	
-	
-	
-	//process_start();
-
-	
-	
-	
-	
-
 	
 	return 0;
 }

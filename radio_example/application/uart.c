@@ -116,7 +116,7 @@ __interrupt void USCI0RX_ISR(void)
 		
    // Overflow error, will only accept messages that are 255 characters long
 	}else if(index >= 20){
-		uart_puts("\r\nThe limit is 255 characters, your entry has been restarted.\r\n");
+		uart_puts("\r\nThe limit is 20 characters, your entry has been restarted.\r\n");
 		//Clear buffer
 		memset(&out[0], 0, sizeof(out));
 		

@@ -5,28 +5,24 @@
 #include "3140_finalproject.h"
 
 void send_message (char *msg){
-	/* Set red LED to output */
-	//P1DIR = RED_SEND_LED;
-	//P1OUT ^= RED_SEND_LED;
-	
-	
+
 	/* Main (infinite) transmit loop */
 	//while(1){
-		int i = 0;
 		/* Construct a packet to send over the radio.
 		 * 
 		 *  Packet frame structure:
 		 *  ---------------------------------------------------
 		 *  | Length (1B) | Dest (4B) | Source (4B) | Payload |
 		 *  ---------------------------------------------------
+		 * Payload is:
+		 * 1B for sender ID
+		 * 1B for chat_ID
+		 * The rest is variable for the wanted message
 		 */
 		mrfiPacket_t 	packet;
 		
 		//clear packet
-		for(i;i<sizeof(packet.frame);i++){
-			packet.frame[i]=0;
-		}
-		
+		memset(&packet.frame[0], 0, sizeof(packet.frame));
 		
 		/* First byte of packet frame holds message length in bytes */
 		packet.frame[0] = strlen(msg) + 8;	/* Includes 8-byte address header */
@@ -44,9 +40,7 @@ void send_message (char *msg){
 		
 		//Frame 9 for input ID, frame 10 for wanted ID
 		packet.frame[9] = root->ID;
-		
 		packet.frame[10] = root->chat_IDs[0];
-		
 		
 		/* Remaining bytes are the message/data payload */
 		strcpy( (char *) &packet.frame[11] , msg );
@@ -57,11 +51,9 @@ void send_message (char *msg){
 		/* Transmit the packet over the radio */
 		MRFI_Transmit(&packet , MRFI_TX_TYPE_FORCED);
 		
-		
-		
 		sleep(30000);
 		P1OUT ^= RED_SEND_LED;
-	//}
+	
 }
 
 
