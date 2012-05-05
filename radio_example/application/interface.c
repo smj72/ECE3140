@@ -45,12 +45,12 @@ void interface_loop(void){
 				}
 			}
 		}
-	}
+	
 		// If id was found and state is in chat mode
 		if (found_id && root->state == CHAT_MODE){	
 			uart_puts("Message From ID: ");
 			//char *id;
-			sprintf(id_str,"%d",root->ID);
+			sprintf(id_str,"%d",head->ID);
 			uart_puts(id_str);
 			uart_puts("\n");
 			uart_puts(head->message);
@@ -82,6 +82,7 @@ void interface_loop(void){
 		
 				// SEND RADIO SIGNAL
 			}
+		}
 		// NETWORK STATE
 		}
 		else if (root->state == CHAT_ACCEPT_MODE){

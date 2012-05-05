@@ -39,9 +39,14 @@ void send_message (char *msg){
 		//Frame 9 for input ID, frame 10 for wanted ID
 		packet.frame[9] = root->ID;
 		packet.frame[10] = root->chat_IDs[0];
+		packet.frame[11] = root->chat_IDs[1];
+		packet.frame[12] = root->chat_IDs[2];
+		packet.frame[13] = root->chat_IDs[3];
+		packet.frame[14] = root->chat_IDs[4];
+		
 		
 		/* Remaining bytes are the message/data payload */
-		strcpy( (char *) &packet.frame[11] , msg );
+		strcpy( (char *) &packet.frame[15] , msg );
 		
 		/* Toggle red LED before transmitting, then wait a while */
 		P1OUT ^= RED_SEND_LED;
