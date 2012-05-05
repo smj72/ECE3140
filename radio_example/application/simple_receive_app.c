@@ -54,7 +54,7 @@ void MRFI_RxCompleteISR(void) {
 	mrfiPacket_t	packet;
 	MRFI_Receive(&packet);
 	//clear low power mode
-	__bic_SR_register(LPM3_bits);
+	//__bic_SR_register(LPM3_bits);
 	
 	sender_id = packet.frame[9];
 	sender_want_chat_id = packet.frame[10];
