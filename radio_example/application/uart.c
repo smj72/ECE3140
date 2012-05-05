@@ -102,7 +102,7 @@ __interrupt void USCI0RX_ISR(void)
 			uart_puts("\nNow choose another ID 0-9 (0 for anyone) you wish to chat with\nFollowed by any message\n");
 		}
 		//Network mode: send chat acceptance to msp430 with specific ID
-		else if(root->state == NETWORK_MODE){
+		else if(root->state == NETWORK_MODE || root->state == CHAT_ACCEPT_MODE){
 			int wanted_chat_id = out[0] - '0';
 			root->chat_IDs[0] = wanted_chat_id;
 			uart_puts("\nSending chat request to ID ");
@@ -110,12 +110,14 @@ __interrupt void USCI0RX_ISR(void)
 			uart_putc('\n');
 			root->state = CHAT_ACCEPT_MODE;
 		}
+		__bic_SR_register_on_exit(LPM3_bits);
 		
    // Overflow error, will only accept messages that are 20 characters long
 	}else if(index >= 20){
 		uart_puts("\r\nThe limit is 20 characters, your entry has been restarted.\r\n");
 		//Clear buffer
 		memset(&out[0], 0, sizeof(out));
+		__bic_SR_register_on_exit(LPM3_bits);
 		
 	}
 }

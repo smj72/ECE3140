@@ -1,5 +1,6 @@
 #include "3140_finalproject.h"
 
+char *id_str;
 /* Parameterized "sleep" helper function */
 void sleep(unsigned int count) {
 	int i;
@@ -13,7 +14,8 @@ void sleep(unsigned int count) {
 void interface_loop(void){
 	
 	//char buffer[10] = {0};
-	char *id_str = (char *) malloc(2);
+	
+	
 	//char *id_str = &buffer[0];
 	int found_id;
 	int array_size;
@@ -80,6 +82,16 @@ void interface_loop(void){
 			}
 		// NETWORK STATE
 		}
+		else if (root->state == CHAT_ACCEPT_MODE){
+			if(root->message!=NULL&& strcmp (root->message,"\0") != 0){
+				int id_want = root->message[0] - '0';
+				root->chat_IDs[0] = id_want;
+				//uart_puts();
+				
+				send_message(&(root->message[1]));
+				root->message = "\0";
+			}
+		}
 		else if (root->state == NETWORK_MODE){
 			/*root->message = "smj72";
 			while(1){
@@ -93,12 +105,14 @@ void interface_loop(void){
 				send_message(&(root->message[1]));
 				root->message = "\0";
 			}
+		
 			
-			sleep(5000000);
+			//low power mode to wait for new update
+			
 			
 		}
-	
-	sleep(10000);
+	__bis_SR_register(LPM3_bits + GIE);       // Enter LPM3, interrupts enabled 
+	sleep(100000);
 	}//end program loop
 	
 }
@@ -108,6 +122,7 @@ int main(void){
 	WDTCTL = WDTPW + WDTHOLD;
  	P1DIR = 0x03;
  	P1OUT = 0x00;
+	id_str = (char *) malloc(2);
 	
 	init_uart();
 	uart_clear_screen();

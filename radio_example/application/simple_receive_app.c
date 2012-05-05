@@ -4,6 +4,8 @@
  *   Toggles red LED every time a packet is received.
  *----------------------------------------------------------*/
 #include "3140_finalproject.h"
+char packet_message[20];
+msp430_obj *senders;
 
 //Initialization for receiving messages
 void receive_message(void){
@@ -15,7 +17,7 @@ void receive_message(void){
 	 *   This should match the "destination" address of
 	 *   the packets sent by the transmitter. */
 	uint8_t address[] = {0x12,0x34,0xab,0xcd};
-	
+	senders = (msp430_obj*)malloc(sizeof(msp430_obj));
 	
 	/* Attempt to turn on address filtering
 	 *   If unsuccessful, turn on both LEDs and wait forever */
@@ -29,7 +31,6 @@ void receive_message(void){
 	
 	/* Turn on the radio receiver */
 	MRFI_RxOn();
-	//MRFI_GpioIsr();
 	
 	
 	__bis_SR_register(GIE);
@@ -45,7 +46,7 @@ void MRFI_RxCompleteISR(void) {
 	/* Read the received data packet */
 	int sender_id;
 	int sender_want_chat_id;
-	char packet_message[20];
+	
 	//char * packet_message;
 	
 	mrfiPacket_t	packet;
@@ -58,14 +59,14 @@ void MRFI_RxCompleteISR(void) {
 	if(sender_want_chat_id == 0 || sender_want_chat_id == root->ID){
 		
 		//packet_message = (char *) malloc(2);
-		uart_puts("\nRadio Message Received!\n");
+		/*uart_puts("\nRadio Message Received!\n");
 		uart_puts("sender: ");
 		sprintf(packet_message,"%d",sender_id);
 		uart_puts(packet_message);
 		uart_puts("\nmessage: ");
 		sprintf(packet_message,"%s", &packet.frame[11]);
 		uart_puts(packet_message);
-		uart_putc('\n');
+		uart_putc('\n');*/
 		
 		
 		//Conditions for chat mode. chat_ID = 0 means it will accept any chat request
@@ -91,14 +92,16 @@ void MRFI_RxCompleteISR(void) {
 		}
 		//Add msp430 to linked list in network/chat accept modes
 		else if(root->state == NETWORK_MODE || root->state == CHAT_ACCEPT_MODE){
-			msp430_obj *senders = (msp430_obj*)malloc(sizeof(msp430_obj));
-			msp430_obj *new_msp430;
+			
 			senders = root;
-			while(senders != NULL)
+			while(senders)
 			{
 				//Only add to linked list if it's a new msp430
-				if(senders->signal_next == NULL){
-					new_msp430 = (msp430_obj*) malloc(sizeof(msp430_obj));
+				if(senders->ID == sender_id){
+					break;
+				}
+				else if(senders->signal_next == NULL){
+					msp430_obj *new_msp430 = (msp430_obj*) malloc(sizeof(msp430_obj));
 					
 					new_msp430->ID = sender_id;
 					new_msp430->chat_IDs[0]=sender_want_chat_id;
@@ -106,23 +109,25 @@ void MRFI_RxCompleteISR(void) {
 					new_msp430->signal_next = root->signal_next;
 					
 					root->signal_next = new_msp430;
+					
+					//Update list of available msp430s to chat with
+					uart_puts("\n These msp430s wish to chat with you:\n");
+					senders = root->signal_next;
+					memset(&packet_message[0], 0, sizeof(packet_message));
+					while(senders!=NULL){
+						sprintf(packet_message,"%d ",senders->ID);
+						uart_puts(packet_message);
+						senders = senders->signal_next;
+					}
+					uart_putc('\n');
+					
 					break;
 				}
-				else if(senders->ID == sender_id){
-					break;
-				}
+				
 				senders = senders->signal_next;
 			}
-			//Update list of available msp430s to chat with
-			uart_puts("\n These msp430s wish to chat with you:\n");
-			senders = root->signal_next;
-			memset(&packet_message[0], 0, sizeof(packet_message));
-			while(senders!=NULL){
-				sprintf(packet_message,"%d ",senders->ID);
-				uart_puts(packet_message);
-			}
-			uart_putc('\n');
-			free(senders);
+			
+			//free(senders);
 		}
 		//If in chat mode, check ID and automatically add to stack
 		else if(root->state == CHAT_MODE && sender_id == root->chat_IDs[0])
@@ -144,7 +149,7 @@ void MRFI_RxCompleteISR(void) {
 		uart_puts("\nDEBUG: Message Blocked\n");
 		
 	}
-	free(packet_message);
+	//free(packet_message);
 	
 	
 	/* Toggle the red GREEN to signal that data has arrived */
@@ -152,6 +157,7 @@ void MRFI_RxCompleteISR(void) {
 	P1OUT ^= GREEN_LED;
 	sleep(60000);
 	P1OUT ^= GREEN_LED;
+	__bis_SR_register(GIE);
 }
 
 
