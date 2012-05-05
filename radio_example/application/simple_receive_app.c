@@ -63,10 +63,10 @@ void MRFI_RxCompleteISR(void) {
 		
 		//Find: Send back response command
 		//strcpy(  packet_message, (char *) &packet.frame[15]  );
-		if(strcmp((char*) &packet.frame[15], "\find")==0){
+		if(strncmp((char*) &packet.frame[15], "\find", 5)==0){
 			send_message("\response");
 		}
-		else if(strcmp((char*) &packet.frame[15], "\response")==0){
+		if(strncmp((char*) &packet.frame[15], "\response", 9)==0){
 			memset(&packet_message[0], 0, sizeof(packet_message));
 			sprintf(packet_message," [%d] ",root->ID);
 			uart_puts(packet_message);
