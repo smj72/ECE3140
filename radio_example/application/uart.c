@@ -92,19 +92,21 @@ __interrupt void USCI0RX_ISR(void)
 		//Choose ID mode: obtain your ID
 		if(root->state == CHOOSE_ID_MODE)
 		{
-			int wanted_id = out[0] - '0';
+			//int wanted_id = out[0] - '0';
+			int wanted_id = atoi(out);
 			root->ID = wanted_id;
 			root->state = NETWORK_MODE;
 			uart_puts("\n ID is now: ");
-			uart_putc(out[0]);
+			uart_puts(out);
 			uart_puts("\nNow choose another ID (0 for anyone) you wish to chat with\nFollowed by any message\n");
 		}
 		//Network mode: send chat acceptance to msp430 with specific ID
 		else if(root->state == NETWORK_MODE || root->state == CHAT_ACCEPT_MODE){
-			int wanted_chat_id = out[0] - '0';
+			//int wanted_chat_id = out[0] - '0';
+			int wanted_id = atoi(out);
 			root->chat_IDs[0] = wanted_chat_id;
 			uart_puts("\nSending chat request to ID ");
-			uart_putc(out[0]);
+			uart_putc(out);
 			uart_putc('\n');
 			//root->state = CHAT_ACCEPT_MODE;
 		}

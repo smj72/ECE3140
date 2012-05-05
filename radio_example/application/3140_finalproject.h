@@ -54,7 +54,7 @@ MCU using a serial terminal.
 ------------------------------------------------------------------------*/
 
 /* This variable maintains what the user typed in */
-extern char out[20];
+extern char out[CHAR_LIMIT];
 
 /* Sets up uart bits */
 void init_uart (void);
