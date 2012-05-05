@@ -33,14 +33,17 @@ Each root represents its own msp430. Each child msp430's next is connected with 
 
 ---------------------------------------------------------------------------------------*/
  
- //typedef struct msp430_impl msp430_obj;
- //opaque definition of msp430 type;
 typedef struct msp430_impl msp430_obj; 
 //struct msp430_obj;
+struct msp430_impl{
+ 	int ID;
+ 	char *message;
+ 	int chat_IDs[4];
+ 	msp430_obj *signal_next;
+ 	int state;
+ };
 
-
-
-//extern msp430_obj *root;
+extern msp430_obj *root;
 
 /*------------------------------------------------------------------------
   

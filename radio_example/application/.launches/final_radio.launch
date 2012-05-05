@@ -18,13 +18,13 @@
 <stringAttribute key="com.ti.ccstudio.debug.core.DISPLAY_NAME_FORMAT" value="final_radio [Debug] - {0}"/>
 <stringAttribute key="CCEDebugOptions.TARGET_CONFIGURATION_OPTION" value="full"/>
 <stringAttribute key="org.eclipse.cdt.launch.MEMORY_BLOCKS" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#13;&#10;&lt;memoryBlockExpressionList/&gt;&#13;&#10;"/>
-<stringAttribute key="com.ti.ccstudio.debug.core.MRU_PROGRAM_NAME" value="C:\Users\SAN\Dropbox\ECE 3140 Embedded Systems\Workspace\final_radio\radio_example\application\Debug\radio_example.out"/>
-<stringAttribute key="com.ti.ccstudio.debug.core.MRU_MODULES" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#13;&#10;&lt;modules&gt;&#13;&#10;&lt;module name=&quot;Z:\ece3140\radio_example\application\Debug\radio_example.out&quot; time=&quot;Wed May 02 01:49:41 EDT 2012&quot; time_long=&quot;1335937781671&quot;/&gt;&#13;&#10;&lt;module name=&quot;C:\Users\SAN\Dropbox\ECE 3140 Embedded Systems\Workspace\final_radio\radio_example\application\Debug\radio_example.out&quot; time=&quot;Wed May 02 17:04:14 EDT 2012&quot; time_long=&quot;1335992654769&quot;/&gt;&#13;&#10;&lt;/modules&gt;&#13;&#10;"/>
+<stringAttribute key="com.ti.ccstudio.debug.core.MRU_PROGRAM_NAME" value="Z:\ece3140\radio_example\application\Debug\radio_example.out"/>
+<stringAttribute key="com.ti.ccstudio.debug.core.MRU_MODULES" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#13;&#10;&lt;modules&gt;&#13;&#10;&lt;module name=&quot;C:\Users\SAN\Dropbox\ECE 3140 Embedded Systems\Workspace\final_radio\radio_example\application\Debug\radio_example.out&quot; time=&quot;Wed May 02 17:04:14 EDT 2012&quot; time_long=&quot;1335992654769&quot;/&gt;&#13;&#10;&lt;module name=&quot;Z:\ece3140\radio_example\application\Debug\radio_example.out&quot; time=&quot;Fri May 04 21:01:07 EDT 2012&quot; time_long=&quot;1336179667796&quot;/&gt;&#13;&#10;&lt;/modules&gt;&#13;&#10;"/>
 <stringAttribute key="org.eclipse.cdt.launch.PROJECT_ATTR" value="final_radio"/>
 <stringAttribute key="CCEDebugOptions.CPU_NAME" value="TI MSP430 USB1/MSP430"/>
 <stringAttribute key="org.eclipse.cdt.launch.GLOBAL_VARIABLES" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#13;&#10;&lt;globalVariableList/&gt;&#13;&#10;"/>
 <booleanAttribute key="CCEDebugOptions.FORBID_DEVICE_MODIFICATION" value="true"/>
 <stringAttribute key="org.eclipse.cdt.launch.PROGRAM_NAME" value="Debug/radio_example.out"/>
 <stringAttribute key="com.ti.ccstudio.debug.core.BUILD_CONFIGURATION" value="Debug"/>
-<stringAttribute key="CCEDebugOptions.TARGET_CONFIGURATION_FILE" value="C:\Users\SAN\Dropbox\ECE 3140 Embedded Systems\Workspace\final_radio\radio_example\application\MSP430F2274.ccxml"/>
+<stringAttribute key="CCEDebugOptions.TARGET_CONFIGURATION_FILE" value="Z:\ece3140\radio_example\application\MSP430F2274.ccxml"/>
 </launchConfiguration>

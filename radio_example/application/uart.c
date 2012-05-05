@@ -3,15 +3,6 @@
 volatile int index = 0;
 char out[20];
 
-
-//msp430_obj my_msp430;
-typedef struct msp430_impl{
- 	int ID;
- 	char *message;
- 	int chat_IDs[4];
- 	msp430_obj *signal_next;
- 	int state;
- }msp430_obj; 
 msp430_obj *root;
 
 /*------------------------------------------------------------------------

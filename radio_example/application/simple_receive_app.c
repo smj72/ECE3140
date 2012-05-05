@@ -3,33 +3,7 @@
  *   Always blinks green LED.
  *   Toggles red LED every time a packet is received.
  *----------------------------------------------------------*/
-
-#include "bsp.h"
-#include "mrfi.h"
-#include "radios/family1/mrfi_spi.h"
 #include "3140_finalproject.h"
-#include <string.h>
-#include<stdio.h>
-
-/* Useful #defines */
-#define RED_RECEIVE_LED 0x01
-#define GREEN_LED   0x02
-
-/* Function prototypes */
-void sleep(unsigned int count);
-
-typedef struct msp430_impl{
- 	int ID;
- 	char *message;
- 	int chat_IDs[4];
- 	msp430_obj *signal_next;
- 	int state;
- }msp430_obj; 
-
-
-
-
-extern msp430_obj *root;
 
 //Initialization for receiving messages
 void receive_message(void){

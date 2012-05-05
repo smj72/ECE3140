@@ -1,18 +1,5 @@
 #include "3140_finalproject.h"
 
-
-typedef struct msp430_impl{
- 	int ID;
- 	char *message;
- 	int chat_IDs[4];
- 	msp430_obj *signal_next;
- 	int state;
- }msp430_obj; 
-extern msp430_obj *root;
-
-#define NETWORK_MODE 0x00
-#define CHAT_ACCEPT_MODE 0x01
-#define CHAT_MODE 0x02
 /* Parameterized "sleep" helper function */
 void sleep(unsigned int count) {
 	int i;

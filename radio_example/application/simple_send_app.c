@@ -2,32 +2,7 @@
  * Example radio "send" application
  *   Sends packets with a data payload in an infinite loop
  *----------------------------------------------------------*/
-
-#include "bsp.h"
-#include "mrfi.h"
-#include "radios/family1/mrfi_spi.h"
 #include "3140_finalproject.h"
-#include <string.h>
-
-/* Useful #defines */
-#define RED_SEND_LED 		0x01
-
-/* Function prototypes */
-//void sleep(unsigned int count);
-
-
-
-typedef struct msp430_impl{
- 	int ID;
- 	char *message;
- 	int chat_IDs[4];
- 	msp430_obj *signal_next;
- 	int state;
- }msp430_obj; 
-
-extern msp430_obj *root;
-
-
 
 void send_message (char *msg){
 	/* Set red LED to output */
