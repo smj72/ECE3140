@@ -81,7 +81,7 @@ __interrupt void USCI0RX_ISR(void)
 		
 		root->message = out; 
 		if (root->message == "\quit"){
-			memset(&root_init->chat_IDs,0,sizeof(root_init->chat_IDs));
+			memset(&root->chat_IDs,0,sizeof(root->chat_IDs));
 		}
 		
 		// Restart index to the beginning of the array
