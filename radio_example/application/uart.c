@@ -24,8 +24,6 @@ void init_uart(void) {
 	UCA0MCTL = UCBRS0;            /* Modulation UCBRSx = 1 */
 	UCA0CTL1 &= ~UCSWRST;         /* Initialize USCI state machine */
 	IE2 |= UCA0RXIE; 			  /* Enable USCI_A0 RX interrupt */
-	//IE1  |=  URXIE0;        	  //  Enable  USART0  RX  interrupt
-	//extern msp430_obj *root;
 	
 	// Define Root parameters
 	root_init->ID = 5;
@@ -114,7 +112,7 @@ __interrupt void USCI0RX_ISR(void)
 			uart_putc('\n');
 		}
 		
-   // Overflow error, will only accept messages that are 255 characters long
+   // Overflow error, will only accept messages that are 20 characters long
 	}else if(index >= 20){
 		uart_puts("\r\nThe limit is 20 characters, your entry has been restarted.\r\n");
 		//Clear buffer

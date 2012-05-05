@@ -6,8 +6,6 @@
 
 void send_message (char *msg){
 
-	/* Main (infinite) transmit loop */
-	//while(1){
 		/* Construct a packet to send over the radio.
 		 * 
 		 *  Packet frame structure:
