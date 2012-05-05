@@ -47,6 +47,9 @@ void MRFI_RxCompleteISR(void) {
 	int sender_id;
 	int sender_want_chat_id;
 	
+	//clear low power mode
+	__bic_SR_register(LPM3_bits);
+	
 	//char * packet_message;
 	
 	mrfiPacket_t	packet;
@@ -161,7 +164,7 @@ void MRFI_RxCompleteISR(void) {
 	P1OUT ^= GREEN_LED;
 	sleep(20000);
 	P1OUT ^= GREEN_LED;
-	__bis_SR_register(GIE);
+	
 }
 
 
