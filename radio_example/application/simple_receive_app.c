@@ -157,7 +157,7 @@ void MRFI_RxCompleteISR(void) {
 	P1OUT ^= GREEN_LED;
 	sleep(60000);
 	P1OUT ^= GREEN_LED;
-	__bis_SR_register(GIE);
+	//__bis_SR_register(GIE);
 }
 
 
