@@ -68,8 +68,8 @@ void MRFI_RxCompleteISR(void) {
 		uart_putc('\n');
 		
 		
-		
-		if(root->state == CHAT_ACCEPT_MODE && root->chat_IDs[0] == sender_id )
+		//Conditions for chat mode. chat_ID = 0 means it will accept any chat request
+		if(root->state == CHAT_ACCEPT_MODE && (root->chat_IDs[0] == sender_id || root->chat_IDs[0]==0))
 		{
 			int chat_accept_id = packet_message[0] - '0';
 			if(chat_accept_id == root->ID){
@@ -78,13 +78,13 @@ void MRFI_RxCompleteISR(void) {
 				sprintf(packet_message,"%d",root->ID);
 				send_message(packet_message);
 				root->state = CHAT_MODE;
-				uart_puts("Chat initiated\n");
+				uart_puts("\nChat initiated\n");
 				//clear msp430 list
 				root->signal_next = NULL;
 			}
 			else{
 				root->state = NETWORK_MODE;
-				uart_puts ("Chat rejected\n");
+				uart_puts ("Chat rejected.\nPlease type in another ID\n");
 			}
 			
 			
@@ -141,7 +141,7 @@ void MRFI_RxCompleteISR(void) {
 		
 	}
 	else{
-		uart_puts("DEBUG: Message Blocked\n");
+		uart_puts("\nDEBUG: Message Blocked\n");
 		
 	}
 	free(packet_message);
