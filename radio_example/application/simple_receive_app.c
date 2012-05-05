@@ -74,7 +74,7 @@ void MRFI_RxCompleteISR(void) {
 		{
 			//int chat_accept_id = packet_message[0] - '0';
 			if(sender_want_chat_id == root->ID){
-				root->chat_IDs[0] = sender_want_chat_id;
+				root->chat_IDs[0] = sender_id;
 				memset(&packet_message[0], 0, sizeof(packet_message));
 				sprintf(packet_message,"%d chat accept",root->ID);
 				send_message(packet_message);
