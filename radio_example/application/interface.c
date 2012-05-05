@@ -56,7 +56,7 @@ void interface_loop(void){
 			uart_puts(head->message);
 			// If message quit then remove from chat ids
 			quit = 0;
-			if (head->message == "/quit"){
+			if (head->message == "\quit"){
 				int i = 0;
 				for(i;i<array_size;i++){
 					if(root->chat_IDs[i] == head->ID){
@@ -73,12 +73,12 @@ void interface_loop(void){
 				uart_puts("Respond To (enter id): ");
 				root->message = NULL;
 				// busy wait for message
-				while(root->message == NULL);
+				//while(root->message == NULL);
 		
 				uart_puts("Enter message: \n");
 				root->message = NULL;
 				// busy wait for message
-				while(root->message[0] == NULL);
+				//while(root->message[0] == NULL);
 		
 				// SEND RADIO SIGNAL
 			}
