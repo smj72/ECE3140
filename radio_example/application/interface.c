@@ -13,7 +13,7 @@ void sleep(unsigned int count) {
 void interface_loop(void){
 	
 	//char buffer[10] = {0};
-	char *id_str;
+	char *id_str = (char *) malloc(2);
 	//char *id_str = &buffer[0];
 	int found_id;
 	int array_size;
@@ -52,7 +52,7 @@ void interface_loop(void){
 			uart_puts(head->message);
 			// If message quit then remove from chat ids
 			quit = 0;
-			if (head->message == "quit"){
+			if (head->message == "/quit"){
 				int i = 0;
 				for(i;i<array_size;i++){
 					if(root->chat_IDs[i] == head->ID){
