@@ -106,7 +106,7 @@ __interrupt void USCI0RX_ISR(void)
 		
 		else{
 			// Restart index to the beginning of the array
-			index = 0;
+			
 			uart_putc('\n');
 			
 			//State changes based on what was sent
@@ -142,6 +142,7 @@ __interrupt void USCI0RX_ISR(void)
 				
 				send_message(root->message);
 			}
+			index = 0;
 		}
 		
    // Overflow error, will only accept messages that are so many characters long
@@ -150,6 +151,7 @@ __interrupt void USCI0RX_ISR(void)
 		uart_puts("\nThe limit is so many characters, Please try again.\n");
 		//Clear buffer
 		memset(&out[0], 0, sizeof(out));
+		index = 0;
 		//__bic_SR_register_on_exit(LPM3_bits);
 	
 	}
