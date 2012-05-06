@@ -26,8 +26,8 @@ void send_message (char *msg){
 		packet.frame[0] = strlen(msg) + 14;	/* Includes 8-byte address header */
 		
 		/* Next 8 bytes are addresses, 4 each for source and dest. */
-		packet.frame[1] = 0x12;		/* Destination */
-		packet.frame[2] = 0x34;
+		packet.frame[1] = 0x15;		/* Destination */
+		packet.frame[2] = 0x40;
 		packet.frame[3] = 0xac;
 		packet.frame[4] = 0xcd;
 		

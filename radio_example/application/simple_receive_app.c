@@ -16,7 +16,7 @@ void receive_message(void){
 	/* Set a filter address for packets received by the radio
 	 *   This should match the "destination" address of
 	 *   the packets sent by the transmitter. */
-	uint8_t address[] = {0x12,0x34,0xac,0xcd};
+	uint8_t address[] = {0x15,0x40,0xac,0xcd};
 	senders = (msp430_obj*)malloc(sizeof(msp430_obj));
 	
 	/* Attempt to turn on address filtering
