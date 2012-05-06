@@ -32,18 +32,12 @@ void interface_loop(void){
 	if(head != NULL){
 		root->signal_next = head->signal_next;
 		head->signal_next = NULL;
-		
-		// If there are chat ids, make sure the message sender is part of the ids
-		array_size = sizeof(root->chat_IDs)/sizeof(int);
-		found_id = 0;
-		if (array_size != 0){
-			int i = 0;
-			for(i;i<array_size;i++){
-				if(root->chat_IDs[i] == head->ID){
-					found_id = 1;
-					break;
-				}
-			}
+		if(root->chat_want_ID == head->ID){
+			found_id = 1;
+		}
+		else
+		{
+			found_id = 0;
 		}
 	
 		// If id was found and state is in chat mode
@@ -59,12 +53,10 @@ void interface_loop(void){
 			quit = 0;
 			if (head->message == "/quit"){
 				int i = 0;
-				for(i;i<array_size;i++){
-					if(root->chat_IDs[i] == head->ID){
-						root->chat_IDs[i] = NULL;
-						quit = 1;
-						break;
-					}
+				if(root->chat_want_ID == head->ID){
+					root->chat_want_ID = 0;
+					quit = 1;
+					break;
 				}
 			}
 			//free head memory
@@ -92,7 +84,7 @@ void interface_loop(void){
 		else if (root->state == CHAT_ACCEPT_MODE){
 			if(root->message!=NULL&& strcmp (root->message,"\0") != 0){
 				int id_want = root->message[0] - '0';
-				root->chat_IDs[0] = id_want;
+				root->chat_want_ID = id_want;
 				//uart_puts();
 				
 				send_message(&(root->message[1]));
@@ -107,7 +99,7 @@ void interface_loop(void){
 			if(root->message!=NULL&& strcmp (root->message,"\0") != 0){
 				//int id_want = root->message[0] - '0';
 				int id_want = atoi(root->message);
-				root->chat_IDs[0] = id_want;
+				root->chat_want_ID = id_want;
 				//uart_puts();
 				
 				send_message(root->message);

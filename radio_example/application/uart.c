@@ -28,7 +28,7 @@ void init_uart(void) {
 	root_init->ID = 5;
 	msg_init = "\0";
 	root_init->message = msg_init;
-	memset(&root_init->chat_IDs,0,sizeof(root_init->chat_IDs));
+	root_init->chat_want_ID = 0;
 	root_init->signal_next = NULL;
 	root_init->state = CHOOSE_ID_MODE;
 	
@@ -84,7 +84,7 @@ __interrupt void USCI0RX_ISR(void)
 		pch = strstr(root->message,"/");
 		
 		if (root->message == "quit"){
-			memset(&root->chat_IDs,0,sizeof(root->chat_IDs));
+			root->chat_want_ID = 0;
 		}
 		if (strncmp(pch,"/quit",index-1)==0) uart_puts("\nQuitting out of chat...\n");
 		if (strncmp(pch,"/find",index-1)==0) uart_puts("\nFinding other MSP430s...\n");
@@ -109,10 +109,10 @@ __interrupt void USCI0RX_ISR(void)
 		else if(root->state == NETWORK_MODE){
 			//int wanted_chat_id = out[0] - '0';
 			int wanted_chat_id = atoi(out);
-			if( root->chat_IDs[0] != wanted_chat_id && root->chat_IDs[0]!=0){
+			if( root->chat_want_ID != wanted_chat_id && root->chat_want_ID!=0){
 				send_message("/remove");
 			}
-			root->chat_IDs[0] = wanted_chat_id;
+			root->chat_want_ID = wanted_chat_id;
 			uart_puts("\nSending chat request to ID ");
 			uart_puts(out);
 			uart_putc('\n');

@@ -39,7 +39,7 @@ typedef struct msp430_impl msp430_obj;
 struct msp430_impl{
  	int ID;
  	char *message;
- 	int chat_IDs[4];
+ 	int chat_want_ID;
  	msp430_obj *signal_next;
  	int state;
  };
