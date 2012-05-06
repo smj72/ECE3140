@@ -109,9 +109,9 @@ __interrupt void USCI0RX_ISR(void)
 		else if(root->state == NETWORK_MODE){
 			//int wanted_chat_id = out[0] - '0';
 			int wanted_chat_id = atoi(out);
-			if( root->chat_want_ID != wanted_chat_id && root->chat_want_ID!=0){
+			/*if( root->chat_want_ID != wanted_chat_id && root->chat_want_ID!=0){
 				send_message("/remove");
-			}
+			}*/
 			root->chat_want_ID = wanted_chat_id;
 			uart_puts("\nSending chat request to ID ");
 			uart_puts(out);
