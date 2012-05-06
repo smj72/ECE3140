@@ -98,10 +98,12 @@ __interrupt void USCI0RX_ISR(void)
 				root->ID = 0;
 				uart_puts("\nQutting. Returning to choose ID mode...\n Please select the ID you wish to use.\n");
 			}
+			index = 0;
 		}
 		else if (strncmp(pch,"/find",index-1)==0) {
 				send_message("/find");
 				uart_puts("\nFinding other MSP430s...\n");
+				index = 0;
 			}
 		
 		else{
