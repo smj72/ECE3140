@@ -51,7 +51,7 @@ void send_message (char *msg){
 		/* Transmit the packet over the radio */
 		MRFI_Transmit(&packet , MRFI_TX_TYPE_FORCED);
 		
-		sleep(100000);
+		sleep(1000);
 		P1OUT ^= RED_SEND_LED;
 	
 }
