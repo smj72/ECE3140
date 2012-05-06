@@ -57,7 +57,7 @@ void interface_loop(void){
 			uart_puts("\n");
 			// If message quit then remove from chat ids
 			quit = 0;
-			if (head->message == "\quit"){
+			if (head->message == "/quit"){
 				int i = 0;
 				for(i;i<array_size;i++){
 					if(root->chat_IDs[i] == head->ID){

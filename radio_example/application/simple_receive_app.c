@@ -60,13 +60,13 @@ void MRFI_RxCompleteISR(void) {
 	sender_want_chat_id = packet.frame[10];
 	
 	//Commands
-		
+		uart_puts((char *)&packet.frame[15]);
 		//Find: Send back response command
 		//strcpy(  packet_message, (char *) &packet.frame[15]  );
-		if(strncmp((char*) &packet.frame[15], "\find", 5)==0){
-			send_message("\response");
+		if(strncmp((char*) &packet.frame[15], "/find", 5)==0){
+			send_message("/response");
 		}
-		if(strncmp((char*) &packet.frame[15], "\response", 9)==0){
+		if(strncmp((char*) &packet.frame[15], "/response", 9)==0){
 			memset(&packet_message[0], 0, sizeof(packet_message));
 			sprintf(packet_message," [%d] ",root->ID);
 			uart_puts(packet_message);
@@ -74,17 +74,6 @@ void MRFI_RxCompleteISR(void) {
 	
 	//Accept package if ID matches
 	if(sender_want_chat_id == 0 || sender_want_chat_id == root->ID){
-		
-		//packet_message = (char *) malloc(2);
-		/*uart_puts("\nRadio Message Received!\n");
-		uart_puts("sender: ");
-		sprintf(packet_message,"%d",sender_id);
-		uart_puts(packet_message);
-		uart_puts("\nmessage: ");
-		sprintf(packet_message,"%s", &packet.frame[11]);
-		uart_puts(packet_message);
-		uart_putc('\n');*/
-		
 		
 		
 		//Conditions for chat mode. chat_ID = 0 means it will accept any chat request
@@ -94,31 +83,27 @@ void MRFI_RxCompleteISR(void) {
 			if(sender_want_chat_id == root->ID){
 				root->chat_IDs[0] = sender_id;
 				memset(&packet_message[0], 0, sizeof(packet_message));
-				sprintf(packet_message,"%d chat accept",root->ID);
+				sprintf(packet_message,"\n %d chat accept\n",root->ID);
 				send_message(packet_message);
 				root->state = CHAT_MODE;
 				uart_puts("\nChat initiated\n");
 				//clear msp430 list
 				root->signal_next = NULL;
 			}
-			else{
-				root->state = NETWORK_MODE;
-				uart_puts ("Chat rejected.\nPlease type in another ID\n");
-			}
-			
 			
 		}
 		//Add msp430 to linked list in network/chat accept modes
 		else if(root->state == NETWORK_MODE /*|| root->state == CHAT_ACCEPT_MODE*/){
-			
+				/*uart_puts("\n This msp430s wishes to chat with you:\n");
+				memset(&packet_message[0], 0, sizeof(packet_message));
+				sprintf(packet_message," %d ",sender_id);
+				uart_puts(packet_message);
+				uart_putc('\n');*/
 			senders = root;
 			while(senders)
 			{
-				//Only add to linked list if it's a new msp430
-				if(senders->ID == sender_id){
-					break;
-				}
-				else if(senders->signal_next == NULL){
+				
+				if(senders->signal_next == NULL){
 					msp430_obj *new_msp430 = (msp430_obj*) malloc(sizeof(msp430_obj));
 					
 					new_msp430->ID = sender_id;
@@ -141,12 +126,26 @@ void MRFI_RxCompleteISR(void) {
 					uart_putc('\n');
 					
 					break;
+					
+				}
+				//Only add to linked list if it's a new msp430
+				else if(senders->signal_next->ID == sender_id){
+					//If he wants to be removed
+					
+					if(strncmp((char*) &packet.frame[15], "/remove", 7)==0){
+						msp430_obj *remove = senders->signal_next;
+						memset(&packet_message[0], 0, sizeof(packet_message));
+						sprintf(packet_message,"\n%d does not want to chat anymore\n",senders->ID);
+						senders->signal_next = senders->signal_next->signal_next;
+						free(remove);
+
+					}
+					break;
 				}
 				
 				senders = senders->signal_next;
 			}
 			
-			//free(senders);
 		}
 		//If in chat mode, check ID and automatically add to stack
 		else if(root->state == CHAT_MODE && sender_id == root->chat_IDs[0])
@@ -160,7 +159,6 @@ void MRFI_RxCompleteISR(void) {
 			new_msp430->signal_next = root->signal_next;
 			strcpy( (char *) msg_init, (char *) &packet.frame[15]  );
 			new_msp430->message = msg_init;
-			//strcpy( (char *) new_msp430->message, (char *) &packet.frame[15]  );
 			
 			root->signal_next = new_msp430;
 			uart_puts("\n message received \n");
@@ -168,10 +166,8 @@ void MRFI_RxCompleteISR(void) {
 		
 	}
 	else{
-		uart_puts("\nDEBUG: Message Blocked\n");
-		
+		uart_puts("\n Blocked radio message \n");
 	}
-	//free(packet_message);
 	
 	
 	/* Toggle the red GREEN to signal that data has arrived */
