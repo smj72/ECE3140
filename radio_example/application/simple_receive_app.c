@@ -4,7 +4,7 @@
  *   Toggles red LED every time a packet is received.
  *----------------------------------------------------------*/
 #include "3140_finalproject.h"
-char packet_message[CHAR_LIMIT];
+char packet_message[20];
 msp430_obj *senders;
 
 //Initialization for receiving messages
@@ -74,7 +74,7 @@ void MRFI_RxCompleteISR(void) {
 			&& root->state == CHAT_MODE && sender_id == root->chat_want_ID)
 			{
 
-				uart_puts("\n The other MSP430 is quitting from this chat... \n");
+				uart_puts("\n The other MSP430 is quitting from this chat... \n Please pick another ID to chat with.\n");
 				root->chat_want_ID = 0;
 				root->state = NETWORK_MODE;
 				root->signal_next = NULL;
@@ -92,7 +92,7 @@ void MRFI_RxCompleteISR(void) {
 					
 						msp430_obj *remove = senders->signal_next;
 						memset(&packet_message[0], 0, sizeof(packet_message));
-						sprintf(packet_message,"\n%d does not want to chat anymore\n",senders->ID);
+						sprintf(packet_message,"\n%d stops request\n",senders->ID);
 						senders->signal_next = senders->signal_next->signal_next;
 						free(remove);
 	
@@ -153,8 +153,9 @@ void MRFI_RxCompleteISR(void) {
 							//Update list of available msp430s to chat with
 							uart_puts("\n These msp430s wish to chat with you:\n");
 							senders = root->signal_next;
-							memset(&packet_message[0], 0, sizeof(packet_message));
+							
 							while(senders!=NULL){
+								memset(&packet_message[0], 0, sizeof(packet_message));
 								sprintf(packet_message," %d ",senders->ID);
 								uart_puts(packet_message);
 								senders = senders->signal_next;
@@ -166,16 +167,7 @@ void MRFI_RxCompleteISR(void) {
 						}
 						//Only add to linked list if it's a new msp430
 						else if(senders->signal_next->ID == sender_id){
-							//If he wants to be removed
 							
-							if(strncmp((char*) &packet.frame[11], "/remove", 7)==0){
-								msp430_obj *remove = senders->signal_next;
-								memset(&packet_message[0], 0, sizeof(packet_message));
-								sprintf(packet_message,"\n%d does not want to chat anymore\n",senders->ID);
-								senders->signal_next = senders->signal_next->signal_next;
-								free(remove);
-		
-							}
 							break;
 						}
 						

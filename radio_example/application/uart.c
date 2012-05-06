@@ -96,6 +96,7 @@ __interrupt void USCI0RX_ISR(void)
 			else if(root->state == NETWORK_MODE){
 				root->state = CHOOSE_ID_MODE;
 				root->ID = 0;
+				send_message("/remove");
 				uart_puts("\nQutting. Returning to choose ID mode...\n Please select the ID you wish to use.\n");
 			}
 			index = 0;
