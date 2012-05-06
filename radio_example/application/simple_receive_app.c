@@ -168,28 +168,28 @@ void MRFI_RxCompleteISR(void) {
 		
 	}
 	
-	else if(root->state == NETWORK_MODE && root->signal_next !=NULL){
+	else if(root->state == NETWORK_MODE && strncmp((char*) &packet.frame[11], "/remove", 7)==0){
 		senders = root;
-		if(strncmp((char*) &packet.frame[11], "/remove", 7)==0){
-			while(senders)
-			{
-				
-				if(senders->signal_next->ID == sender_id){
-					//If he wants to be removed
-					
-						msp430_obj *remove = senders->signal_next;
-						memset(&packet_message[0], 0, sizeof(packet_message));
-						sprintf(packet_message,"\n%d does not want to chat anymore\n",senders->ID);
-						senders->signal_next = senders->signal_next->signal_next;
-						free(remove);
 
-					
-					break;
-				}
+		while(senders)
+		{
+			
+			if(senders->signal_next->ID == sender_id){
+				//If he wants to be removed
 				
-				senders = senders->signal_next;
+					msp430_obj *remove = senders->signal_next;
+					memset(&packet_message[0], 0, sizeof(packet_message));
+					sprintf(packet_message,"\n%d does not want to chat anymore\n",senders->ID);
+					senders->signal_next = senders->signal_next->signal_next;
+					free(remove);
+
+				
+				break;
 			}
+			
+			senders = senders->signal_next;
 		}
+		
 			
 	}
 	else{

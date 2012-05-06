@@ -25,7 +25,7 @@ void init_uart(void) {
 	IE2 |= UCA0RXIE; 			  /* Enable USCI_A0 RX interrupt */
 	
 	// Define Root parameters
-	root_init->ID = 5;
+	root_init->ID = 0;
 	msg_init = "\0";
 	root_init->message = msg_init;
 	root_init->chat_want_ID = 0;
@@ -109,9 +109,9 @@ __interrupt void USCI0RX_ISR(void)
 		else if(root->state == NETWORK_MODE){
 			//int wanted_chat_id = out[0] - '0';
 			int wanted_chat_id = atoi(out);
-			/*if( root->chat_want_ID != wanted_chat_id && root->chat_want_ID!=0){
+			if( root->chat_want_ID != wanted_chat_id && root->chat_want_ID!=0){
 				send_message("/remove");
-			}*/
+			}
 			root->chat_want_ID = wanted_chat_id;
 			uart_puts("\nSending chat request to ID ");
 			uart_puts(out);
