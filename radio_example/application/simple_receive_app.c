@@ -20,7 +20,7 @@ void receive_message(void){
 	senders = (msp430_obj*)malloc(sizeof(msp430_obj));
 	
 	/* Attempt to turn on address filtering
-	 *   If unsuccessful, turn on both LEDs and wait forever *
+	 *   If unsuccessful, turn on both LEDs and wait forever */
 	status = MRFI_SetRxAddrFilter(address);	
 	MRFI_EnableRxAddrFilter();
 	if( status != 0) {
@@ -94,6 +94,7 @@ void MRFI_RxCompleteISR(void) {
 						memset(&packet_message[0], 0, sizeof(packet_message));
 						sprintf(packet_message,"\n%d stops request\n",senders->ID);
 						senders->signal_next = senders->signal_next->signal_next;
+						uart_puts(packet_message);
 						free(remove);
 	
 					
