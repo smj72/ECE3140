@@ -90,7 +90,7 @@ __interrupt void USCI0RX_ISR(void)
 			if(root->state == CHAT_MODE)
 			{
 				root->state = NETWORK_MODE;
-				
+				send_message("/quit");
 				uart_puts("\nQuitting. Returning to chat select mode...\nPlease input the ID you wish to chat with.\n If you would like to choose another ID, please type in /quit again.\n");
 			}
 			else if(root->state == NETWORK_MODE){

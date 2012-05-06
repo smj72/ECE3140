@@ -118,10 +118,9 @@ void MRFI_RxCompleteISR(void) {
 				{
 					root->chat_want_ID = sender_id;
 					
-					memset(&packet_message[0], 0, sizeof(packet_message));
-					sprintf(packet_message,"\n %d chat accept\n",root->ID);
 					
-					send_message(packet_message);
+					
+					send_message("Chat accept");
 					root->state = CHAT_MODE;
 					uart_puts("\nChat initiated\n");
 					
