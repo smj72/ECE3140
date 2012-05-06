@@ -99,47 +99,54 @@ __interrupt void USCI0RX_ISR(void)
 				uart_puts("\nQutting. Returning to choose ID mode...\n Please select the ID you wish to use.\n");
 			}
 		}
-		if (strncmp(pch,"/find",index-1)==0) {uart_puts("\nFinding other MSP430s...\n");}
-		
-		// Restart index to the beginning of the array
-		index = 0;
-		uart_putc('\n');
-		
-		//State changes based on what was sent
-		//Choose ID mode: obtain your ID
-		if(root->state == CHOOSE_ID_MODE)
-		{
-			//int wanted_id = out[0] - '0';
-			int wanted_id = atoi(out);
-			root->ID = wanted_id;
-			root->state = NETWORK_MODE;
-			uart_puts("\n ID is now: ");
-			uart_puts(out);
-			uart_puts("\nNow choose another ID you wish to chat with\n");
-		}
-		//Network mode: send chat acceptance to msp430 with specific ID
-		else if(root->state == NETWORK_MODE){
-			//int wanted_chat_id = out[0] - '0';
-			int wanted_chat_id = atoi(out);
-			if( root->chat_want_ID != wanted_chat_id && root->chat_want_ID!=0){
-				send_message("/remove");
+		else if (strncmp(pch,"/find",index-1)==0) {
+				send_message("/find");
+				uart_puts("\nFinding other MSP430s...\n");
 			}
-			root->chat_want_ID = wanted_chat_id;
-			uart_puts("\nSending chat request to ID ");
-			uart_puts(out);
-			uart_putc('\n');
-		}
-		else if(root->state == CHAT_MODE){
-			uart_puts("\nSending message:\n");
-			uart_puts(root->message);
+		
+		else{
+			// Restart index to the beginning of the array
+			index = 0;
 			uart_putc('\n');
 			
-			send_message(root->message);
+			//State changes based on what was sent
+			//Choose ID mode: obtain your ID
+			if(root->state == CHOOSE_ID_MODE)
+			{
+				//int wanted_id = out[0] - '0';
+				int wanted_id = atoi(out);
+				root->ID = wanted_id;
+				root->state = NETWORK_MODE;
+				uart_puts("\n ID is now: ");
+				uart_puts(out);
+				uart_puts("\nNow choose another ID you wish to chat with\n");
+			}
+			//Network mode: send chat acceptance to msp430 with specific ID
+			else if(root->state == NETWORK_MODE)
+			{
+				//int wanted_chat_id = out[0] - '0';
+				int wanted_chat_id = atoi(out);
+				if( root->chat_want_ID != wanted_chat_id && root->chat_want_ID!=0){
+					send_message("/remove");
+				}
+				root->chat_want_ID = wanted_chat_id;
+				uart_puts("\nSending chat request to ID ");
+				uart_puts(out);
+				uart_putc('\n');
+			}
+			//Chat Mode: send message to another msp430
+			else if(root->state == CHAT_MODE){
+				uart_puts("\nSending message:\n");
+				uart_puts(root->message);
+				uart_putc('\n');
+				
+				send_message(root->message);
+			}
 		}
-		//__bic_SR_register_on_exit(LPM3_bits);
 		
    // Overflow error, will only accept messages that are so many characters long
-	}else if(index >= CHAR_LIMIT){
+	}
+	else if(index >= CHAR_LIMIT){
 		uart_puts("\nThe limit is so many characters, Please try again.\n");
 		//Clear buffer
 		memset(&out[0], 0, sizeof(out));
