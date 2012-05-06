@@ -196,9 +196,9 @@ void MRFI_RxCompleteISR(void) {
 		}
 		
 		
-		else{
+		/*else{
 			uart_puts("\n Blocked radio message \n");
-		}
+		}*/
 	}
 	
 	
