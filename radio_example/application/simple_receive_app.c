@@ -136,10 +136,14 @@ void MRFI_RxCompleteISR(void) {
 						uart_puts(packet_message);
 						uart_putc('\n');*/
 					senders = root;
-					while(senders)
+					while(1)
 					{
-						
-						if(senders->signal_next == NULL){
+						//Only add to linked list if it's a new msp430
+						if(senders->ID == sender_id){
+							
+							break;
+						}
+						else if(senders == NULL){
 							msp430_obj *new_msp430 = (msp430_obj*) malloc(sizeof(msp430_obj));
 							
 							new_msp430->ID = sender_id;
@@ -165,11 +169,7 @@ void MRFI_RxCompleteISR(void) {
 							break;
 							
 						}
-						//Only add to linked list if it's a new msp430
-						else if(senders->signal_next->ID == sender_id){
-							
-							break;
-						}
+						
 						
 						senders = senders->signal_next;
 					}
