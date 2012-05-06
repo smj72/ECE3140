@@ -83,11 +83,23 @@ __interrupt void USCI0RX_ISR(void)
 		root->message = out; 
 		pch = strstr(root->message,"/");
 		
-		if (root->message == "quit"){
+		
+		if (strncmp(pch,"/quit",index-1)==0){
 			root->chat_want_ID = 0;
+			root->signal_next = NULL;
+			if(root->state == CHAT_MODE)
+			{
+				root->state = NETWORK_MODE;
+				
+				uart_puts("\nQuitting. Returning to chat select mode...\nPlease input the ID you wish to chat with.\n If you would like to choose another ID, please type in /quit again.\n");
+			}
+			else if(root->state == NETWORK_MODE){
+				root->state = CHOOSE_ID_MODE;
+				root->ID = 0;
+				uart_puts("\nQutting. Returning to choose ID mode...\n Please select the ID you wish to use.\n");
+			}
 		}
-		if (strncmp(pch,"/quit",index-1)==0) uart_puts("\nQuitting out of chat...\n");
-		if (strncmp(pch,"/find",index-1)==0) uart_puts("\nFinding other MSP430s...\n");
+		if (strncmp(pch,"/find",index-1)==0) {uart_puts("\nFinding other MSP430s...\n");}
 		
 		// Restart index to the beginning of the array
 		index = 0;
@@ -103,7 +115,7 @@ __interrupt void USCI0RX_ISR(void)
 			root->state = NETWORK_MODE;
 			uart_puts("\n ID is now: ");
 			uart_puts(out);
-			uart_puts("\nNow choose another ID (0 for anyone) you wish to chat with\nFollowed by any message\n");
+			uart_puts("\nNow choose another ID you wish to chat with\n");
 		}
 		//Network mode: send chat acceptance to msp430 with specific ID
 		else if(root->state == NETWORK_MODE){
@@ -128,7 +140,7 @@ __interrupt void USCI0RX_ISR(void)
 		
    // Overflow error, will only accept messages that are so many characters long
 	}else if(index >= CHAR_LIMIT){
-		uart_puts("\r\nThe limit is so many characters, your entry has been restarted.\r\n");
+		uart_puts("\nThe limit is so many characters, Please try again.\n");
 		//Clear buffer
 		memset(&out[0], 0, sizeof(out));
 		//__bic_SR_register_on_exit(LPM3_bits);

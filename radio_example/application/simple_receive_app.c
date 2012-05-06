@@ -20,7 +20,7 @@ void receive_message(void){
 	senders = (msp430_obj*)malloc(sizeof(msp430_obj));
 	
 	/* Attempt to turn on address filtering
-	 *   If unsuccessful, turn on both LEDs and wait forever */
+	 *   If unsuccessful, turn on both LEDs and wait forever *
 	status = MRFI_SetRxAddrFilter(address);	
 	MRFI_EnableRxAddrFilter();
 	if( status != 0) {

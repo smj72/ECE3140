@@ -43,41 +43,28 @@ void interface_loop(void){
 		
 			// If id was found and state is in chat mode
 			if (found_id && root->state == CHAT_MODE){	
-				uart_puts("Message From ID: ");
+				uart_puts("\nMessage From ID: \n");
 				//char *id;
-				sprintf(id_str,"%d",head->ID);
+				sprintf(id_str,"%d: ",head->ID);
 				uart_puts(id_str);
-				uart_puts("\n");
 				uart_puts(head->message);
 				uart_puts("\n");
 				// If message quit then remove from chat ids
 				quit = 0;
-				if (head->message == "/quit"){
-					int i = 0;
-					if(root->chat_want_ID == head->ID){
+				if (strncmp(head->message, "/quit", 5)==0){
 						root->chat_want_ID = 0;
+						root->state = NETWORK_MODE;
 						quit = 1;
-						break;
-					}
 				}
 				//free head memory
 				free(head->message);
 				free(head);
 				
 				
-				// If there was no quit message
 				if (!quit){
-					uart_puts("Response: \n");
-					root->message = NULL;
-					// busy wait for message
-					//while(root->message == NULL);
-			
-					//uart_puts("Enter message: \n");
-					//root->message = NULL;
-					// busy wait for message
-					//while(root->message[0] == NULL);
-			
-					// SEND RADIO SIGNAL
+					uart_puts("\nResponse: \n");
+					root->message = "\0";
+					
 				}
 			}
 		}
