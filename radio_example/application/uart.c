@@ -135,6 +135,7 @@ __interrupt void USCI0RX_ISR(void)
 				uart_puts("\nSending chat request to ID ");
 				uart_puts(out);
 				uart_putc('\n');
+				send_message("Chat request");
 			}
 			//Chat Mode: send message to another msp430
 			else if(root->state == CHAT_MODE){
