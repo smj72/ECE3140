@@ -60,7 +60,6 @@ void MRFI_RxCompleteISR(void) {
 	sender_want_chat_id = packet.frame[10];
 	
 	//Commands
-		uart_puts((char *)&packet.frame[15]);
 		//Find: Send back response command
 		//strcpy(  packet_message, (char *) &packet.frame[15]  );
 		if(strncmp((char*) &packet.frame[15], "/find", 5)==0){
@@ -77,7 +76,7 @@ void MRFI_RxCompleteISR(void) {
 		
 		
 		//Conditions for chat mode. chat_ID = 0 means it will accept any chat request
-		if(root->state == NETWORK_MODE && (root->chat_IDs[0] == sender_id && root->chat_IDs[0]!=0))
+		if(root->state == NETWORK_MODE && (root->chat_IDs[0] == sender_id))
 		{
 			//int chat_accept_id = packet_message[0] - '0';
 			if(sender_want_chat_id == root->ID){
@@ -93,7 +92,7 @@ void MRFI_RxCompleteISR(void) {
 			
 		}
 		//Add msp430 to linked list in network/chat accept modes
-		else if(root->state == NETWORK_MODE /*|| root->state == CHAT_ACCEPT_MODE*/){
+		else if(root->state == NETWORK_MODE ){
 				/*uart_puts("\n This msp430s wishes to chat with you:\n");
 				memset(&packet_message[0], 0, sizeof(packet_message));
 				sprintf(packet_message," %d ",sender_id);
@@ -119,7 +118,7 @@ void MRFI_RxCompleteISR(void) {
 					senders = root->signal_next;
 					memset(&packet_message[0], 0, sizeof(packet_message));
 					while(senders!=NULL){
-						sprintf(packet_message,"%d ",senders->ID);
+						sprintf(packet_message," %d ",senders->ID);
 						uart_puts(packet_message);
 						senders = senders->signal_next;
 					}
@@ -164,6 +163,30 @@ void MRFI_RxCompleteISR(void) {
 			uart_puts("\n message received \n");
 		}
 		
+	}
+	else if(root->state == NETWORK_MODE && root->signal_next !=NULL){
+		senders = root;
+		if(strncmp((char*) &packet.frame[15], "/remove", 7)==0){
+			while(senders)
+			{
+				
+				if(senders->signal_next->ID == sender_id){
+					//If he wants to be removed
+					
+						msp430_obj *remove = senders->signal_next;
+						memset(&packet_message[0], 0, sizeof(packet_message));
+						sprintf(packet_message,"\n%d does not want to chat anymore\n",senders->ID);
+						senders->signal_next = senders->signal_next->signal_next;
+						free(remove);
+
+					
+					break;
+				}
+				
+				senders = senders->signal_next;
+			}
+		}
+			
 	}
 	else{
 		uart_puts("\n Blocked radio message \n");
