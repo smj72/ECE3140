@@ -81,6 +81,30 @@ void MRFI_RxCompleteISR(void) {
 		
 						
 			}
+		else if(root->state == NETWORK_MODE && (strncmp((char*) &packet.frame[11], "/remove", 7)==0)){
+			senders = root;
+	
+			while(senders)
+			{
+				
+				if(senders->signal_next->ID == sender_id){
+					//If he wants to be removed
+					
+						msp430_obj *remove = senders->signal_next;
+						memset(&packet_message[0], 0, sizeof(packet_message));
+						sprintf(packet_message,"\n%d does not want to chat anymore\n",senders->ID);
+						senders->signal_next = senders->signal_next->signal_next;
+						free(remove);
+	
+					
+					break;
+				}
+				
+				senders = senders->signal_next;
+			}
+			
+				
+		}
 	else{
 		//Accept package if this MSP430 accepts anything or a package was meant for you
 		if(root->chat_want_ID == -1 || sender_want_chat_id == root->ID){
@@ -179,30 +203,7 @@ void MRFI_RxCompleteISR(void) {
 			
 		}
 		
-		else if(root->state == NETWORK_MODE && strncmp((char*) &packet.frame[11], "/remove", 7)==0){
-			senders = root;
-	
-			while(senders)
-			{
-				
-				if(senders->signal_next->ID == sender_id){
-					//If he wants to be removed
-					
-						msp430_obj *remove = senders->signal_next;
-						memset(&packet_message[0], 0, sizeof(packet_message));
-						sprintf(packet_message,"\n%d does not want to chat anymore\n",senders->ID);
-						senders->signal_next = senders->signal_next->signal_next;
-						free(remove);
-	
-					
-					break;
-				}
-				
-				senders = senders->signal_next;
-			}
-			
-				
-		}
+		
 		else{
 			uart_puts("\n Blocked radio message \n");
 		}
