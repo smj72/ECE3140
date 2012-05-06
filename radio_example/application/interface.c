@@ -25,32 +25,33 @@ void interface_loop(void){
 	
 	while(1){
 		// Get head of messages received
-		
-		msp430_obj* head = root->signal_next;
-		
-		// Pop off top message and print out the message
-		if(head != NULL){
-			root->signal_next = head->signal_next;
-			head->signal_next = NULL;
+		if(root->state == CHAT_MODE){
+			msp430_obj* head = root->signal_next;
 			
-			if(root->chat_want_ID == head->ID){
-				found_id = 1;
-			}
-			else
-			{
-				found_id = 0;
-			}
-		
-			// If id was found and state is in chat mode
-			if (found_id && root->state == CHAT_MODE){	
-				uart_puts("\nMessage From ID: \n");
-				sprintf(id_str,"%d: ",head->ID);
-				uart_puts(id_str);
-				uart_puts(head->message);
+			// Pop off top message and print out the message
+			if( head != NULL){
+				root->signal_next = head->signal_next;
+				head->signal_next = NULL;
+				
+				if(root->chat_want_ID == head->ID){
+					found_id = 1;
+				}
+				else
+				{
+					found_id = 0;
+				}
 			
-				uart_puts("\n\nResponse: \n");
-				root->message = "\0";
-					
+				// If id was found and state is in chat mode
+				if (found_id && root->state == CHAT_MODE){	
+					uart_puts("\nMessage From ID: \n");
+					sprintf(id_str,"%d: ",head->ID);
+					uart_puts(id_str);
+					uart_puts(head->message);
+				
+					uart_puts("\n\nResponse: \n");
+					root->message = "\0";
+						
+				}
 			}
 		}
 	
